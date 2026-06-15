@@ -1,0 +1,193 @@
+import Link from "next/link";
+import SectionHeading from "../reusables/SectionHeading";
+
+const communityLinks = [
+  { label: "About Us", href: "/about" },
+  { label: "Events", href: "/events" },
+  { label: "Gallery", href: "/gallery" },
+  { label: "Stories", href: "/stories" },
+];
+
+const getInvolvedLinks = [
+  { label: "Register", href: "/register" },
+  { label: "Donate", href: "/donate" },
+  { label: "Volunteer", href: "/volunteer" },
+  { label: "Submit a Story", href: "/submit-story" },
+];
+
+const adminLinks = [
+  { label: "Admin Login", href: "/login" },
+  { label: "Committee Portal", href: "/admin/committee" },
+  { label: "Contact", href: "/contact" },
+  { label: "Privacy Policy", href: "/privacy" },
+];
+
+function FacebookIcon({ className }: { className?: string }) {
+  return (
+    <svg viewBox="0 0 24 24" fill="currentColor" className={className} xmlns="http://www.w3.org/2000/svg">
+      <path d="M22 12c0-5.523-4.477-10-10-10S2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.878V14.89h-2.54V12h2.54V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V12h2.773l-.443 2.89h-2.33v6.988C18.343 21.128 22 16.991 22 12z" />
+    </svg>
+  );
+}
+
+function YouTubeIcon({ className }: { className?: string }) {
+  return (
+    <svg viewBox="0 0 24 24" fill="currentColor" className={className} xmlns="http://www.w3.org/2000/svg">
+      <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z" />
+    </svg>
+  );
+}
+
+function InstagramIcon({ className }: { className?: string }) {
+  return (
+    <svg viewBox="0 0 24 24" fill="currentColor" className={className} xmlns="http://www.w3.org/2000/svg">
+      <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 1 0 0 12.324 6.162 6.162 0 0 0 0-12.324zM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.406-11.845a1.44 1.44 0 1 0 0 2.881 1.44 1.44 0 0 0 0-2.881z" />
+    </svg>
+  );
+}
+
+function LinkedInIcon({ className }: { className?: string }) {
+  return (
+    <svg viewBox="0 0 24 24" fill="currentColor" className={className} xmlns="http://www.w3.org/2000/svg">
+      <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" />
+    </svg>
+  );
+}
+
+const socialLinks = [
+  { label: "Facebook", Icon: FacebookIcon, href: "#" },
+  { label: "YouTube", Icon: YouTubeIcon, href: "#" },
+  { label: "Instagram", Icon: InstagramIcon, href: "#" },
+  { label: "LinkedIn", Icon: LinkedInIcon, href: "#" },
+];
+
+export default function Footer() {
+  return (
+    <footer className="w-full bg-[#0d1726] text-white">
+      {/* ── Upper section ── */}
+      <div className="mx-auto max-w-7xl px-4 lg:px-20 pt-16 pb-8">
+        <div className="flex flex-col lg:flex-row gap-8 w-full">
+
+          {/* ── Brand column ── */}
+          <div className="w-full lg:max-w-[25rem] flex flex-col gap-4">
+            {/* HROGA logo Here*/}
+            <div className="w-[110px]">
+              <svg viewBox="0 0 120 140" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full">
+                {/* Outer shield */}
+                <path
+                  d="M60 4L112 24V82Q112 120 60 136Q8 120 8 82V24Z"
+                  fill="rgba(255,255,255,0.07)"
+                  stroke="rgba(255,255,255,0.45)"
+                  strokeWidth="2.5"
+                />
+                {/* Inner shield */}
+                <path
+                  d="M60 13L103 30V82Q103 113 60 127Q17 113 17 82V30Z"
+                  fill="rgba(255,255,255,0.04)"
+                  stroke="rgba(255,255,255,0.25)"
+                  strokeWidth="1.5"
+                />
+                {/* Torch stick */}
+                <line x1="60" y1="14" x2="60" y2="36" stroke="rgba(255,255,255,0.7)" strokeWidth="2" strokeLinecap="round"/>
+                {/* Torch flame */}
+                <ellipse cx="60" cy="11" rx="4" ry="5" fill="rgba(255,255,255,0.7)" />
+                {/* HROGA */}
+                <text x="60" y="54" textAnchor="middle" fill="rgba(255,255,255,0.82)" fontSize="11" fontWeight="700" fontFamily="serif" letterSpacing="2.5">HROGA</text>
+                {/* P.H. */}
+                <text x="60" y="80" textAnchor="middle" fill="rgba(255,255,255,0.85)" fontSize="18" fontWeight="800" fontFamily="serif">P.H.</text>
+                {/* Bottom curved text */}
+                <path id="arc" d="M22 105 Q60 128 98 105" fill="none" />
+                <text fontSize="7.5" fill="rgba(255,255,255,0.5)" fontFamily="sans-serif" letterSpacing="2">
+                  <textPath href="#arc" startOffset="50%" textAnchor="middle">TRUTH &amp; SERVICE</textPath>
+                </text>
+              </svg>
+            </div>
+
+            {/* Org name */}
+            <h2 className="text-[18px] mt-2 font-semibold leading-snug text-white/80 font-serif">
+              Holy Rosary Old Girls Association
+            </h2>
+
+            {/* Tagline */}
+            <p className="max-w-[270px] text-[13.5px] leading-relaxed text-[#7d8fa3]">
+              A sisterhood that endures celebrating the women Holy Rosary shaped and the lives they continue to build.
+            </p>
+          </div>
+
+          <div className="mt-6 lg:mt-15 grid grid-cols-1 md:grid-cols-3 gap-10 w-full">
+            {/* ── Community ── */}
+            <div className="w-full">
+              <SectionHeading title="Community" className="text-[#f3f9d2] mb-5"/>
+              <ul className="flex flex-col gap-[13px]">
+                {communityLinks.map(({ label, href }) => (
+                  <li key={label}>
+                    <Link href={href} className="text-[14px] text-[#c5cdd8] transition-colors duration-150 hover:text-white">
+                      {label}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            {/* ── Get Involved ── */}
+            <div>
+              <SectionHeading title="Get Involved" className="text-[#f3f9d2] mb-5"/>
+              <ul className="flex flex-col gap-[13px]">
+                {getInvolvedLinks.map(({ label, href }) => (
+                  <li key={label}>
+                    <Link href={href} className="text-[14px] text-[#c5cdd8] transition-colors duration-150 hover:text-white">
+                      {label}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            {/* ── Admin ── */}
+            <div>
+              <SectionHeading title="Admin" className="text-[#f3f9d2] mb-5"/>
+              <ul className="flex flex-col gap-[13px]">
+                {adminLinks.map(({ label, href }) => (
+                  <li key={label}>
+                    <Link href={href} className="text-[14px] text-[#c5cdd8] transition-colors duration-150 hover:text-white">
+                      {label}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* ── Divider ── */}
+      <div className="mx-auto max-w-7xl border-t border-[#1c2b3e] px-16" />
+
+      {/* ── Bottom bar ── */}
+      <div className="mx-auto max-w-7xl lg:px-20 pt-5 pb-7">
+        <div className="flex flex-col lg:flex-row items-center justify-between gap-4">
+          {/* Social icons (bottom left) */}
+          <div className="flex items-center gap-[18px]">
+            {socialLinks.map(({ label, Icon, href }) => (
+              <Link key={label} href={href} aria-label={label} className="text-[#7d8fa3] transition-colors duration-150 hover:text-white">
+                <Icon className="h-[19px] w-[19px]" />
+              </Link>
+            ))}
+          </div>
+
+          <div className="flex flex-col md:flex-row items-center justify-between w-full lg:max-w-[68%] px-4 gap-2">
+            {/* Copyright */}
+            <p className="text-[12px] text-[#7d8fa3]">
+              © 2026 Holy Rosary Old Girls Association. All rights reserved.
+            </p>
+
+            {/* Right tagline */}
+            <p className="text-[12px] text-[#7d8fa3]">
+              Built with pride · For every woman who walked those halls
+            </p>
+          </div>
+        </div>
+      </div>
+    </footer>
+  );
+}
