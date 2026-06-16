@@ -1,42 +1,9 @@
+'use client';
+
 import SectionHeading from "@/components/reusables/SectionHeading";
-import React from "react";
-
-type EventType = "Birthday" | "Wedding" | "New Arrivals";
-
-interface CelebrationEvent {
-  id: number;
-  type: EventType;
-  title: string;
-  dateLocation: string;
-  description: string;
-}
-
-const events: CelebrationEvent[] = [
-  {
-    id: 1,
-    type: "Birthday",
-    title: "Mrs. Adaeze Okonkwo",
-    dateLocation: "June 15, 2026",
-    description:
-      "Class of 1994 · Celebrating her 50th — join us in wishing her a wonderful milestone.",
-  },
-  {
-    id: 2,
-    type: "Wedding",
-    title: "Chisom Eze & Femi Adeyemi",
-    dateLocation: "July 5, 2026 · Lagos",
-    description:
-      "Class of 2008 · Our beloved Chisom walks down the aisle. RSVP to celebrate with her.",
-  },
-  {
-    id: 3,
-    type: "New Arrivals",
-    title: "Baby Girl – Ngozi Bello",
-    dateLocation: "Arrived June 2nd, 2026",
-    description:
-      "Class of 2005 · Ngozi welcomed her first grandchild! Send the family your congratulations.",
-  },
-];
+import React, { useEffect } from "react";
+import { useAppDispatch, useAppSelector } from "../../../../redux/hooks";
+import { fetchEvents, Event, EventType } from "../../../../redux/features/events/eventsSlice";
 
 const badgeConfig: Record<
   EventType,
@@ -66,6 +33,21 @@ const dateColor: Record<EventType, string> = {
 };
 
 export default function UpcomingEvents() {
+  const dispatch = useAppDispatch();
+  const { events, loading } = useAppSelector((state) => state.events);
+
+  useEffect(() => {
+    dispatch(fetchEvents());
+  }, [dispatch]);
+
+  if (loading) {
+    return (
+      <section className="bg-gradient-to-tl from-gray-400 via-gray-50 via-gray-400 via-white to-gray-100 px-4 py-14 lg:px-[5rem] xl:px-[13rem]">
+        <div className="py-12 text-center text-gray-500">Loading events...</div>
+      </section>
+    );
+  }
+
   return (
     <section className="bg-gradient-to-tl from-gray-400 via-gray-50 via-gray-400 via-white to-gray-100 px-4 py-14 lg:px-[5rem] xl:px-[13rem]">
       {/* Header */}
@@ -84,34 +66,38 @@ export default function UpcomingEvents() {
 
       {/* Cards */}
       <div className="grid grid-cols-1 gap-4 md:grid-cols-3 lg:grid-cols-3">
-        {events.map((event) => {
-          const badge = badgeConfig[event.type];
-          const dc = dateColor[event.type];
-          return (
-            <div key={event.id} className="relative pt-5">
-              {/* Badge tab */}
-              <div
-                className={`absolute -top-0 left-1/2 z-10 -translate-x-1/2 min-w-[15rem] md:min-w-auto lg:min-w-[15rem] rounded-md px-5 py-1.5 text-sm font-semibold ${badge.bg} ${badge.text} flex items-center justify-center gap-2 whitespace-nowrap`}
-              >
-                <span>{badge.emoji}</span>
-                <span>{event.type}</span>
-              </div>
+        {events.length === 0 ? (
+          <div className="col-span-full py-12 text-center text-gray-500">No events to display yet.</div>
+        ) : (
+          events.map((event) => {
+            const badge = badgeConfig[event.type];
+            const dc = dateColor[event.type];
+            return (
+              <div key={event._id} className="relative pt-5">
+                {/* Badge tab */}
+                <div
+                  className={`absolute -top-0 left-1/2 z-10 -translate-x-1/2 min-w-[15rem] md:min-w-auto lg:min-w-[15rem] rounded-md px-5 py-1.5 text-sm font-semibold ${badge.bg} ${badge.text} flex items-center justify-center gap-2 whitespace-nowrap`}
+                >
+                  <span>{badge.emoji}</span>
+                  <span>{event.type}</span>
+                </div>
 
-              {/* Card body */}
-              <div className="rounded-2xl bg-white px-7 py-8 pt-10 shadow-sm md:min-h-[13.5rem]">
-                <h3 className="mb-2 text-lg font-bold text-gray-900">
-                  {event.title}
-                </h3>
-                <p className={`mb-4 text-sm font-semibold ${dc}`}>
-                  {event.dateLocation}
-                </p>
-                <p className="text-sm leading-relaxed text-gray-500">
-                  {event.description}
-                </p>
+                {/* Card body */}
+                <div className="rounded-2xl bg-white px-7 py-8 pt-10 shadow-sm md:min-h-[13.5rem]">
+                  <h3 className="mb-2 text-lg font-bold text-gray-900">
+                    {event.title}
+                  </h3>
+                  <p className={`mb-4 text-sm font-semibold ${dc}`}>
+                    {event.dateLocation}
+                  </p>
+                  <p className="text-sm leading-relaxed text-gray-500">
+                    {event.description}
+                  </p>
+                </div>
               </div>
-            </div>
-          );
-        })}
+            );
+          })
+        )}
       </div>
     </section>
   );

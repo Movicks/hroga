@@ -4,6 +4,7 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import Profile from '@/components/reusables/Profile';
 import Divider from '@/components/reusables/Divider';
+import { X } from 'lucide-react';
 
 interface AdminNavbarProps {
   isOpen: boolean;
@@ -14,6 +15,8 @@ const navItems = [
   { name: 'Dashboard', href: '/admin' },
   { name: 'Activities', href: '/admin/activities' },
   { name: 'Gallery', href: '/admin/gallery' },
+  { name: 'Upcoming Events', href: '/admin/upcomingevents' },
+  { name: 'All Users', href: '/admin/users' },
 ];
 
 export default function AdminNavbar({ isOpen, onClose }: AdminNavbarProps) {
@@ -45,7 +48,7 @@ export default function AdminNavbar({ isOpen, onClose }: AdminNavbarProps) {
             onClick={onClose}
             className="flex h-10 w-10 items-center justify-center rounded-full border border-slate-700 text-slate-300 lg:hidden"
           >
-            x
+            <X size={20} />
           </button>
         </div>
 

@@ -1,0 +1,128 @@
+import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
+import api from '../../../apiConfig/axios';
+
+export interface Address {
+  country: string;
+  state: string;
+  city: string;
+  addressLine: string;
+}
+
+export interface User {
+  id: string;
+  firstName: string;
+  middleName?: string;
+  lastName: string;
+  role: string;
+  yearOfGraduation: string;
+  email: string;
+  phoneNumber: string;
+  currentAddress: Address;
+  permanentAddress: Address;
+  suspended: boolean;
+  createdAt: string;
+  updatedAt: string;
+}
+
+interface UsersState {
+  users: User[];
+  loading: boolean;
+  error: string | null;
+}
+
+const initialState: UsersState = {
+  users: [],
+  loading: false,
+  error: null,
+};
+
+export const fetchUsers = createAsyncThunk(
+  'users/fetchUsers',
+  async (_, { rejectWithValue }) => {
+    try {
+      const response = await api.get('/auth/admin/users');
+      return response.data;
+    } catch (error: any) {
+      return rejectWithValue(error.response?.data?.message || 'Failed to fetch users');
+    }
+  }
+);
+
+export const suspendUser = createAsyncThunk(
+  'users/suspendUser',
+  async (userId: string, { rejectWithValue }) => {
+    try {
+      const response = await api.patch(`/auth/admin/users/${userId}/suspend`);
+      return response.data;
+    } catch (error: any) {
+      return rejectWithValue(error.response?.data?.message || 'Failed to suspend user');
+    }
+  }
+);
+
+export const unsuspendUser = createAsyncThunk(
+  'users/unsuspendUser',
+  async (userId: string, { rejectWithValue }) => {
+    try {
+      const response = await api.patch(`/auth/admin/users/${userId}/unsuspend`);
+      return response.data;
+    } catch (error: any) {
+      return rejectWithValue(error.response?.data?.message || 'Failed to unsuspend user');
+    }
+  }
+);
+
+export const deleteUser = createAsyncThunk(
+  'users/deleteUser',
+  async (userId: string, { rejectWithValue }) => {
+    try {
+      await api.delete(`/auth/admin/users/${userId}`);
+      return userId;
+    } catch (error: any) {
+      return rejectWithValue(error.response?.data?.message || 'Failed to delete user');
+    }
+  }
+);
+
+const usersSlice = createSlice({
+  name: 'users',
+  initialState,
+  reducers: {
+    clearUsersError: (state) => {
+      state.error = null;
+    },
+  },
+  extraReducers: (builder) => {
+    builder
+      .addCase(fetchUsers.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(fetchUsers.fulfilled, (state, action: PayloadAction<User[]>) => {
+        state.loading = false;
+        state.users = action.payload;
+      })
+      .addCase(fetchUsers.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload as string;
+      })
+      .addCase(suspendUser.fulfilled, (state, action: PayloadAction<User>) => {
+        const index = state.users.findIndex(u => u.id === action.payload.id);
+        if (index !== -1) {
+          state.users[index] = action.payload;
+        }
+      })
+      .addCase(unsuspendUser.fulfilled, (state, action: PayloadAction<User>) => {
+        const index = state.users.findIndex(u => u.id === action.payload.id);
+        if (index !== -1) {
+          state.users[index] = action.payload;
+        }
+      })
+      .addCase(deleteUser.fulfilled, (state, action: PayloadAction<string>) => {
+        state.users = state.users.filter(u => u.id !== action.payload);
+      });
+  },
+});
+
+export const { clearUsersError } = usersSlice.actions;
+export default usersSlice.reducer;

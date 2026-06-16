@@ -1,26 +1,36 @@
 'use client';
 
 import { useState } from 'react';
-import { SearchIcon } from "lucide-react";
+import { SearchIcon } from 'lucide-react';
 
 export default function Searchbar() {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
     <div
-      className={`flex items-center overflow-hidden rounded-xl border border-slate-200 bg-slate-50 shadow-sm transition-all duration-300 ease-in-out ${
-        isOpen ? 'w-full pl-4 lg:max-w-xl' : 'w-fit'
-      }`}
+      className={`
+        flex items-center overflow-hidden rounded-xl
+        border border-slate-200 bg-slate-50 shadow-sm
+        transition-all duration-300 ease-in-out
+        md:w-full md:max-w-xl
+        ${isOpen ? 'w-full' : 'w-14'}
+      `}
     >
       <div
-        className={`overflow-hidden transition-all duration-300 ease-in-out ${
-          isOpen ? 'mr-3 max-w-md opacity-100' : 'mr-0 max-w-0 opacity-0'
-        }`}
+        className={`
+          flex-1 overflow-hidden transition-all duration-300 ease-in-out
+          md:max-w-full md:opacity-100
+          ${
+            isOpen
+              ? 'max-w-full opacity-100'
+              : 'max-w-0 opacity-0'
+          }
+        `}
       >
         <input
           type="text"
           placeholder="Search activities, gallery items, and admin content"
-          className="w-64 bg-transparent text-sm text-slate-700 outline-none placeholder:text-slate-400 sm:w-80"
+          className="w-full bg-transparent px-4 text-sm text-slate-700 outline-none placeholder:text-slate-400"
         />
       </div>
 
@@ -28,9 +38,9 @@ export default function Searchbar() {
         type="button"
         aria-label={isOpen ? 'Hide search' : 'Show search'}
         onClick={() => setIsOpen((prev) => !prev)}
-        className="flex items-center justify-center bg-black px-4 py-3 text-white transition-colors hover:bg-slate-800"
+        className="flex h-11 lg:h-12 w-14 shrink-0 items-center justify-center bg-black text-white transition-colors duration-300 hover:bg-slate-800"
       >
-        <SearchIcon size={22} />
+        <SearchIcon size={20} />
       </button>
     </div>
   );
