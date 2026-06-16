@@ -30,10 +30,10 @@ const Gallery = () => {
     <section className="gallery-section bg-[#e3f4ff] px-4 lg:px-[5rem] xl:px-[13rem] py-[3rem]">
       <div className="gallery-container">
               {/* <span className="gallery-label">GALLERY</span> */}
-        <SectionHeading title="GALLERY" className="text-[15px] mb-[18px] !text-[#1260ad]"/>
+        <SectionHeading title="GALLERY" className="text-xs md:text-[18px] mb-[18px] !text-[#1260ad]"/>
 
-        <h2 className="gallery-title">
-          <ItalicTitle title="Memories" colorClass="text-[#f8a44a]"/>
+        <h2 className="gallery-title text-[2rem] sm:text-[3.25rem]">
+          <ItalicTitle title="Memories" colorClass="text-[#f8a44a] text-[2rem] sm:text-[3.25rem]"/>
           <span className="gallery-title-white"> in Frame</span>
         </h2>
 

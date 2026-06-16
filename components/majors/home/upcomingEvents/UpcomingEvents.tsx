@@ -70,13 +70,13 @@ export default function UpcomingEvents() {
     <section className="bg-gradient-to-tl from-gray-400 via-gray-50 via-gray-400 via-white to-gray-100 px-4 py-14 lg:px-[5rem] xl:px-[13rem]">
       {/* Header */}
       <div className="mb-16 max-w-xl">
-        <SectionHeading title="UPCOMING EVENTS" className="text-[14px] mb-3"/>
+        <SectionHeading title="UPCOMING EVENTS" className="text-xs md:text-[18px] mb-2"/>
         
-        <h2 className="mb-6 text-5xl font-bold tracking-tight text-gray-900">
+        <h2 className="mb-4 text-[2rem] sm:text-[3.25rem] font-bold tracking-tight text-gray-900">
           Celebrating our own
         </h2>
         <p className="text-base leading-relaxed text-gray-500">
-          Birthdays, weddings, new arrivals — we mark every milestone
+          Birthdays, weddings, new arrivals we mark every milestone
           <br />
           together as one community.
         </p>

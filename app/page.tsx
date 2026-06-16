@@ -11,6 +11,7 @@ import HeroSection from '@/components/majors/home/heroSection/HeroSection';
 import AboutAssociation from '@/components/majors/home/aboutUsSection/AboutUs';
 import UpcomingEvents from '@/components/majors/home/upcomingEvents/UpcomingEvents';
 import Footer from '@/components/footer/Footer';
+import StoriesSection from '@/components/majors/home/storiesSection/StoriesSection';
 
 export default function HomePage() {
   const router = useRouter();
@@ -31,7 +32,8 @@ export default function HomePage() {
         <AboutAssociation />
         <UpcomingEvents />
         <ActivitiesSection/>
-        <Gallery/>
+        <Gallery />
+        <StoriesSection />
       </main>
       <Footer/>
     </div>

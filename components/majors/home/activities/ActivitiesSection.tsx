@@ -39,22 +39,22 @@ export default function ActivitiesSection() {
         <div className="grid grid-cols-1 gap-5 xl:gap-10 lg:grid-cols-[400px_1fr]">
           {/* Left Content */}
           <div>
-            <SectionHeading title="ACTIVITIES" className="text-[14px] mb-0"/>
+            <SectionHeading title="ACTIVITIES" className="text-xs md:text-[18px] mb-0"/>
 
-            <h2 className="mt-5 text-[48px] leading-[0.95] font-light tracking-[-3px] text-[#5F8FE8] lg:whitespace-nowrap">
+            <h2 className="mt-5 text-[2rem] sm:text-[3.25rem] leading-[0.95] font-light tracking-[-3px] text-[#5F8FE8] lg:whitespace-nowrap">
               What we do{" "}
-              <ItalicTitle title="Together" colorClass={`text-[#1260ad] text-[48px]`}  />
+              <ItalicTitle title="Together" colorClass={`text-[#1260ad] text-[2rem] sm:text-[3.25rem]`}  />
             </h2>
 
-            <p className="mt-10 max-w-[500px] text-[19px] leading-[1.9] text-[#5F5F5F]">
+            <p className="mt-6 max-w-[500px] text-[19px] leading-[1.9] text-[#5F5F5F]">
               Reunions, interviews, and annual meetings keep our community
               active and engaged year-round.
             </p>
           </div>
 
           {/* Right Menu */}
-          <div className="flex items-start justify-center pt-8 lg:pt-13 w-full">
-            <div className="flex flex-wrap items-center lg:justify-end gap-8 text-[17px] font-medium text-[#A97408] w-full">
+          <div className="flex items-start justify-center pt-4 lg:pt-13 w-full">
+            <div className="flex flex-wrap items-center lg:justify-end gap-4 md:gap-8 text-[17px] font-medium text-[#A97408] w-full">
               <span>- Reunion Schedule</span>
               <span>- Interviews</span>
               <span>- Annual Meetings</span>

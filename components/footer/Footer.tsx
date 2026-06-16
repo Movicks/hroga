@@ -69,7 +69,7 @@ export default function Footer() {
         <div className="flex flex-col lg:flex-row gap-8 w-full">
 
           {/* ── Brand column ── */}
-          <div className="w-full lg:max-w-[25rem] flex flex-col gap-4">
+          <div className="w-full lg:max-w-[25rem] flex flex-col md:flex-row md:items-center lg:flex-col lg:justify-start lg:items-start gap-4">
             {/* HROGA logo Here*/}
             <div className="w-[110px]">
               <svg viewBox="0 0 120 140" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full">
@@ -103,15 +103,17 @@ export default function Footer() {
               </svg>
             </div>
 
-            {/* Org name */}
-            <h2 className="text-[18px] mt-2 font-semibold leading-snug text-white/80 font-serif">
-              Holy Rosary Old Girls Association
-            </h2>
+            <div className="flex flex-col gap-4">
+              {/* Org name */}
+              <h2 className="text-[18px] mt-2 font-semibold leading-snug text-white/80 font-serif">
+                Holy Rosary Old Girls Association
+              </h2>
 
-            {/* Tagline */}
-            <p className="max-w-[270px] text-[13.5px] leading-relaxed text-[#7d8fa3]">
-              A sisterhood that endures celebrating the women Holy Rosary shaped and the lives they continue to build.
-            </p>
+              {/* Tagline */}
+              <p className="max-w-[270px] text-[13.5px] leading-relaxed text-[#7d8fa3]">
+                A sisterhood that endures celebrating the women Holy Rosary shaped and the lives they continue to build.
+              </p>
+            </div>
           </div>
 
           <div className="mt-6 lg:mt-15 grid grid-cols-1 md:grid-cols-3 gap-10 w-full">

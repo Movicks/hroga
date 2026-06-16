@@ -11,7 +11,7 @@ const ItalicTitle: React.FC<GalleryTitleProps> = ({
 }) => {
   return (
     <span
-      className={`${colorClass} text-[4rem] italic font-normal leading-none font-serif`}
+      className={`${colorClass} italic font-normal leading-none font-serif`}
     >
       {title}
     </span>
