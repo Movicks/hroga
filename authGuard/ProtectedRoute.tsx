@@ -53,8 +53,10 @@ export default function ProtectedRoute({ children, allowedRoles }: ProtectedRout
 
   if (!isHydrated || loading) {
     return (
-      <div className="flex items-center justify-center min-h-screen">
+      <div className="flex flex-col items-center justify-center min-h-screen">
+        <div className="loading-spinner"/>
         <div className="text-xl">Loading...</div>
+        <div className="text-sm text-slate-500">Please wait while we verify your identity.</div>
       </div>
     );
   }

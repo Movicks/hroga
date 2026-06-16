@@ -3,6 +3,7 @@
 import { usePathname } from 'next/navigation';
 import { useAppSelector } from '../../redux/hooks';
 import Searchbar from '../reusables/Searchbar';
+import { BellDotIcon } from 'lucide-react';
 
 interface AdminLayoutTopbarProps {
   onMenuClick: () => void;
@@ -19,6 +20,8 @@ export default function AdminLayoutTopbar({ onMenuClick }: AdminLayoutTopbarProp
     '/admin': { label: 'Admin dashboard', title: `Welcome back, ${user?.firstName || 'Admin'}` },
     '/admin/activities': { label: 'Activities', title: 'Manage activities' },
     '/admin/gallery': { label: 'Gallery', title: 'Gallery management' },
+    '/admin/upcomingevents': { label: 'Events', title: ' Upcoming Event Management' },
+    '/admin/users': { label: 'Users', title: 'User management' },
   };
 
   const currentRoute = routeMeta[pathname] || {
@@ -56,36 +59,13 @@ export default function AdminLayoutTopbar({ onMenuClick }: AdminLayoutTopbarProp
             </div>
           </div>
           
-          <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between gap-6 w-full max-w-[40rem]">
+          <div className="flex gap-4 items-center justify-end lg:gap-6 w-full max-w-[40rem]">
             <Searchbar />
-
-            <div className="hidden min-w-[15rem] md:flex items-center justify-start gap-4 rounded-2xl border border-slate-200 bg-white px-4 py-3 shadow-sm sm:justify-end">
-                <div className="flex items-center gap-3 w-full">
-                    <div className="flex h-11 w-11 items-center justify-center rounded-full bg-slate-900 text-sm font-semibold text-white">
-                        {initials}
-                    </div>
-                    <div>
-                        <p className="text-sm font-semibold text-slate-900">{fullName}</p>
-                        <p className="text-xs uppercase tracking-[0.25em] text-slate-500">{user?.role || 'admin'}</p>
-                    </div>
-                </div>
-            </div>
+            <button className='relative flex items-center justify-center bg-black text-white rounded-xl min-w-13 h-12 border border-slate-200 shadow-sm'>
+                <BellDotIcon size={30}/>
+                <span className='absolute right-0 top-0 min-w-7 h-4 text-xs font-medium bg-red-500 rounded-full'>12</span>
+            </button> 
           </div>
-          
-          {/* <div className="hidden items-center gap-3 sm:flex">
-            <button
-              type="button"
-              className="rounded-2xl border border-slate-200 px-4 py-2 text-sm font-medium text-slate-600 transition-colors hover:bg-slate-50"
-            >
-              Export
-            </button>
-            <button
-              type="button"
-              className="rounded-2xl bg-primary px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-primary/90"
-            >
-              New Update
-            </button>
-          </div> */}
         </div>
 
         

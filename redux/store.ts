@@ -3,6 +3,7 @@ import authReducer from './features/auth/authSlice';
 import activitiesReducer from './features/activities/activitiesSlice';
 import galleryReducer from './features/gallery/gallerySlice';
 import eventsReducer from './features/events/eventsSlice';
+import usersReducer from './features/users/usersSlice';
 import socketMiddleware from './middleware/socketMiddleware';
 
 export const makeStore = () => {
@@ -12,6 +13,7 @@ export const makeStore = () => {
       activities: activitiesReducer,
       gallery: galleryReducer,
       events: eventsReducer,
+      users: usersReducer,
     },
     middleware: (getDefaultMiddleware) =>
       getDefaultMiddleware().concat(socketMiddleware),

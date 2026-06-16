@@ -1,5 +1,6 @@
 import Link from "next/link";
 import SectionHeading from "../reusables/SectionHeading";
+import Image from "next/image";
 
 const communityLinks = [
   { label: "About Us", href: "/about" },
@@ -65,42 +66,14 @@ export default function Footer() {
   return (
     <footer className="w-full bg-[#0d1726] text-white">
       {/* ── Upper section ── */}
-      <div className="mx-auto max-w-7xl px-4 lg:px-20 pt-16 pb-8">
+      <div className="mx-auto max-w-7xl px-4 lg:px-20 pt-8 pb-4">
         <div className="flex flex-col lg:flex-row gap-8 w-full">
 
           {/* ── Brand column ── */}
           <div className="w-full lg:max-w-[25rem] flex flex-col md:flex-row md:items-center lg:flex-col lg:justify-start lg:items-start gap-4">
             {/* HROGA logo Here*/}
-            <div className="w-[110px]">
-              <svg viewBox="0 0 120 140" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full">
-                {/* Outer shield */}
-                <path
-                  d="M60 4L112 24V82Q112 120 60 136Q8 120 8 82V24Z"
-                  fill="rgba(255,255,255,0.07)"
-                  stroke="rgba(255,255,255,0.45)"
-                  strokeWidth="2.5"
-                />
-                {/* Inner shield */}
-                <path
-                  d="M60 13L103 30V82Q103 113 60 127Q17 113 17 82V30Z"
-                  fill="rgba(255,255,255,0.04)"
-                  stroke="rgba(255,255,255,0.25)"
-                  strokeWidth="1.5"
-                />
-                {/* Torch stick */}
-                <line x1="60" y1="14" x2="60" y2="36" stroke="rgba(255,255,255,0.7)" strokeWidth="2" strokeLinecap="round"/>
-                {/* Torch flame */}
-                <ellipse cx="60" cy="11" rx="4" ry="5" fill="rgba(255,255,255,0.7)" />
-                {/* HROGA */}
-                <text x="60" y="54" textAnchor="middle" fill="rgba(255,255,255,0.82)" fontSize="11" fontWeight="700" fontFamily="serif" letterSpacing="2.5">HROGA</text>
-                {/* P.H. */}
-                <text x="60" y="80" textAnchor="middle" fill="rgba(255,255,255,0.85)" fontSize="18" fontWeight="800" fontFamily="serif">P.H.</text>
-                {/* Bottom curved text */}
-                <path id="arc" d="M22 105 Q60 128 98 105" fill="none" />
-                <text fontSize="7.5" fill="rgba(255,255,255,0.5)" fontFamily="sans-serif" letterSpacing="2">
-                  <textPath href="#arc" startOffset="50%" textAnchor="middle">TRUTH &amp; SERVICE</textPath>
-                </text>
-              </svg>
+            <div className="">
+              <Image src="/images/MaskLogo.svg" alt="HROGA" width={110} height={50} />
             </div>
 
             <div className="flex flex-col gap-4">

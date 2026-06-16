@@ -60,7 +60,7 @@ export default function HomeTopbar() {
       <div className={`container flex items-center justify-between gap-6 transform duration-300 ${scrolled ? 'bg-white px-4 lg:px-8 rounded-full' : ''}`}>
         {/* Logo */}
         <Link href="/" className="text-2xl font-bold text-secondary">
-          <Image src="/images/HROGA_LOGO2.png" className={`transform duration-300 ${scrolled ? 'w-[3rem] max-h-[3.2rem]' : 'w-[3.5rem] max-h-[3.7rem]'}`}  alt="HROGA" width={100} height={100} loading="eager" />
+          <Image src="/images/MaskLogo.svg" className={`transform duration-300 ${scrolled ? 'w-[3rem] max-h-[3.2rem]' : 'w-[3.5rem] max-h-[3.7rem]'}`}  alt="HROGA" width={100} height={100} loading="eager" />
         </Link>
 
         <section className={`hidden md:flex gap-15 xl:gap-4 xl:w-[55%] pl-8 justify-between h-full py-2 rounded-full overflow-hidden transform duration-300 ${scrolled ? 'bg-white' : 'bg-[#f3f9d2] pr-4'}`}>
