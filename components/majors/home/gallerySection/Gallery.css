@@ -22,8 +22,8 @@
 .gallery-title {
   display: flex;
   align-items: center;
-  gap: 12px;
-  margin-bottom: 28px;
+  gap: 8px;
+  margin-bottom: 15px;
 }
 
 /* .gallery-title-orange {

@@ -14,6 +14,7 @@ const navItems = [
   { name: 'Dashboard', href: '/admin' },
   { name: 'Activities', href: '/admin/activities' },
   { name: 'Gallery', href: '/admin/gallery' },
+  { name: 'Upcoming Events', href: '/admin/upcomingevents' },
 ];
 
 export default function AdminNavbar({ isOpen, onClose }: AdminNavbarProps) {

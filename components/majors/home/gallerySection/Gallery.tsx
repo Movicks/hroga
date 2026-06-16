@@ -1,36 +1,41 @@
 'use client';
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Image from "next/image";
 import "./Gallery.css";
-import { galleryData } from "./GalleryData";
 import ItalicTitle from "@/components/reusables/ItalicTitle";
 import SectionHeading from "@/components/reusables/SectionHeading";
-
+import { useAppDispatch, useAppSelector } from "@/redux/hooks";
+import { fetchGallery } from "@/redux/features/gallery/gallerySlice";
 
 const filters = [
   "All",
   "Reunion",
   "Weddings",
   "Birthdays",
-  "Charity",
+  "Charity drives",
   "School Projects",
   "Visitations",
 ];
 
 const Gallery = () => {
   const [activeFilter, setActiveFilter] = useState("All");
+  const dispatch = useAppDispatch();
+  const { gallery, loading } = useAppSelector((state) => state.gallery);
+
+  useEffect(() => {
+    dispatch(fetchGallery());
+  }, [dispatch]);
 
   const filteredGalleryData =
     activeFilter === "All"
-      ? galleryData
-      : galleryData.filter((item) => item.category === activeFilter);
+      ? gallery
+      : gallery.filter((item) => item.category === activeFilter);
 
   return (
     <section className="gallery-section bg-[#e3f4ff] px-4 lg:px-[5rem] xl:px-[13rem] py-[3rem]">
       <div className="gallery-container">
-              {/* <span className="gallery-label">GALLERY</span> */}
-        <SectionHeading title="GALLERY" className="text-xs md:text-[18px] mb-[18px] !text-[#1260ad]"/>
+        <SectionHeading title="GALLERY" className="text-xs md:text-[18px] mb-[8px] !text-[#1260ad]"/>
 
         <h2 className="gallery-title text-[2rem] sm:text-[3.25rem]">
           <ItalicTitle title="Memories" colorClass="text-[#f8a44a] text-[2rem] sm:text-[3.25rem]"/>
@@ -56,11 +61,24 @@ const Gallery = () => {
         </div>
 
         <div className="gallery-grid">
-          {filteredGalleryData.map((item) => (
-            <div key={item.id} className="gallery-card">
-              <Image src={item.image} alt={item.category} width={300} height={200} loading="eager"/>
-            </div>
-          ))}
+          {loading && filteredGalleryData.length === 0 ? (
+            <div className="col-span-full py-12 text-center text-slate-500">Loading gallery...</div>
+          ) : filteredGalleryData.length === 0 ? (
+            <div className="col-span-full py-12 text-center text-slate-500">No gallery items found.</div>
+          ) : (
+            filteredGalleryData.map((item) => (
+              <div key={item._id} className="gallery-card">
+                <Image
+                  src={item.image}
+                  alt={item.category}
+                  width={300}
+                  height={200}
+                  loading="eager"
+                  unoptimized
+                />
+              </div>
+            ))
+          )}
         </div>
       </div>
     </section>

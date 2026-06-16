@@ -1,11 +1,20 @@
 import { configureStore } from '@reduxjs/toolkit';
 import authReducer from './features/auth/authSlice';
+import activitiesReducer from './features/activities/activitiesSlice';
+import galleryReducer from './features/gallery/gallerySlice';
+import eventsReducer from './features/events/eventsSlice';
+import socketMiddleware from './middleware/socketMiddleware';
 
 export const makeStore = () => {
   return configureStore({
     reducer: {
       auth: authReducer,
+      activities: activitiesReducer,
+      gallery: galleryReducer,
+      events: eventsReducer,
     },
+    middleware: (getDefaultMiddleware) =>
+      getDefaultMiddleware().concat(socketMiddleware),
   });
 };
 

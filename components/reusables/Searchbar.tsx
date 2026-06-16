@@ -4,7 +4,7 @@ import { useState } from 'react';
 import { SearchIcon } from "lucide-react";
 
 export default function Searchbar() {
-  const [isOpen, setIsOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState(true);
 
   return (
     <div
@@ -20,7 +20,7 @@ export default function Searchbar() {
         <input
           type="text"
           placeholder="Search activities, gallery items, and admin content"
-          className="w-64 bg-transparent text-sm text-slate-700 outline-none placeholder:text-slate-400 sm:w-80"
+          className="w-full max-w-64 bg-transparent text-sm text-slate-700 outline-none placeholder:text-slate-400 sm:w-80"
         />
       </div>
 
