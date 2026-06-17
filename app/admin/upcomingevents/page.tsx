@@ -83,7 +83,7 @@ export default function AdminUpcomingEvents() {
 
   return (
     <section className="space-y-6">
-      <div className="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm flex justify-between items-center">
+      <div className="rounded-3xl border border-slate-200 bg-white p-6 gap-4 shadow-sm flex flex-col md:flex-row justify-between items-center">
         <div>
           <p className="text-sm uppercase tracking-[0.3em] text-slate-500">Upcoming Events</p>
           <h1 className="mt-3 text-3xl font-semibold text-slate-900">Events Management</h1>
@@ -93,7 +93,7 @@ export default function AdminUpcomingEvents() {
         </div>
         <button
           onClick={() => handleOpenModal()}
-          className="flex items-center gap-2 bg-primary text-white px-6 py-3 rounded-full hover:bg-primary/90 transition-all shadow-md"
+          className="flex items-center gap-2 bg-[#020618] text-white px-6 py-3 rounded-xl hover:bg-[#020618]/70 transition-all shadow-xs"
         >
           <Plus size={20} />
           <span>Add Event</span>
