@@ -1,0 +1,17 @@
+import { type Config } from "shadcn";
+
+export default {
+  style: "default",
+  rsc: false,
+  tsx: true,
+  tailwind: {
+    config: "tailwind.config.ts",
+    css: "app/globals.css",
+    baseColor: "slate",
+    cssVariables: true,
+  },
+  aliases: {
+    components: "@/components",
+    utils: "@/lib/utils",
+  },
+} satisfies Config;
