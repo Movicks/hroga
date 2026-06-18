@@ -15,17 +15,30 @@ interface ActivitiesState {
   activities: Activity[];
   loading: boolean;
   error: string | null;
+  fetchedAt: number | null; // Timestamp when we last fetched
 }
+
+const CACHE_TTL = 5 * 60 * 1000; // 5 minutes
 
 const initialState: ActivitiesState = {
   activities: [],
   loading: false,
   error: null,
+  fetchedAt: null,
 };
 
 export const fetchActivities = createAsyncThunk(
   'activities/fetchActivities',
-  async (_, { rejectWithValue }) => {
+  async (params: { force?: boolean } | undefined, { rejectWithValue, getState }) => {
+    // Check if cache is still fresh, unless forced
+    const state = getState() as any;
+    if (!params?.force && 
+        state.activities.fetchedAt && 
+        Date.now() - state.activities.fetchedAt < CACHE_TTL && 
+        state.activities.activities.length > 0) {
+      return state.activities.activities; // Return cached data
+    }
+    
     try {
       const response = await api.get('/activities');
       return response.data;
@@ -88,6 +101,7 @@ const activitiesSlice = createSlice({
       .addCase(fetchActivities.fulfilled, (state, action: PayloadAction<Activity[]>) => {
         state.loading = false;
         state.activities = action.payload;
+        state.fetchedAt = Date.now(); // Update cache timestamp
       })
       .addCase(fetchActivities.rejected, (state, action) => {
         state.loading = false;
@@ -95,15 +109,18 @@ const activitiesSlice = createSlice({
       })
       .addCase(createActivity.fulfilled, (state, action: PayloadAction<Activity>) => {
         state.activities.unshift(action.payload);
+        state.fetchedAt = Date.now();
       })
       .addCase(updateActivity.fulfilled, (state, action: PayloadAction<Activity>) => {
         const index = state.activities.findIndex((a) => a._id === action.payload._id);
         if (index !== -1) {
           state.activities[index] = action.payload;
         }
+        state.fetchedAt = Date.now();
       })
       .addCase(deleteActivity.fulfilled, (state, action: PayloadAction<string>) => {
         state.activities = state.activities.filter((a) => a._id !== action.payload);
+        state.fetchedAt = Date.now();
       });
   },
 });

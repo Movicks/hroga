@@ -13,17 +13,30 @@ interface GalleryState {
   gallery: GalleryItem[];
   loading: boolean;
   error: string | null;
+  fetchedAt: number | null; // Timestamp when we last fetched
 }
+
+const CACHE_TTL = 5 * 60 * 1000; // 5 minutes
 
 const initialState: GalleryState = {
   gallery: [],
   loading: false,
   error: null,
+  fetchedAt: null,
 };
 
 export const fetchGallery = createAsyncThunk(
   'gallery/fetchGallery',
-  async (_, { rejectWithValue }) => {
+  async (params: { force?: boolean } | undefined, { rejectWithValue, getState }) => {
+    // Check if cache is still fresh, unless forced
+    const state = getState() as any;
+    if (!params?.force && 
+        state.gallery.fetchedAt && 
+        Date.now() - state.gallery.fetchedAt < CACHE_TTL && 
+        state.gallery.gallery.length > 0) {
+      return state.gallery.gallery; // Return cached data
+    }
+    
     try {
       const response = await api.get('/gallery');
       return response.data;
@@ -90,6 +103,7 @@ const gallerySlice = createSlice({
       .addCase(fetchGallery.fulfilled, (state, action: PayloadAction<GalleryItem[]>) => {
         state.loading = false;
         state.gallery = action.payload;
+        state.fetchedAt = Date.now(); // Update cache timestamp
       })
       .addCase(fetchGallery.rejected, (state, action) => {
         state.loading = false;
@@ -97,15 +111,18 @@ const gallerySlice = createSlice({
       })
       .addCase(createGalleryItem.fulfilled, (state, action: PayloadAction<GalleryItem>) => {
         state.gallery.unshift(action.payload);
+        state.fetchedAt = Date.now();
       })
       .addCase(updateGalleryItem.fulfilled, (state, action: PayloadAction<GalleryItem>) => {
         const index = state.gallery.findIndex((item) => item._id === action.payload._id);
         if (index !== -1) {
           state.gallery[index] = action.payload;
         }
+        state.fetchedAt = Date.now();
       })
       .addCase(deleteGalleryItem.fulfilled, (state, action: PayloadAction<string>) => {
         state.gallery = state.gallery.filter((item) => item._id !== action.payload);
+        state.fetchedAt = Date.now();
       });
   },
 });

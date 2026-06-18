@@ -17,17 +17,30 @@ interface EventsState {
   events: Event[];
   loading: boolean;
   error: string | null;
+  fetchedAt: number | null; // Timestamp when we last fetched
 }
+
+const CACHE_TTL = 5 * 60 * 1000; // 5 minutes
 
 const initialState: EventsState = {
   events: [],
   loading: false,
   error: null,
+  fetchedAt: null,
 };
 
 export const fetchEvents = createAsyncThunk(
   'events/fetchEvents',
-  async (_, { rejectWithValue }) => {
+  async (params: { force?: boolean } | undefined, { rejectWithValue, getState }) => {
+    // Check if cache is still fresh, unless forced
+    const state = getState() as any;
+    if (!params?.force && 
+        state.events.fetchedAt && 
+        Date.now() - state.events.fetchedAt < CACHE_TTL && 
+        state.events.events.length > 0) {
+      return state.events.events; // Return cached data
+    }
+    
     try {
       const response = await api.get('/events');
       return response.data;
@@ -90,6 +103,7 @@ const eventsSlice = createSlice({
       .addCase(fetchEvents.fulfilled, (state, action: PayloadAction<Event[]>) => {
         state.loading = false;
         state.events = action.payload;
+        state.fetchedAt = Date.now(); // Update cache timestamp
       })
       .addCase(fetchEvents.rejected, (state, action) => {
         state.loading = false;
@@ -97,15 +111,18 @@ const eventsSlice = createSlice({
       })
       .addCase(createEvent.fulfilled, (state, action: PayloadAction<Event>) => {
         state.events.unshift(action.payload);
+        state.fetchedAt = Date.now();
       })
       .addCase(updateEvent.fulfilled, (state, action: PayloadAction<Event>) => {
         const index = state.events.findIndex((e) => e._id === action.payload._id);
         if (index !== -1) {
           state.events[index] = action.payload;
         }
+        state.fetchedAt = Date.now();
       })
       .addCase(deleteEvent.fulfilled, (state, action: PayloadAction<string>) => {
         state.events = state.events.filter((e) => e._id !== action.payload);
+        state.fetchedAt = Date.now();
       });
   },
 });

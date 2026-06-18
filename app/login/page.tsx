@@ -38,6 +38,7 @@ export default function LoginPage() {
                 onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                 className="w-full p-2 border-2 border-secondary/30 rounded-md focus:outline-none focus:border-primary"
                 required
+                autoComplete="email"
               />
             </div>
             <div>
@@ -48,6 +49,7 @@ export default function LoginPage() {
                 onChange={(e) => setFormData({ ...formData, password: e.target.value })}
                 className="w-full p-2 border-2 border-secondary/30 rounded-md focus:outline-none focus:border-primary"
                 required
+                autoComplete="current-password"
               />
             </div>
             <button

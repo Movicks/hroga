@@ -17,6 +17,7 @@ const navItems = [
   { name: 'Gallery', href: '/admin/gallery' },
   { name: 'Upcoming Events', href: '/admin/upcomingevents' },
   { name: 'All Users', href: '/admin/users' },
+  { name: 'Audits', href: '/admin/audits' },
 ];
 
 export default function AdminNavbar({ isOpen, onClose }: AdminNavbarProps) {

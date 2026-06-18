@@ -28,17 +28,30 @@ interface UsersState {
   users: User[];
   loading: boolean;
   error: string | null;
+  fetchedAt: number | null; // Timestamp when we last fetched
 }
+
+const CACHE_TTL = 5 * 60 * 1000; // 5 minutes
 
 const initialState: UsersState = {
   users: [],
   loading: false,
   error: null,
+  fetchedAt: null,
 };
 
 export const fetchUsers = createAsyncThunk(
   'users/fetchUsers',
-  async (_, { rejectWithValue }) => {
+  async (params: { force?: boolean } | undefined, { rejectWithValue, getState }) => {
+    // Check if cache is still fresh, unless forced
+    const state = getState() as any;
+    if (!params?.force && 
+        state.users.fetchedAt && 
+        Date.now() - state.users.fetchedAt < CACHE_TTL && 
+        state.users.users.length > 0) {
+      return state.users.users; // Return cached data
+    }
+    
     try {
       const response = await api.get('/auth/admin/users');
       return response.data;
@@ -101,6 +114,7 @@ const usersSlice = createSlice({
       .addCase(fetchUsers.fulfilled, (state, action: PayloadAction<User[]>) => {
         state.loading = false;
         state.users = action.payload;
+        state.fetchedAt = Date.now(); // Update cache timestamp
       })
       .addCase(fetchUsers.rejected, (state, action) => {
         state.loading = false;
@@ -111,15 +125,18 @@ const usersSlice = createSlice({
         if (index !== -1) {
           state.users[index] = action.payload;
         }
+        state.fetchedAt = Date.now();
       })
       .addCase(unsuspendUser.fulfilled, (state, action: PayloadAction<User>) => {
         const index = state.users.findIndex(u => u.id === action.payload.id);
         if (index !== -1) {
           state.users[index] = action.payload;
         }
+        state.fetchedAt = Date.now();
       })
       .addCase(deleteUser.fulfilled, (state, action: PayloadAction<string>) => {
         state.users = state.users.filter(u => u.id !== action.payload);
+        state.fetchedAt = Date.now();
       });
   },
 });

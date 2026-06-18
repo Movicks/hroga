@@ -32,10 +32,25 @@ interface AuthState {
   error: string | null;
 }
 
+const getInitialToken = () => {
+  if (typeof window !== 'undefined') {
+    return localStorage.getItem('accessToken');
+  }
+  return null;
+};
+
+const getInitialUser = () => {
+  if (typeof window !== 'undefined') {
+    const user = localStorage.getItem('user');
+    return user ? JSON.parse(user) : null;
+  }
+  return null;
+};
+
 const initialState: AuthState = {
-  user: null,
-  accessToken: null,
-  isAuthenticated: false,
+  user: getInitialUser(),
+  accessToken: getInitialToken(),
+  isAuthenticated: !!getInitialToken(),
   loading: false,
   error: null,
 };
@@ -95,15 +110,17 @@ const authSlice = createSlice({
   name: 'auth',
   initialState,
   reducers: {
-    initializeAuth: (state, action: PayloadAction<string | null>) => {
-      state.accessToken = action.payload;
-      state.isAuthenticated = !!action.payload;
+    initializeAuth: (state, action: PayloadAction<{ token: string | null; user: User | null }>) => {
+      state.accessToken = action.payload.token;
+      state.isAuthenticated = !!action.payload.token;
+      state.user = action.payload.user;
     },
     logout: (state) => {
       state.user = null;
       state.accessToken = null;
       state.isAuthenticated = false;
       localStorage.removeItem('accessToken');
+      localStorage.removeItem('user');
     },
     clearError: (state) => {
       state.error = null;
@@ -120,6 +137,7 @@ const authSlice = createSlice({
         state.user = action.payload.user;
         state.accessToken = action.payload.accessToken;
         state.isAuthenticated = true;
+        localStorage.setItem('user', JSON.stringify(action.payload.user));
       })
       .addCase(login.rejected, (state, action) => {
         state.loading = false;
@@ -134,6 +152,7 @@ const authSlice = createSlice({
         state.user = action.payload.user;
         state.accessToken = action.payload.accessToken;
         state.isAuthenticated = true;
+        localStorage.setItem('user', JSON.stringify(action.payload.user));
       })
       .addCase(signupAlumni.rejected, (state, action) => {
         state.loading = false;
@@ -148,6 +167,7 @@ const authSlice = createSlice({
         state.user = action.payload.user;
         state.accessToken = action.payload.accessToken;
         state.isAuthenticated = true;
+        localStorage.setItem('user', JSON.stringify(action.payload.user));
       })
       .addCase(registerAdmin.rejected, (state, action) => {
         state.loading = false;
@@ -161,12 +181,12 @@ const authSlice = createSlice({
         state.loading = false;
         state.user = action.payload.user;
         state.isAuthenticated = true;
+        localStorage.setItem('user', JSON.stringify(action.payload.user));
       })
       .addCase(fetchCurrentUser.rejected, (state, action) => {
         state.loading = false;
-        state.isAuthenticated = false;
         state.error = action.payload as string;
-        localStorage.removeItem('accessToken');
+        // Don't immediately log out - keep user state until we confirm token is invalid
       });
   },
 });
