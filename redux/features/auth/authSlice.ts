@@ -110,9 +110,10 @@ const authSlice = createSlice({
   name: 'auth',
   initialState,
   reducers: {
-    initializeAuth: (state, action: PayloadAction<string | null>) => {
-      state.accessToken = action.payload;
-      state.isAuthenticated = !!action.payload;
+    initializeAuth: (state, action: PayloadAction<{ token: string | null; user: User | null }>) => {
+      state.accessToken = action.payload.token;
+      state.isAuthenticated = !!action.payload.token;
+      state.user = action.payload.user;
     },
     logout: (state) => {
       state.user = null;
@@ -184,10 +185,8 @@ const authSlice = createSlice({
       })
       .addCase(fetchCurrentUser.rejected, (state, action) => {
         state.loading = false;
-        state.isAuthenticated = false;
         state.error = action.payload as string;
-        localStorage.removeItem('accessToken');
-        localStorage.removeItem('user');
+        // Don't immediately log out - keep user state until we confirm token is invalid
       });
   },
 });

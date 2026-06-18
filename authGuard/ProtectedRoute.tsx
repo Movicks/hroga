@@ -3,65 +3,133 @@
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { useAppDispatch, useAppSelector } from '../redux/hooks';
-import { fetchCurrentUser, initializeAuth } from '../redux/features/auth/authSlice';
+import {
+  fetchCurrentUser,
+  initializeAuth,
+} from '../redux/features/auth/authSlice';
 
 interface ProtectedRouteProps {
   children: React.ReactNode;
   allowedRoles?: ('admin' | 'alumni')[];
 }
 
-export default function ProtectedRoute({ children, allowedRoles }: ProtectedRouteProps) {
+export default function ProtectedRoute({
+  children,
+  allowedRoles,
+}: ProtectedRouteProps) {
   const router = useRouter();
   const dispatch = useAppDispatch();
-  const [isHydrated, setIsHydrated] = useState(false);
-  const { isAuthenticated, user, loading } = useAppSelector((state) => state.auth);
 
+  const [isHydrated, setIsHydrated] = useState(false);
+  const [authChecked, setAuthChecked] = useState(false);
+
+  const { isAuthenticated, user, loading } = useAppSelector(
+    (state) => state.auth
+  );
+
+  // Initialize auth from localStorage
   useEffect(() => {
-    const token = localStorage.getItem('accessToken');
-    dispatch(initializeAuth(token));
-    setIsHydrated(true);
+    const initialize = async () => {
+      const token = localStorage.getItem('accessToken');
+      const storedUser = localStorage.getItem('user');
+
+      dispatch(
+        initializeAuth({
+          token,
+          user: storedUser ? JSON.parse(storedUser) : null,
+        })
+      );
+
+      setIsHydrated(true);
+    };
+
+    initialize();
   }, [dispatch]);
 
+  // Fetch user if authenticated but user data is missing
   useEffect(() => {
-    if (!isHydrated) {
-      return;
-    }
+    const verifyUser = async () => {
+      if (!isHydrated) return;
 
+      try {
+        if (isAuthenticated && !user) {
+          await dispatch(fetchCurrentUser()).unwrap();
+        }
+      } catch (error) {
+        console.error('Failed to fetch current user:', error);
+      } finally {
+        setAuthChecked(true);
+      }
+    };
+
+    verifyUser();
+  }, [dispatch, isAuthenticated, user, isHydrated]);
+
+  // Handle redirects
+  useEffect(() => {
+    if (!isHydrated || !authChecked || loading) return;
+
+    // Not logged in
     if (!isAuthenticated) {
-      router.push('/login');
+      router.replace('/login');
       return;
     }
 
-    if (!user) {
-      dispatch(fetchCurrentUser());
-    }
-  }, [isAuthenticated, user, dispatch, router, isHydrated]);
-
-  useEffect(() => {
-    if (!isHydrated) {
+    // No role restriction
+    if (!allowedRoles || !user) {
       return;
     }
 
-    if (user && allowedRoles && !allowedRoles.includes(user.role)) {
-      if (user.role === 'admin') {
-        router.push('/admin');
-      } else {
-        router.push('/alumni');
+    // Wrong role
+    if (!allowedRoles.includes(user.role)) {
+      switch (user.role) {
+        case 'admin':
+          router.replace('/admin');
+          break;
+
+        case 'alumni':
+          router.replace('/alumni');
+          break;
+
+        default:
+          router.replace('/login');
       }
     }
-  }, [user, allowedRoles, router, isHydrated]);
+  }, [
+    isAuthenticated,
+    user,
+    allowedRoles,
+    router,
+    loading,
+    authChecked,
+    isHydrated,
+  ]);
 
-  if (!isHydrated || (loading && !user)) {
+  // Loading state
+  if (!isHydrated || loading || !authChecked) {
     return (
-      <div className="flex flex-col items-center justify-center min-h-screen">
-        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mb-4" />
-        <div className="text-xl font-medium text-slate-800">Verifying access...</div>
-        <div className="text-sm text-slate-500 mt-2">Please wait while we secure your session.</div>
+      <div className="flex min-h-screen flex-col items-center justify-center">
+        <div className="mb-4 h-12 w-12 animate-spin rounded-full border-b-2 border-blue-600" />
+        <h2 className="text-xl font-medium text-slate-800">
+          Verifying access...
+        </h2>
+        <p className="mt-2 text-sm text-slate-500">
+          Please wait while we secure your session.
+        </p>
       </div>
     );
   }
 
+  // Prevent rendering during redirect
   if (!isAuthenticated) {
+    return null;
+  }
+
+  if (
+    user &&
+    allowedRoles &&
+    !allowedRoles.includes(user.role)
+  ) {
     return null;
   }
 

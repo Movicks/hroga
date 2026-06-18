@@ -50,10 +50,14 @@ const getActionBadgeColor = (action: string) => {
 export default function AuditsPage() {
   const dispatch = useAppDispatch();
   const { audits, loading, error } = useAppSelector((state) => state.audits);
+  const { isAuthenticated, user, loading: authLoading } = useAppSelector((state) => state.auth);
 
   useEffect(() => {
-    dispatch(fetchAudits());
-  }, [dispatch]);
+    // Only fetch audits once authenticated and user is loaded
+    if (isAuthenticated && user) {
+      dispatch(fetchAudits());
+    }
+  }, [dispatch, isAuthenticated, user]);
 
   if (loading && audits.length === 0) {
     return (

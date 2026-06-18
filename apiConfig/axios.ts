@@ -22,8 +22,13 @@ api.interceptors.response.use(
   (response) => response,
   (error) => {
     if (error.response?.status === 401) {
+      // Only clear storage and redirect if it's an actual auth error (not just missing token)
       localStorage.removeItem('accessToken');
-      window.location.href = '/login';
+      localStorage.removeItem('user');
+      // Only redirect if we're not already on login
+      if (!window.location.pathname.includes('/login')) {
+        window.location.href = '/login';
+      }
     }
     return Promise.reject(error);
   }

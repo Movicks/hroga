@@ -131,6 +131,7 @@ export default function AlumniSignupPage() {
                   onChange={(e) => setFormData({ ...formData, firstName: e.target.value })}
                   className="w-full p-2 border-2 border-secondary/30 rounded-md focus:outline-none focus:border-primary"
                   required
+                  autoComplete="given-name"
                 />
               </div>
               <div>
@@ -150,6 +151,7 @@ export default function AlumniSignupPage() {
                   onChange={(e) => setFormData({ ...formData, lastName: e.target.value })}
                   className="w-full p-2 border-2 border-secondary/30 rounded-md focus:outline-none focus:border-primary"
                   required
+                  autoComplete="family-name"
                 />
               </div>
               <div>
@@ -171,16 +173,18 @@ export default function AlumniSignupPage() {
                 onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                 className="w-full p-2 border-2 border-secondary/30 rounded-md focus:outline-none focus:border-primary"
                 required
+                autoComplete="email"
               />
             </div>
             <div>
               <label className="block text-sm font-medium mb-1 text-secondary">Phone Number</label>
               <input
-                type="text"
+                type="tel"
                 value={formData.phoneNumber}
                 onChange={(e) => setFormData({ ...formData, phoneNumber: e.target.value })}
                 className="w-full p-2 border-2 border-secondary/30 rounded-md focus:outline-none focus:border-primary"
                 required
+                autoComplete="tel"
               />
             </div>
           </div>
@@ -197,6 +201,7 @@ export default function AlumniSignupPage() {
                 className="w-full p-2 border-2 border-secondary/30 rounded-md focus:outline-none focus:border-primary"
                 minLength={8}
                 required
+                autoComplete="new-password"
               />
             </div>
           </div>
