@@ -39,7 +39,7 @@ export default function HomeTopbar() {
   const navLinks: linkProps[] = [
     { name: "Home", href: "/" },
     { name: "About Us", href: "about" },
-    { name: "Contact Us", href: "" },
+    { name: "Contact Us", href: "contact_us" },
     { name: "Events", href: "" }
   ]
 
