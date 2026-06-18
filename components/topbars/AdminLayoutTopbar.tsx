@@ -22,6 +22,7 @@ export default function AdminLayoutTopbar({ onMenuClick }: AdminLayoutTopbarProp
     '/admin/gallery': { label: 'Gallery', title: 'Gallery management' },
     '/admin/upcomingevents': { label: 'Events', title: ' Upcoming Event Management' },
     '/admin/users': { label: 'All Users', title: 'Manage all registered users on the platform.' },
+    '/admin/audits': { label: 'Audits', title: 'Manage all audit logs.' },
   };
 
   const currentRoute = routeMeta[pathname] || {

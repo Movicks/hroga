@@ -51,12 +51,12 @@ export default function ProtectedRoute({ children, allowedRoles }: ProtectedRout
     }
   }, [user, allowedRoles, router, isHydrated]);
 
-  if (!isHydrated || loading) {
+  if (!isHydrated || (loading && !user)) {
     return (
       <div className="flex flex-col items-center justify-center min-h-screen">
-        <div className="loading-spinner"/>
-        <div className="text-xl">Loading...</div>
-        <div className="text-sm text-slate-500">Please wait while we verify your identity.</div>
+        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mb-4" />
+        <div className="text-xl font-medium text-slate-800">Verifying access...</div>
+        <div className="text-sm text-slate-500 mt-2">Please wait while we secure your session.</div>
       </div>
     );
   }
