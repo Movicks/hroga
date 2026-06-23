@@ -83,10 +83,10 @@ export default function GetToKnowUs() {
             {/* Mission */}
             <div className="w-full">
               <div className="mb-3">
-                <MissionIcon />
+                <Image src="/svgIcons/Eye_Frame.svg" alt="Mission Icon" width={66} height={66} />
               </div>
               <h3
-                className="text-xl font-bold mb-4"
+                className="text-xl font-semibold mb-4"
                 style={{ color: "#0D1B4B", fontFamily: "inherit" }}
               >
                 Our Mission
@@ -105,10 +105,10 @@ export default function GetToKnowUs() {
             {/* Vision */}
             <div>
               <div className="mb-3">
-                <VisionIcon />
+                <Image src="/svgIcons/Target_Frame.svg" alt="Vision Icon" width={56} height={56} />
               </div>
               <h3
-                className="text-xl font-bold mb-4"
+                className="text-xl font-semibold mb-4"
                 style={{ color: "#0D1B4B", fontFamily: "inherit" }}
               >
                 Our Vision
