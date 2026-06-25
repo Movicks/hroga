@@ -5,7 +5,7 @@ import Image from "next/image";
 export default function GetToKnowUs() {
   return (
     <section
-      className="w-full"
+      className="w-full px-4 lg:px-[6rem] xl:px-[12.5rem]"
     //   style={{ background: "linear-gradient(135deg, #fdf6ee 0%, #fdf0f0 100%)" }}
     >
       <div className="max-w-6xl mx-auto">
