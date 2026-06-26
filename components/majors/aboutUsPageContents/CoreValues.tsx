@@ -17,7 +17,7 @@ export default function CoreValues() {
               {coreValuesDummy.values.map((item) => (
                 <li
                   key={item.id}
-                  className="flex items-center gap-2 px-4 py-2"
+                  className="flex items-center gap-2 mr-4 py-2"
                 >
                   <span
                     className={`h-4 w-4 rounded-full bg-gradient-to-r ${item.color}`}
