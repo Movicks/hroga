@@ -5,6 +5,7 @@ import galleryReducer from './features/gallery/gallerySlice';
 import eventsReducer from './features/events/eventsSlice';
 import usersReducer from './features/users/usersSlice';
 import auditsReducer from './features/audits/auditsSlice';
+import donationsReducer from './features/donations/donationsSlice';
 import socketMiddleware from './middleware/socketMiddleware';
 
 export const makeStore = () => {
@@ -16,6 +17,7 @@ export const makeStore = () => {
       events: eventsReducer,
       users: usersReducer,
       audits: auditsReducer,
+      donations: donationsReducer,
     },
     middleware: (getDefaultMiddleware) =>
       getDefaultMiddleware().concat(socketMiddleware),
