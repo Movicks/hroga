@@ -31,6 +31,8 @@ const Gallery = () => {
     activeFilter === "All"
       ? gallery
       : gallery.filter((item) => item.category === activeFilter);
+  
+  console.log(filteredGalleryData)
 
   return (
     <section className="gallery-section bg-[#e3f4ff] px-4 lg:px-[5rem] xl:px-[13rem] py-[3rem]">

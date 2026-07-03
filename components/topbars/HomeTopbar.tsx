@@ -6,6 +6,7 @@ import { useEffect, useState } from 'react';
 import { useAppDispatch, useAppSelector } from '../../redux/hooks';
 import { logout } from '../../redux/features/auth/authSlice';
 import Image from 'next/image';
+import { X } from 'lucide-react';
 
 export default function HomeTopbar() {
   const router = useRouter();
@@ -63,7 +64,7 @@ export default function HomeTopbar() {
           <Image src="/images/MaskLogo.svg" className={`transform duration-300 ${scrolled ? 'w-[3rem] max-h-[3.2rem]' : 'w-[3.5rem] max-h-[3.7rem]'}`}  alt="HROGA" width={100} height={100} loading="eager" />
         </Link>
 
-        <section className={`hidden md:flex gap-15 xl:gap-4 xl:w-[55%] pl-8 justify-between h-full py-2 rounded-full overflow-hidden transform duration-300 ${scrolled ? 'bg-white' : 'bg-[#f3f9d2] pr-4'}`}>
+        <section className={`hidden md:flex gap-15 xl:gap-4 xl:w-[55%] pl-8 justify-between h-full py-2 rounded-full overflow-hidden transform duration-300 ${scrolled ? 'bg-white' : 'md:bg-[#f3f9d2] pr-4'}`}>
           {/* Navigation Links */}
           <nav className="hidden md:flex items-center gap-6">
             {navLinks.map((item, index) => (
@@ -108,7 +109,7 @@ export default function HomeTopbar() {
           aria-label="Open menu"
           aria-expanded={isMenuOpen}
           onClick={() => setIsMenuOpen(true)}
-          className="md:hidden flex h-11 w-11 items-center justify-center rounded-full bg-[#f3f9d2] shadow-md"
+          className="md:hidden flex h-11 w-11 items-center justify-center rounded-full md:bg-[#f3f9d2] md:shadow-md"
         >
           <span className="flex flex-col gap-1.5 px-4 py-1">
             <span className="block h-0.5 w-5 bg-gray-700" />
@@ -142,7 +143,7 @@ export default function HomeTopbar() {
                 onClick={() => setIsMenuOpen(false)}
                 className="flex h-10 w-10 items-center justify-center rounded-full bg-gray-100 text-2xl text-gray-700"
               >
-                x
+                <X size={25}/>
               </button>
             </div>
 
@@ -160,7 +161,7 @@ export default function HomeTopbar() {
             </nav>
           </div>
 
-          <div className="mt-8 flex flex-col gap-3 h-full max-h-[27rem] justify-end">
+          <div className="mt-8 flex flex-col gap-3 h-full max-h-[25rem] justify-end">
             {!isAuthenticated ? (
               <button
                 onClick={() => handleNavigate('/signup')}

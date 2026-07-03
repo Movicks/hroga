@@ -17,6 +17,8 @@ const navItems = [
   { name: 'Gallery', href: '/admin/gallery' },
   { name: 'Upcoming Events', href: '/admin/upcomingevents' },
   { name: 'All Users', href: '/admin/users' },
+  { name: 'Contact Messages', href: '/admin/contact_messages' },
+  { name: 'All Donations', href: '/admin/donations' },
   { name: 'Audits', href: '/admin/audits' },
 ];
 
@@ -62,7 +64,7 @@ export default function AdminNavbar({ isOpen, onClose }: AdminNavbarProps) {
 
         <Divider />
 
-        <nav className="mt-4 flex flex-1 flex-col gap-2">
+        <nav className="mt-4 flex flex-1 flex-col gap-2 max-h-[30rem] overflow-y-auto">
           {navItems.map((item) => {
             const isActive =
               item.href === '/admin' ? pathname === item.href : pathname.startsWith(item.href);

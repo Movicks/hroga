@@ -23,6 +23,7 @@ export default function AdminLayoutTopbar({ onMenuClick }: AdminLayoutTopbarProp
     '/admin/upcomingevents': { label: 'Events', title: ' Upcoming Event Management' },
     '/admin/users': { label: 'All Users', title: 'Manage all registered users on the platform.' },
     '/admin/contact_messages': { label: 'Inbox', title: 'Manage all contact requests.' },
+    '/admin/donations': {label: 'All Donations', title: 'Manage all donations.'},
     '/admin/audits': { label: 'Audits', title: 'Manage all audit logs.' },
   };
 
