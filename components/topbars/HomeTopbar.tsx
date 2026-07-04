@@ -28,7 +28,7 @@ export default function HomeTopbar() {
   }, []);
 
   // Don't show HomeTopbar on portal pages
-  if (pathname.startsWith('/admin') || pathname.startsWith('/alumni') || pathname.startsWith('/auth/signup') || pathname.startsWith('/auth/login')) {
+  if (pathname.startsWith('/admin') || pathname.startsWith('/alumni')) {
     return null;
   }
 
@@ -79,7 +79,7 @@ export default function HomeTopbar() {
             {!isAuthenticated ? (
               <>
                 <button
-                  onClick={() => handleNavigate('/signup')}
+                  onClick={() => handleNavigate('/auth')}
                   className="px-4 py-2 bg-primary text-white rounded-full hover:bg-primary/80 transition-colors"
                 >
                   Join Us
@@ -164,7 +164,7 @@ export default function HomeTopbar() {
           <div className="mt-8 flex flex-col gap-3 h-full max-h-[25rem] justify-end">
             {!isAuthenticated ? (
               <button
-                onClick={() => handleNavigate('/signup')}
+                onClick={() => handleNavigate('/auth')}
                 className="w-full rounded-full bg-primary px-4 py-3 text-white transition-colors hover:bg-primary/80"
               >
                 Join Us
