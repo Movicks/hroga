@@ -7,6 +7,13 @@ export interface Involvement {
   serveExec: boolean;
 }
 
+export interface Address {
+  country: string;
+  state: string;
+  city: string;
+  addressLine: string;
+}
+
 export interface FormData {
   // Personal Info
   firstName: string;
@@ -22,6 +29,7 @@ export interface FormData {
   country: string;
   stateCity: string;
   homeAddress: string;
+  password: string;
   // School Details
   entryYear: string;
   house: string;
@@ -53,6 +61,9 @@ export interface FormData {
     smsAlerts: boolean;
   };
   acceptTerms: boolean;
+  // Required for API
+  currentAddress: Address;
+  permanentAddress: Address;
 }
 
 export const initialFormData: FormData = {
@@ -70,6 +81,7 @@ export const initialFormData: FormData = {
   country: '',
   stateCity: '',
   homeAddress: '',
+  password: '',
   // School Details
   entryYear: '',
   house: '',
@@ -108,6 +120,19 @@ export const initialFormData: FormData = {
     smsAlerts: false,
   },
   acceptTerms: false,
+  // Required for API
+  currentAddress: {
+    country: '',
+    state: '',
+    city: '',
+    addressLine: '',
+  },
+  permanentAddress: {
+    country: '',
+    state: '',
+    city: '',
+    addressLine: '',
+  },
 };
 
 export const stepNames = [

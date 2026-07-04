@@ -12,8 +12,8 @@ export default function SignupStepper({
   stepNames,
 }: SignupStepperProps) {
   return (
-    <div className="mb-10">
-      <div className="flex items-center justify-center bg-white py-5 rounded-xl shadow-md">
+    <div className="md:mb-8">
+      <div className="flex items-center justify-center bg-white py-5 rounded-xl">
         {stepNames.map((name, index) => {
           const step = index + 1;
           const isActive = step === currentStep;

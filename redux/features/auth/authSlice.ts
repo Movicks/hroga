@@ -6,10 +6,52 @@ export interface User {
   firstName: string;
   middleName?: string;
   lastName: string;
+  maidenName?: string;
   role: 'admin' | 'alumni';
   yearOfGraduation: string;
+  dateOfBirth?: string;
+  gender?: string;
   email: string;
   phoneNumber: string;
+  whatsappNumber?: string;
+  country: string;
+  stateCity?: string;
+  homeAddress?: string;
+  entryYear?: string;
+  house?: string;
+  classArm?: string;
+  formTeacher?: string;
+  positionsHeld?: string;
+  clubsSocieties?: string;
+  favoriteMemory?: string;
+  classmates?: string;
+  currentOccupation?: string;
+  jobTitle?: string;
+  organisation?: string;
+  industry?: string;
+  highestQualification?: string;
+  institutionAttended?: string;
+  maritalStatus?: string;
+  spouseName?: string;
+  numberOfChildren?: string;
+  numberOfGrandchildren?: string;
+  yourStory?: string;
+  involvement?: {
+    attendReunion: boolean;
+    joinCommittee: boolean;
+    contributeFundraising: boolean;
+    mentorStudents: boolean;
+    shareStory: boolean;
+    serveExec: boolean;
+  };
+  howHeard?: string;
+  referralName?: string;
+  notifications?: {
+    emailNewsletter: boolean;
+    whatsAppGroup: boolean;
+    smsAlerts: boolean;
+  };
+  acceptTerms?: boolean;
   currentAddress: {
     country: string;
     state: string;
@@ -22,6 +64,9 @@ export interface User {
     city: string;
     addressLine: string;
   };
+  suspended?: boolean;
+  createdAt?: string;
+  updatedAt?: string;
 }
 
 interface AuthState {
