@@ -47,10 +47,11 @@ export default function AlumniSignupForm() {
   const handleSubmit = async () => {
     dispatch(clearError());
     
-    // Map frontend form data to API format
+    // Map frontend form data to API format - only include whitelisted fields
+    const { graduationYear, ...rest } = formData;
     const apiData = {
-      ...formData,
-      yearOfGraduation: formData.graduationYear,
+      ...rest,
+      yearOfGraduation: graduationYear,
     };
     
     const result = await dispatch(signupAlumni(apiData));

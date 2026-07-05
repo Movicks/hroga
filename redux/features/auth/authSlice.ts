@@ -9,6 +9,7 @@ export interface User {
   maidenName?: string;
   role: 'admin' | 'alumni';
   yearOfGraduation: string;
+  image?: string;
   dateOfBirth?: string;
   gender?: string;
   email: string;
@@ -151,6 +152,18 @@ export const fetchCurrentUser = createAsyncThunk(
   }
 );
 
+export const updateCurrentUser = createAsyncThunk(
+  'auth/updateCurrentUser',
+  async (data: Partial<User>, { rejectWithValue }) => {
+    try {
+      const response = await api.put('/auth/me', data);
+      return response.data;
+    } catch (error: any) {
+      return rejectWithValue(error.response?.data?.message || 'Failed to update user');
+    }
+  }
+);
+
 const authSlice = createSlice({
   name: 'auth',
   initialState,
@@ -232,9 +245,23 @@ const authSlice = createSlice({
         state.loading = false;
         state.error = action.payload as string;
         // Don't immediately log out - keep user state until we confirm token is invalid
+      })
+      .addCase(updateCurrentUser.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(updateCurrentUser.fulfilled, (state, action: PayloadAction<{ user: User }>) => {
+        state.loading = false;
+        state.user = action.payload.user;
+        localStorage.setItem('user', JSON.stringify(action.payload.user));
+      })
+      .addCase(updateCurrentUser.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload as string;
       });
   },
 });
 
 export const { initializeAuth, logout, clearError } = authSlice.actions;
+export { login, signupAlumni, registerAdmin, fetchCurrentUser, updateCurrentUser };
 export default authSlice.reducer;

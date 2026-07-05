@@ -13,10 +13,53 @@ export interface User {
   firstName: string;
   middleName?: string;
   lastName: string;
+  maidenName?: string;
+  image?: string;
   role: string;
   yearOfGraduation: string;
+  dateOfBirth?: string;
+  gender?: string;
   email: string;
   phoneNumber: string;
+  whatsappNumber?: string;
+  country: string;
+  stateCity?: string;
+  homeAddress?: string;
+  entryYear?: string;
+  house?: string;
+  classArm?: string;
+  formTeacher?: string;
+  positionsHeld?: string;
+  clubsSocieties?: string;
+  favoriteMemory?: string;
+  classmates?: string;
+  currentOccupation?: string;
+  jobTitle?: string;
+  organisation?: string;
+  industry?: string;
+  highestQualification?: string;
+  institutionAttended?: string;
+  maritalStatus?: string;
+  spouseName?: string;
+  numberOfChildren?: string;
+  numberOfGrandchildren?: string;
+  yourStory?: string;
+  involvement?: {
+    attendReunion: boolean;
+    joinCommittee: boolean;
+    contributeFundraising: boolean;
+    mentorStudents: boolean;
+    shareStory: boolean;
+    serveExec: boolean;
+  };
+  howHeard?: string;
+  referralName?: string;
+  notifications?: {
+    emailNewsletter: boolean;
+    whatsAppGroup: boolean;
+    smsAlerts: boolean;
+  };
+  acceptTerms?: boolean;
   currentAddress: Address;
   permanentAddress: Address;
   suspended: boolean;
@@ -29,6 +72,9 @@ interface UsersState {
   loading: boolean;
   error: string | null;
   fetchedAt: number | null; // Timestamp when we last fetched
+  selectedUser: User | null;
+  selectedUserLoading: boolean;
+  selectedUserError: string | null;
 }
 
 const CACHE_TTL = 5 * 60 * 1000; // 5 minutes
@@ -38,6 +84,9 @@ const initialState: UsersState = {
   loading: false,
   error: null,
   fetchedAt: null,
+  selectedUser: null,
+  selectedUserLoading: false,
+  selectedUserError: null,
 };
 
 export const fetchUsers = createAsyncThunk(
@@ -97,6 +146,30 @@ export const deleteUser = createAsyncThunk(
   }
 );
 
+export const fetchUser = createAsyncThunk(
+  'users/fetchUser',
+  async (userId: string, { rejectWithValue }) => {
+    try {
+      const response = await api.get(`/auth/admin/users/${userId}`);
+      return response.data;
+    } catch (error: any) {
+      return rejectWithValue(error.response?.data?.message || 'Failed to fetch user details');
+    }
+  }
+);
+
+export const changeUserRole = createAsyncThunk(
+  'users/changeUserRole',
+  async ({ userId, role }: { userId: string; role: 'admin' | 'alumni' }, { rejectWithValue }) => {
+    try {
+      const response = await api.patch(`/auth/admin/users/${userId}/role`, { role });
+      return response.data;
+    } catch (error: any) {
+      return rejectWithValue(error.response?.data?.message || 'Failed to change user role');
+    }
+  }
+);
+
 const usersSlice = createSlice({
   name: 'users',
   initialState,
@@ -137,6 +210,28 @@ const usersSlice = createSlice({
       .addCase(deleteUser.fulfilled, (state, action: PayloadAction<string>) => {
         state.users = state.users.filter(u => u.id !== action.payload);
         state.fetchedAt = Date.now();
+      })
+      .addCase(fetchUser.pending, (state) => {
+        state.selectedUserLoading = true;
+        state.selectedUserError = null;
+      })
+      .addCase(fetchUser.fulfilled, (state, action: PayloadAction<User>) => {
+        state.selectedUserLoading = false;
+        state.selectedUser = action.payload;
+      })
+      .addCase(fetchUser.rejected, (state, action) => {
+        state.selectedUserLoading = false;
+        state.selectedUserError = action.payload as string;
+      })
+      .addCase(changeUserRole.fulfilled, (state, action: PayloadAction<User>) => {
+        const index = state.users.findIndex(u => u.id === action.payload.id);
+        if (index !== -1) {
+          state.users[index] = action.payload;
+        }
+        // Also update selectedUser if it's the same user
+        if (state.selectedUser && state.selectedUser.id === action.payload.id) {
+          state.selectedUser = action.payload;
+        }
       });
   },
 });
