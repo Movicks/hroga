@@ -790,9 +790,16 @@ export default function EditableUserProfile({ onBack }: EditableUserProfileProps
                             setFormData({
                               ...formData,
                               involvement: {
-                                ...formData.involvement,
+                                ...(formData.involvement || {
+                                  attendReunion: false,
+                                  joinCommittee: false,
+                                  contributeFundraising: false,
+                                  mentorStudents: false,
+                                  shareStory: false,
+                                  serveExec: false,
+                                }),
                                 [key]: e.target.checked,
-                              },
+                              } as any,
                             })
                           }
                           className="w-4 h-4 text-[#6393f6] rounded border-gray-300 focus:ring-[#6393f6]"
@@ -829,9 +836,12 @@ export default function EditableUserProfile({ onBack }: EditableUserProfileProps
                             setFormData({
                               ...formData,
                               notifications: {
-                                ...formData.notifications,
+                                emailNewsletter: false,
+                                whatsAppGroup: false,
+                                smsAlerts: false,
+                                ...(formData.notifications || {}),
                                 [key]: e.target.checked,
-                              },
+                              } as any,
                             })
                           }
                           className="w-4 h-4 text-[#6393f6] rounded border-gray-300 focus:ring-[#6393f6]"
