@@ -48,9 +48,9 @@ export interface User {
   howHeard?: string;
   referralName?: string;
   notifications?: {
-    emailNewsletter: boolean;
-    whatsAppGroup: boolean;
-    smsAlerts: boolean;
+    emailNewsletter?: boolean;
+    whatsAppGroup?: boolean;
+    smsAlerts?: boolean;
   };
   acceptTerms?: boolean;
   currentAddress: {
@@ -101,7 +101,7 @@ const initialState: AuthState = {
   error: null,
 };
 
-export const login = createAsyncThunk(
+const login = createAsyncThunk(
   'auth/login',
   async ({ email, password }: { email: string; password: string }, { rejectWithValue }) => {
     try {
@@ -114,7 +114,7 @@ export const login = createAsyncThunk(
   }
 );
 
-export const signupAlumni = createAsyncThunk(
+const signupAlumni = createAsyncThunk(
   'auth/signupAlumni',
   async (data: any, { rejectWithValue }) => {
     try {
@@ -127,7 +127,7 @@ export const signupAlumni = createAsyncThunk(
   }
 );
 
-export const registerAdmin = createAsyncThunk(
+const registerAdmin = createAsyncThunk(
   'auth/registerAdmin',
   async (data: any, { rejectWithValue }) => {
     try {
@@ -140,7 +140,7 @@ export const registerAdmin = createAsyncThunk(
   }
 );
 
-export const fetchCurrentUser = createAsyncThunk(
+const fetchCurrentUser = createAsyncThunk(
   'auth/fetchCurrentUser',
   async (_, { rejectWithValue }) => {
     try {
@@ -152,7 +152,7 @@ export const fetchCurrentUser = createAsyncThunk(
   }
 );
 
-export const updateCurrentUser = createAsyncThunk(
+const updateCurrentUser = createAsyncThunk(
   'auth/updateCurrentUser',
   async (data: Partial<User>, { rejectWithValue }) => {
     try {
