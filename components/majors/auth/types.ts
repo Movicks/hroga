@@ -30,6 +30,7 @@ export interface FormData {
   stateCity: string;
   homeAddress: string;
   password: string;
+  image: string;
   // School Details
   entryYear: string;
   house: string;
@@ -81,6 +82,7 @@ export const initialFormData: FormData = {
   country: '',
   stateCity: '',
   homeAddress: '',
+  image: '',
   password: '',
   // School Details
   entryYear: '',

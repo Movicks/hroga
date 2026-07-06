@@ -71,7 +71,7 @@ export default function ProtectedRoute({
 
     // Not logged in
     if (!isAuthenticated) {
-      router.replace('/login');
+      router.replace('/auth/login');
       return;
     }
 
@@ -92,7 +92,7 @@ export default function ProtectedRoute({
           break;
 
         default:
-          router.replace('/login');
+          router.replace('/auth/login');
       }
     }
   }, [

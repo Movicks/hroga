@@ -1,5 +1,5 @@
-import ProfileSettingsForm from '../../../components/reusables/ProfileSettingsForm';
+import EditableUserProfile from '@/components/reusables/EditableUserProfile';
 
 export default function AdminProfileSettingPage() {
-  return <ProfileSettingsForm />;
+    return <EditableUserProfile />;
 }
