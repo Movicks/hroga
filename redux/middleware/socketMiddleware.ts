@@ -4,6 +4,7 @@ import { fetchActivities } from '../features/activities/activitiesSlice';
 import { fetchGallery } from '../features/gallery/gallerySlice';
 import { fetchEvents } from '../features/events/eventsSlice';
 import { fetchAudits } from '../features/audits/auditsSlice';
+import { fetchConversations } from '../features/contact-messages/contactMessagesSlice';
 
 const socketMiddleware: Middleware = (store) => {
   socket.on('activitiesUpdated', () => {
@@ -31,6 +32,13 @@ const socketMiddleware: Middleware = (store) => {
     const state = store.getState() as any;
     if (state.auth.isAuthenticated) {
       (store.dispatch as any)(fetchAudits({ force: true }));
+    }
+  });
+
+  socket.on('contactMessagesUpdated', () => {
+    const state = store.getState() as any;
+    if (state.auth.isAuthenticated) {
+      (store.dispatch as any)(fetchConversations({ force: true }));
     }
   });
 

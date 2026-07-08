@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { usePathname, useRouter } from 'next/navigation';
 import { useAppDispatch, useAppSelector } from '../../redux/hooks';
 import { logout } from '../../redux/features/auth/authSlice';
+import { Settings } from 'lucide-react';
 
 interface ProfileProps {
   onClose?: () => void;
@@ -14,13 +15,13 @@ export default function Profile({ onClose }: ProfileProps) {
   const pathname = usePathname();
   const dispatch = useAppDispatch();
   const { user } = useAppSelector((state) => state.auth);
-  const [isProfileOpen, setIsProfileOpen] = useState(false);
+  // const [isProfileOpen, setIsProfileOpen] = useState(false);
 
   const fullName = [user?.firstName, user?.lastName].filter(Boolean).join(' ') || 'Admin User';
   const initials = [user?.firstName?.[0], user?.lastName?.[0]].filter(Boolean).join('') || 'AU';
 
   const handleProfileSettings = () => {
-    setIsProfileOpen(false);
+    // setIsProfileOpen(false);
     onClose?.();
 
     if (pathname.startsWith('/admin') || user?.role === 'admin') {
@@ -43,57 +44,22 @@ export default function Profile({ onClose }: ProfileProps) {
 
   return (
     <div className="mt-6 rounded-lg border border-slate-800 bg-slate-900/70 p-4">
-      <button
-        type="button"
-        // onClick={() => setIsProfileOpen((prev) => !prev)}
-        onClick={handleProfileSettings}
-        className="flex w-full items-center justify-between gap-3 text-left"
+      <div
+        className="flex flex-col justify-between w-full items-center justify-between gap-3 text-left"
       >
-        <div className="flex items-center gap-3">
-          <div className="flex h-11 w-11 items-center justify-center rounded-full bg-white/15 text-sm font-semibold">
-            {initials}
+        <div className="flex items-center justify-between gap-3 w-full">
+          {/* <div className="avatar">{initials}</div> */}
+          <div className="flex-1 min-w-0 w-full">
+            <p className='text-sm'>{fullName}</p>
+            <p className='text-sm text-gray-400'>{user?.role}</p>
           </div>
-          <div>
-            <p className="text-sm font-semibold text-white">{fullName}</p>
-            <p className="text-xs uppercase tracking-[0.2em] text-white/70">{user?.role || 'admin'}</p>
-          </div>
-        </div>
-
-        {/* <div className="flex h-11 w-11 items-center justify-center rounded-full bg-white/15 text-sm font-semibold">
-          {isProfileOpen ? '-' : '::'}
-        </div> */}
-      </button>
-
-      {isProfileOpen && (
-        <div className="mt-4 space-y-4 border-t border-white/10 pt-4">
-          <div className="space-y-2 rounded-xl bg-white/5 p-3">
-            <div>
-              <p className="text-[11px] uppercase tracking-[0.2em] text-white/60">Name</p>
-              <p className="mt-1 text-sm text-white">{fullName}</p>
-            </div>
-            <div>
-              <p className="text-[11px] uppercase tracking-[0.2em] text-white/60">Email</p>
-              <p className="mt-1 text-sm text-white/80">{user?.email || 'No email available'}</p>
-            </div>
-          </div>
-
-          <button
-            type="button"
-            onClick={handleProfileSettings}
-            className="w-full rounded-xl border border-white/15 px-4 py-2 text-left text-white transition-colors hover:bg-white/10"
-          >
-            Profile settings
-          </button>
-
-          <button
-            type="button"
-            onClick={handleLogout}
-            className="w-full rounded-xl border border-red-300/40 px-4 py-2 text-left text-red-200 transition-colors hover:bg-white/10"
-          >
-            Logout
+          <button onClick={handleProfileSettings} aria-label="Profile settings" className="text-white p-2 border rounded-lg">
+            <Settings className="w-5 h-5" />
           </button>
         </div>
-      )}
+        <hr className='border border-slate-700 w-full' />
+        <button onClick={handleLogout} className='border border-red-400 w-full py-1 rounded-md text-red-400 mt-2'>Log out</button>
+      </div>
     </div>
   );
 }
