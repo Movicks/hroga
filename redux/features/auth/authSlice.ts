@@ -48,9 +48,9 @@ export interface User {
   howHeard?: string;
   referralName?: string;
   notifications?: {
-    emailNewsletter?: boolean;
-    whatsAppGroup?: boolean;
-    smsAlerts?: boolean;
+    emailNewsletter: boolean;
+    whatsAppGroup: boolean;
+    smsAlerts: boolean;
   };
   acceptTerms?: boolean;
   currentAddress: {

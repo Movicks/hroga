@@ -55,12 +55,12 @@ export default function AdminNavbar({ isOpen, onClose }: AdminNavbarProps) {
           </button>
         </div>
 
-        <div className="rounded-lg border border-slate-800 bg-slate-900/70 p-4 ">
+        {/* <div className="rounded-lg border border-slate-800 bg-slate-900/70 p-4 ">
           <p className="text-sm font-medium text-slate-100">Your Workspace</p>
           <p className="mt-2 text-sm leading-6 text-slate-400">
             Manage activities, gallery content, and other admin sections from one place.
           </p>
-        </div>
+        </div> */}
 
         <Divider />
 

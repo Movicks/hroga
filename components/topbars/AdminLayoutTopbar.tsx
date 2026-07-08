@@ -3,7 +3,7 @@
 import { usePathname } from 'next/navigation';
 import { useAppSelector } from '../../redux/hooks';
 import Searchbar from '../reusables/Searchbar';
-import { BellDotIcon } from 'lucide-react';
+import Notifications from '../reusables/Notifications';
 
 interface AdminLayoutTopbarProps {
   onMenuClick: () => void;
@@ -64,10 +64,7 @@ export default function AdminLayoutTopbar({ onMenuClick }: AdminLayoutTopbarProp
           
           <div className="flex gap-4 items-center justify-end lg:gap-6 w-full max-w-[40rem]">
             <Searchbar />
-            <button className='relative flex items-center justify-center bg-black text-white rounded-xl min-w-13 h-12 border border-slate-200 shadow-sm'>
-                <BellDotIcon size={30}/>
-                <span className='absolute right-0 top-0 min-w-7 h-4 text-xs font-medium bg-red-500 rounded-full'>12</span>
-            </button> 
+            <Notifications/>
           </div>
         </div>
 

@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Poppins } from "next/font/google";
 import "./globals.css";
 import StoreProvider from "../redux/StoreProvider";
+import AutoFetch from "../components/reusables/AutoFetch";
 
 const poppins = Poppins({
   subsets: ["latin"],
@@ -25,7 +26,10 @@ export default function RootLayout({
       className="h-full antialiased"
     >
       <body className={`flex flex-col ${poppins.className}`}>
-        <StoreProvider>{children}</StoreProvider>
+        <StoreProvider>
+          <AutoFetch />
+          {children}
+        </StoreProvider>
       </body>
     </html>
   );
