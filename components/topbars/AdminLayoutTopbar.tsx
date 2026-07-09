@@ -63,7 +63,7 @@ export default function AdminLayoutTopbar({ onMenuClick }: AdminLayoutTopbarProp
           </div>
           
           <div className="flex gap-4 items-center justify-end lg:gap-6 w-full max-w-[40rem]">
-            <Searchbar />
+            {/* <Searchbar /> */}
             <Notifications/>
           </div>
         </div>

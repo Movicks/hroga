@@ -109,20 +109,47 @@ const gallerySlice = createSlice({
         state.loading = false;
         state.error = action.payload as string;
       })
+      .addCase(createGalleryItem.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
       .addCase(createGalleryItem.fulfilled, (state, action: PayloadAction<GalleryItem>) => {
+        state.loading = false;
         state.gallery.unshift(action.payload);
         state.fetchedAt = Date.now();
       })
+      .addCase(createGalleryItem.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload as string;
+      })
+      .addCase(updateGalleryItem.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
       .addCase(updateGalleryItem.fulfilled, (state, action: PayloadAction<GalleryItem>) => {
+        state.loading = false;
         const index = state.gallery.findIndex((item) => item._id === action.payload._id);
         if (index !== -1) {
           state.gallery[index] = action.payload;
         }
         state.fetchedAt = Date.now();
       })
+      .addCase(updateGalleryItem.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload as string;
+      })
+      .addCase(deleteGalleryItem.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
       .addCase(deleteGalleryItem.fulfilled, (state, action: PayloadAction<string>) => {
+        state.loading = false;
         state.gallery = state.gallery.filter((item) => item._id !== action.payload);
         state.fetchedAt = Date.now();
+      })
+      .addCase(deleteGalleryItem.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload as string;
       });
   },
 });

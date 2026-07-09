@@ -32,7 +32,12 @@ const Gallery = () => {
       ? gallery
       : gallery.filter((item) => item.category === activeFilter);
   
-  console.log(filteredGalleryData)
+  // Helper to get full image URL
+  const getImageUrl = (path: string) => {
+    if (path.startsWith('http') || path.startsWith('data:')) return path;
+    const baseUrl = process.env.NEXT_PUBLIC_API_BASE_URL || 'http://localhost:4000';
+    return `${baseUrl}${path}`;
+  };
 
   return (
     <section className="gallery-section bg-[#e3f4ff] px-4 lg:px-[5rem] xl:px-[13rem] py-[3rem]">
@@ -71,11 +76,11 @@ const Gallery = () => {
             filteredGalleryData.map((item) => (
               <div key={item._id} className="gallery-card">
                 <Image
-                  src={item.image}
+                  src={getImageUrl(item.image)}
                   alt={item.category}
                   width={300}
                   height={200}
-                  loading="eager"
+                  loading="lazy"
                   unoptimized
                 />
               </div>

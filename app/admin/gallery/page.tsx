@@ -31,6 +31,13 @@ export default function GalleryPage() {
   const [category, setCategory] = useState('Reunion');
   const [previewImage, setPreviewImage] = useState('');
 
+  // Helper to get full image URL
+  const getImageUrl = (path: string) => {
+    if (path.startsWith('http') || path.startsWith('data:')) return path;
+    const baseUrl = process.env.NEXT_PUBLIC_API_BASE_URL || 'http://localhost:4000';
+    return `${baseUrl}${path}`;
+  };
+
   useEffect(() => {
     dispatch(fetchGallery());
   }, [dispatch]);
@@ -144,9 +151,10 @@ export default function GalleryPage() {
             <div key={item._id} className="rounded-xl border border-slate-200 bg-white overflow-hidden shadow-sm hover:shadow-md transition-all group">
               <div className="relative">
                 <img
-                  src={item.image}
+                  src={getImageUrl(item.image)}
                   alt={item.category}
                   className="w-full h-48 object-cover"
+                  loading="lazy"
                 />
                 <div className="absolute top-3 right-3 flex gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
                   <button
@@ -192,7 +200,7 @@ export default function GalleryPage() {
               {previewImage && (
                 <div className="rounded-2xl overflow-hidden border border-slate-200">
                   <img
-                    src={previewImage}
+                    src={previewImage.startsWith('http') || previewImage.startsWith('data:') ? previewImage : getImageUrl(previewImage)}
                     alt="Preview"
                     className="w-full h-48 object-cover"
                   />
