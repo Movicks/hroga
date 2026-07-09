@@ -79,7 +79,7 @@ export default function ContactMessagesPage() {
 
         <div className="flex-1 overflow-y-auto">
           {loading && (
-            <div className="p-6 text-center text-gray-500">
+            <div className="p-6 text-center text-gray-500 hidden">
               Loading conversations...
             </div>
           )}
@@ -100,29 +100,33 @@ export default function ContactMessagesPage() {
             <button
               key={conversation.id}
               onClick={() => handleSelectConversation(conversation)}
-              className={`w-full p-4 text-left hover:bg-gray-50 border-b border-gray-100 transition-colors ${
+              className={`w-full px-4 py-1 text-left hover:bg-gray-50 border-b border-gray-100 transition-colors ${
                 selectedConversation?.id === conversation.id ? 'bg-blue-50 border-l-4 border-l-blue-500' : ''
               }`}
             >
-              <div className="flex items-start justify-between">
-                <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 rounded-full bg-gradient-to-br from-blue-400 to-purple-500 flex items-center justify-center text-white font-semibold">
-                    {conversation.fullName[0]}
+              <div className="flex items-start justify-between w-full">
+                <div className="flex items-center gap-3 w-full">
+                  <div className="w-10 h-10 rounded-full border-2 border-[#6393f6] p-1 overflow-hidden">
+                    <div className='w-full h-full rounded-full bg-gradient-to-br from-blue-400 to-purple-500 flex items-center justify-center text-white font-semibold'>
+                      {conversation.fullName[0]}
+                    </div>
                   </div>
-                  <div className="flex-1 min-w-0">
-                    <div className="flex items-center gap-2">
-                      <h3 className="font-semibold text-gray-900 truncate">
-                        {conversation.fullName}
-                      </h3>
-                      {!conversation.isRead && (
-                        <span className="w-2 h-2 rounded-full bg-blue-500" />
-                      )}
+                  <div className="flex-1 min-w-0 w-full">
+                    <div className='flex items-center justify-between w-full'>
+                      <div className="flex items-center gap-2">
+                        <h3 className="font-semibold text-gray-900 truncate">
+                          {conversation.fullName}
+                        </h3>
+                        {!conversation.isRead && (
+                          <span className="w-2 h-2 rounded-full bg-[#6393f6]" />
+                        )}
+                      </div>
+                      <p className="text-[10px] text-gray-400 mt-1">
+                        {formatDate(conversation.createdAt)}
+                      </p>
                     </div>
                     <p className="text-sm text-gray-500 truncate">
                       {conversation.messages[0]?.subject || 'New message'}
-                    </p>
-                    <p className="text-xs text-gray-400 mt-1">
-                      {formatDate(conversation.createdAt)}
                     </p>
                   </div>
                 </div>
