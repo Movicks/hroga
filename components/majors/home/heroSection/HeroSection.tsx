@@ -1,20 +1,21 @@
 import Image from "next/image";
 import ItalicTitle from "@/components/reusables/ItalicTitle";
 import SectionHeading from "@/components/reusables/SectionHeading";
+import OgaGallery from "./OgaGallery";
 
 export default function HeroSection() {
   return (
-    <section className="overflow-hidden bg-[#F6F6F6] px-4 pt-[5.5rem] md:pt-[8rem] lg:pt-[10rem] sm:px-6 lg:px-[5rem] xl:px-[12.5rem]">
+    <section className="overflow-hidden bg-white px-4 pb-[2rem] pt-[5.5rem] md:pt-[8rem] lg:pt-[10rem] sm:px-6 lg:px-[5rem] xl:px-[12.5rem]">
       <div className="w-full">
-        <div className="flex min-h-[auto] flex-col pb-8 gap-12 md:gap-16 lg:min-h-[560px] lg:flex-row lg:items-start lg:gap-20">
+        <div className="flex min-h-[auto] flex-col pb-8 gap-12 md:gap-12 lg:min-h-[560px] lg:flex-row lg:items-start lg:gap-20">
           {/* LEFT CONTENT */}
           <div className="w-full lg:max-w-[560px] ">
             {/* <p className="mb-4 text-sm font-normal uppercase tracking-[-0.02em] text-[#8B8B8B] sm:text-base lg:mb-5 lg:text-[18px]">
               
             </p> */}
-            <SectionHeading title="EST. 1968. OLD GIRLS ASSOCIATION" className="text-xs md:text-[18px] mb-4 text-[#8B8B8B]"/>
+            <SectionHeading title="EST. 1968. OLD GIRLS ASSOCIATION" className="text-xs md:text-[18px] mb-4 !text-[#6393f6] border-2 border-[#6393f6]/20 rounded-full bg-[#6393f6]/10 px-4 py-1 max-w-[23rem]"/>
 
-            <h1 className="mb-2 text-[2.4rem] leading-[1] font-light tracking-[-0.05em] text-[#23232D] sm:text-[3.25rem] lg:text-[56px]">
+            <h1 className="mb-3 text-[2.4rem] leading-[1] font-medium tracking-[-0.05em] text-[#020D39] sm:text-[3.25rem] lg:text-[56px]">
               Where Sisterhood
             </h1>
             <ItalicTitle
@@ -37,19 +38,7 @@ export default function HeroSection() {
           </div>
 
           {/* RIGHT IMAGE */}
-          <div className="flex w-full justify-center lg:justify-end lg:pt-[3.5rem]">
-            <div className="relative aspect-[5/3] lg:aspect-[4.5/3] xl:aspect-[5.5/3] w-full lg:max-w-[535px] overflow-hidden rounded-[6px] border-[6px] border-[#9DDCDC] sm:border-[8px]">
-              <Image
-                src="https://plus.unsplash.com/premium_photo-1661401872795-5c3744af4a1f?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NXx8YmxhY2slMjB3b21lbiUyMGJpcnRoZGF5JTIwcmV1bmlvbnxlbnwwfHwwfHx8MA%3D%3D"
-                alt="Holy Rosary Alumni"
-                className="object-cover"
-                priority
-                // width={100}
-                fill
-                // height={100}
-              />
-            </div>
-          </div>
+          <OgaGallery/>
         </div>
       </div>
     </section>
