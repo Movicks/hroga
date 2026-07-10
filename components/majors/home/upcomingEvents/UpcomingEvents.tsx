@@ -61,7 +61,7 @@ export default function UpcomingEvents() {
       <div className="mb-16 max-w-xl">
         <SectionHeading title="UPCOMING EVENTS" className="text-xs md:text-[18px] mb-2"/>
         
-        <h2 className="mb-4 text-[2rem] sm:text-[3.25rem] font-bold tracking-tight text-gray-900">
+        <h2 className="mb-4 text-[2rem] sm:text-[3.25rem] font-medium tracking-tight text-gray-900">
           Celebrating our own
         </h2>
         <p className="text-base leading-relaxed text-gray-500">
