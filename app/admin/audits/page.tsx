@@ -4,6 +4,7 @@ import { useEffect } from 'react';
 import { useAppDispatch, useAppSelector } from '../../../redux/hooks';
 import { fetchAudits, Audit } from '../../../redux/features/audits/auditsSlice';
 import { Clock, User, Activity, FileText, Trash2, Plus, Eye, Ban, UserCheck } from 'lucide-react';
+import Loader from '@/components/reusables/Loader';
 
 const getActionIcon = (action: string) => {
   switch (action) {
@@ -61,9 +62,7 @@ export default function AuditsPage() {
 
   if (loading && audits.length === 0) {
     return (
-      <div className="flex items-center justify-center min-h-[400px]">
-        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
-      </div>
+      <Loader loadTitle='Loading Audits'/>
     );
   }
 

@@ -72,10 +72,6 @@ export default function UpcomingEvents() {
       </div>
 
       {/* Cards */}
-      <div className="grid grid-cols-1 gap-4 md:grid-cols-3 lg:grid-cols-3">
-        
-      </div>
-
       <div className="mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3 lg:gap-10">
           {events.length === 0 ? (

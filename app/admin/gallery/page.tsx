@@ -10,6 +10,7 @@ import {
   deleteGalleryItem,
   clearGalleryError,
 } from '../../../redux/features/gallery/gallerySlice';
+import Loader from '@/components/reusables/Loader';
 
 const categories = [
   'Reunion',
@@ -143,7 +144,9 @@ export default function GalleryPage() {
 
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
         {loading && gallery.length === 0 ? (
-          <div className="col-span-full py-12 text-center text-slate-500">Loading gallery...</div>
+          <div className="col-span-full">
+            <Loader loadTitle='Loading gallery'/>
+          </div>
         ) : gallery.length === 0 ? (
           <div className="col-span-full py-12 text-center text-slate-500">No gallery items found. Add one to get started!</div>
         ) : (

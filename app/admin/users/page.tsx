@@ -32,6 +32,7 @@ import {
   DropdownMenuSubContent,
   DropdownMenuSubTrigger,
 } from '../../../components/ui/dropdown-menu';
+import Loader from '@/components/reusables/Loader';
 
 export default function UsersPage() {
   const dispatch = useAppDispatch();
@@ -108,7 +109,7 @@ export default function UsersPage() {
             {loading ? (
               <tr>
                 <td colSpan={6} className="px-6 py-12 text-center text-slate-500">
-                  Loading users...
+                  <Loader loadTitle='Loading users'/>
                 </td>
               </tr>
             ) : users.length === 0 ? (
