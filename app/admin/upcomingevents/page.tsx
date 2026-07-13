@@ -12,6 +12,7 @@ import {
   Event,
   EventType,
 } from '../../../redux/features/events/eventsSlice';
+import Loader from '@/components/reusables/Loader';
 
 const eventTypes: EventType[] = ['Birthday', 'Wedding', 'New Arrivals'];
 
@@ -111,7 +112,9 @@ export default function AdminUpcomingEvents() {
 
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
         {loading && events.length === 0 ? (
-          <div className="col-span-full py-12 text-center text-slate-500">Loading events...</div>
+          <div className="col-span-full py-12">
+            <Loader loadTitle='Loading events'/>
+          </div>
         ) : events.length === 0 ? (
           <div className="col-span-full py-12 text-center text-slate-500">No events found. Add one to get started!</div>
         ) : (

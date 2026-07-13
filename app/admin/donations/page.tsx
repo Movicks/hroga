@@ -4,6 +4,7 @@ import React, { useEffect } from 'react';
 import { useAppDispatch, useAppSelector } from '@/redux/hooks';
 import { fetchDonations, Donation } from '@/redux/features/donations/donationsSlice';
 import { CheckCircle2, XCircle, Clock, User, Eye, UserCheck } from 'lucide-react';
+import Loader from '@/components/reusables/Loader';
 
 const getStatusIcon = (status: string) => {
   switch (status) {
@@ -37,9 +38,7 @@ export default function Donations() {
 
   if (loading && donations.length === 0) {
     return (
-      <div className="flex items-center justify-center min-h-[400px]">
-        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600" />
-      </div>
+      <Loader loadTitle='Loading donations'/>
     );
   }
 

@@ -41,7 +41,7 @@ export default function HomeTopbar() {
     { name: "Home", href: "/" },
     { name: "About Us", href: "about_us" },
     { name: "Contact Us", href: "contact_us" },
-    { name: "Events", href: "" }
+    { name: "Events", href: "events" }
   ]
 
   const handleLogout = () => {

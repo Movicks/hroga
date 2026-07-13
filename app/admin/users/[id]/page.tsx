@@ -12,6 +12,7 @@ import {
   DropdownMenuTrigger,
 } from '../../../../components/ui/dropdown-menu';
 import Image from 'next/image';
+import Loader from '@/components/reusables/Loader';
 
 export default function UserProfilePage() {
   const params = useParams();
@@ -52,7 +53,7 @@ export default function UserProfilePage() {
       )}
 
       {loading ? (
-        <div className="py-12 text-center text-slate-500">Loading user profile...</div>
+        <Loader loadTitle='Loading user profile'/>
       ) : !user ? (
         <div className="py-12 text-center text-slate-500">User not found</div>
       ) : (

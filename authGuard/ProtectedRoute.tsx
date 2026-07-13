@@ -7,6 +7,7 @@ import {
   fetchCurrentUser,
   initializeAuth,
 } from '../redux/features/auth/authSlice';
+import Loader from '@/components/reusables/Loader';
 
 interface ProtectedRouteProps {
   children: React.ReactNode;
@@ -109,10 +110,7 @@ export default function ProtectedRoute({
   if (!isHydrated || loading || !authChecked) {
     return (
       <div className="flex min-h-screen flex-col items-center justify-center">
-        <div className="mb-4 h-12 w-12 animate-spin rounded-full border-b-2 border-blue-600" />
-        <h2 className="text-xl font-medium text-slate-800">
-          Verifying access...
-        </h2>
+        <Loader loadTitle='Verifying access'/>
         <p className="mt-2 text-sm text-slate-500">
           Please wait while we secure your session.
         </p>

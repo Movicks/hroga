@@ -10,6 +10,7 @@ import {
   deleteActivity,
   clearActivityError,
 } from '../../../redux/features/activities/activitiesSlice';
+import Loader from '@/components/reusables/Loader';
 
 export default function ActivitiesPage() {
   const dispatch = useAppDispatch();
@@ -97,7 +98,9 @@ export default function ActivitiesPage() {
 
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
         {loading && activities.length === 0 ? (
-          <div className="col-span-full py-12 text-center text-slate-500">Loading activities...</div>
+          <div className="col-span-full">
+            <Loader loadTitle='Loading activities'/> 
+          </div>
         ) : activities.length === 0 ? (
           <div className="col-span-full py-12 text-center text-slate-500">No activities found. Add one to get started!</div>
         ) : (
