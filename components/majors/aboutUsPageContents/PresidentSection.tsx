@@ -6,7 +6,7 @@ export default function PresidentSection() {
   return (
       <section className="flex justify-center w-full px-4 lg:px-[6rem] xl:px-[12.5rem]">
           <div className="bg-gradient-to-r from-[#efe9f5] to-[#f7f7f7] w-full flex flex-wrap gap-6 lg:gap-16 p-4 lg:p-[72px]">
-              <div className="w-full max-w-[354px] h-full max-h-[490px] bg-yellow-200 border-4 border-[#aeecfe] rounded-xl">
+              <div className="w-full max-w-[354px] h-full max-h-[490px] md:max-h-[790px] bg-yellow-200 border-4 border-[#aeecfe] rounded-xl">
                   <Image src="/images/President_image.png" className="w-full h-full bg-cover" alt="President" width={100} height={100} />
               </div>
               {/* Right: Message content */}
@@ -66,23 +66,30 @@ export default function PresidentSection() {
                     every old girl near and far.
                 </p>
         
-                {/* Closing */}
-                <p className="text-base" style={{ color: "#555" }}>
-                    Yours sincerely
-                </p>
-        
-                {/* Signature block */}
-                <div className="mt-1">
-                    <p
-                    className="text-base font-bold"
-                    style={{ color: "#1a1a2e", letterSpacing: "0.01em" }}
-                    >
-                    IGONIBYA. BRISIBE
-                    </p>
-                    <p className="text-sm mt-0.5" style={{ color: "#777" }}>
-                    President-General, HROGA
-                    </p>
-                  </div>
+                <div>
+                    <div>
+                        {/* Closing */}
+                        <p className="text-base" style={{ color: "#555" }}>
+                            Yours sincerely
+                        </p>
+                        <div>
+                            <Image src="/images/HROGA_Sign.png" className="w-full max-w-[5rem] h-full max-h-[10rem] bg-cover" alt="President" width={20} height={20} />
+                        </div>
+                
+                        {/* Signature block */}
+                        <div className="mt-1">
+                            <p
+                            className="text-base font-bold"
+                            style={{ color: "#1a1a2e", letterSpacing: "0.01em" }}
+                            >
+                            IGONIBYA. BRISIBE
+                            </p>
+                            <p className="text-sm mt-0.5" style={{ color: "#777" }}>
+                            President-General, HROGA
+                            </p>
+                        </div>
+                    </div>
+                </div>
             </div>
           </div>
     </section>
