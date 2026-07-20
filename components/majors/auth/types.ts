@@ -56,10 +56,10 @@ export interface FormData {
   involvement: Involvement;
   howHeard: string;
   referralName: string;
-  notifications: {
-    emailNewsletter: boolean;
-    whatsAppGroup: boolean;
-    smsAlerts: boolean;
+  socialMedia: {
+    linkedIn: string;
+    facebook: string;
+    whatsApp: string;
   };
   acceptTerms: boolean;
   // Required for API
@@ -116,10 +116,10 @@ export const initialFormData: FormData = {
   },
   howHeard: '',
   referralName: '',
-  notifications: {
-    emailNewsletter: false,
-    whatsAppGroup: false,
-    smsAlerts: false,
+  socialMedia: {
+    linkedIn: '',
+    facebook: '',
+    whatsApp: '',
   },
   acceptTerms: false,
   // Required for API

@@ -329,7 +329,7 @@ export default function UserProfilePage() {
             )}
 
             {/* Involvement & Notifications */}
-            {(user.involvement || user.notifications || user.howHeard || user.referralName) && (
+            {(user.involvement || user.socialMedia || user.howHeard || user.referralName) && (
               <div className="bg-[#F2F7FC] rounded-lg p-6 space-y-6">
                 <h3 className="text-lg md:text-xl font-semibold text-[#6393f6]">Involvement & Notifications</h3>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -347,11 +347,11 @@ export default function UserProfilePage() {
                       </div>
                     </div>
                   )}
-                  {user.notifications && (
+                  {user.socialMedia && (
                     <div className="bg-white rounded-lg p-4 border border-[#E5E7EB]">
-                      <p className="text-xs text-gray-500 mb-2">Notifications</p>
+                      <p className="text-xs text-gray-500 mb-2">Social Media</p>
                       <div className="space-y-1">
-                        {Object.entries(user.notifications).map(([key, value]) => (
+                        {Object.entries(user.socialMedia).map(([key, value]) => (
                           value && (
                             <p key={key} className="text-sm text-[#4B5563]">
                               • {key.replace(/([A-Z])/g, ' $1').replace(/^./, str => str.toUpperCase())}

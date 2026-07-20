@@ -60,7 +60,7 @@ export default function PersonalInfoStep({ formData, setFormData }: PersonalInfo
                 onChange={(e) => setFormData({ ...formData, firstName: e.target.value })}
                 className="w-full bg-white px-3 py-2 border-2 border-[#E5E7EB] rounded-lg focus:outline-none focus:border-[#6393f6]"
                 required
-                placeholder="David"
+                placeholder="Grace"
               />
             </div>
             <div>
@@ -70,7 +70,7 @@ export default function PersonalInfoStep({ formData, setFormData }: PersonalInfo
                 value={formData.middleName}
                 onChange={(e) => setFormData({ ...formData, middleName: e.target.value })}
                 className="w-full bg-white px-3 py-2 border-2 border-[#E5E7EB] rounded-lg focus:outline-none focus:border-[#6393f6]"
-                placeholder="Akan"
+                placeholder="Amarachi"
               />
             </div>
             <div>
@@ -81,7 +81,7 @@ export default function PersonalInfoStep({ formData, setFormData }: PersonalInfo
                 onChange={(e) => setFormData({ ...formData, lastName: e.target.value })}
                 className="w-full bg-white px-3 py-2 border-2 border-[#E5E7EB] rounded-lg focus:outline-none focus:border-[#6393f6]"
                 required
-                placeholder="Akan"
+                placeholder="Ikechukwu"
               />
             </div>
           </div>

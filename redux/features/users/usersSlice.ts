@@ -54,10 +54,10 @@ export interface User {
   };
   howHeard?: string;
   referralName?: string;
-  notifications?: {
-    emailNewsletter: boolean;
-    whatsAppGroup: boolean;
-    smsAlerts: boolean;
+  socialMedia?: {
+    linkedIn: string;
+    facebook: string;
+    whatsApp: string;
   };
   acceptTerms?: boolean;
   currentAddress: Address;

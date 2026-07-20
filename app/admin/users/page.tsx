@@ -39,6 +39,8 @@ export default function UsersPage() {
   const router = useRouter();
   const { users, loading, error } = useAppSelector((state) => state.users);
 
+  console.log(users)
+
   useEffect(() => {
     dispatch(fetchUsers());
   }, [dispatch]);
