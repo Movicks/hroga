@@ -39,9 +39,9 @@ export default function HomeTopbar() {
 
   const navLinks: linkProps[] = [
     { name: "Home", href: "/" },
-    { name: "About Us", href: "about_us" },
-    { name: "Contact Us", href: "contact_us" },
-    { name: "Events", href: "events" }
+    { name: "About Us", href: "/about_us" },
+    { name: "Contact Us", href: "/contact_us" },
+    { name: "Events", href: "/events" }
   ]
 
   const handleLogout = () => {

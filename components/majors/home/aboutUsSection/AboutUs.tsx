@@ -2,6 +2,7 @@ import ItalicTitle from "@/components/reusables/ItalicTitle";
 import SectionHeading from "@/components/reusables/SectionHeading";
 import { ArrowRight } from "lucide-react";
 import { Cormorant_Garamond } from "next/font/google";
+import Link from "next/link";
 
 const cormorant = Cormorant_Garamond({
   subsets: ["latin"],
@@ -75,10 +76,10 @@ export default function AboutAssociation() {
             </div>
 
             {/* Button */}
-            <button className="mt-10 flex h-[45px] items-center gap-3 rounded-full bg-[#6C93E8] px-6 md:text-[18px] font-medium text-white transition-all duration-300 hover:bg-[#7A9DF0]">
+            <Link href='/about_us' className="max-w-[13.3rem] mt-10 flex h-[45px] items-center gap-3 rounded-full bg-[#6C93E8] px-6 md:text-[18px] font-medium text-white transition-all duration-300 hover:bg-[#7A9DF0]">
               Read our story
               <ArrowRight size={20} />
-            </button>
+            </Link>
           </div>
         </div>
       </div>

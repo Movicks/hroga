@@ -6,6 +6,27 @@ interface GetInvolvedStepProps {
 }
 
 export default function GetInvolvedStep({ formData, setFormData }: GetInvolvedStepProps) {
+  const socialsData = [
+    {
+      key: "linkedIn",
+      label: "LinkedIn",
+      placeholder: "https://linkedin.com/in/your-profile",
+      description: "Share your LinkedIn profile.",
+    },
+    {
+      key: "facebook",
+      label: "Facebook",
+      placeholder: "https://facebook.com/your-profile",
+      description: "Share your Facebook profile.",
+    },
+    {
+      key: "whatsApp",
+      label: "WhatsApp",
+      placeholder: "+234 801 234 5678",
+      description: "Enter your WhatsApp phone number.",
+    },
+  ]
+  
   return (
     <div className="space-y-6">
       <div className="flex justify-between items-center mb-6 px-3 md:px-0">
@@ -100,34 +121,45 @@ export default function GetInvolvedStep({ formData, setFormData }: GetInvolvedSt
 
         {/* Notification preferences */}
         <section className="space-y-4">
-          <h3 className="text-lg font-semibold text-[#4B5563]">Notification preferences</h3>
-          <div className="space-y-3">
-            {[
-              { key: 'emailNewsletter', label: 'Monthly email newsletter', description: 'Events, alumni stories, project updates and association news' },
-              { key: 'whatsAppGroup', label: 'WhatsApp class group', description: 'Be added to your graduation year group chat' },
-              { key: 'smsAlerts', label: 'SMS alerts', description: 'Urgent updates and events reminders by text message' },
-            ].map((item) => (
-              <label key={item.key} className="flex items-start gap-4 px-4 py-2 bg-white border-2 border-[#00BFFF] rounded-lg cursor-pointer hover:bg-[#F0F9FF] transition">
+          <h3 className="text-lg font-semibold text-[#4B5563]">
+            Social Media Handles
+          </h3>
+
+          <div className="space-y-5 grid grid-cols-2 gap-4">
+            {socialsData.map((item) => (
+              <div key={item.key} className="space-y-2">
+                <label
+                  htmlFor={item.key}
+                  className="block text-sm font-semibold text-[#1E3A8A]"
+                >
+                  {item.label}
+                </label>
+
                 <input
-                  type="checkbox"
-                  checked={formData.notifications[item.key as keyof typeof formData.notifications]}
-                  onChange={(e) => setFormData({
-                    ...formData,
-                    notifications: {
-                      ...formData.notifications,
-                      [item.key]: e.target.checked
-                    }
-                  })}
-                  className="mt-1 w-5 h-5 accent-[#00BFFF]"
+                  id={item.key}
+                  type={item.key === "whatsApp" ? "tel" : "url"}
+                  placeholder={item.placeholder}
+                  value={formData.socialMedia?.[
+                    item.key as keyof typeof formData.socialMedia
+                  ] ?? ""}
+                  onChange={(e) =>
+                    setFormData({
+                      ...formData,
+                      socialMedia: {
+                        ...formData.socialMedia,
+                        [item.key]: e.target.value,
+                      },
+                    })
+                  }
+                  className=" w-full flex items-center gap-3 px-4 py-2 bg-white border-2 border-[#00BFFF] rounded-lg cursor-pointer hover:bg-[#F0F9FF] transition"
                 />
-                <div>
-                  <p className="font-semibold text-[#1E3A8A]">{item.label}</p>
-                  <p className="text-sm text-[#6B7280] mt-1">{item.description}</p>
-                </div>
-              </label>
+
+                <p className="text-xs text-gray-500">{item.description}</p>
+              </div>
             ))}
           </div>
         </section>
+
 
         <hr className="border-[#E5E7EB]" />
 

@@ -2,6 +2,7 @@ import Image from "next/image";
 import ItalicTitle from "@/components/reusables/ItalicTitle";
 import SectionHeading from "@/components/reusables/SectionHeading";
 import OgaGallery from "./OgaGallery";
+import Link from "next/link";
 
 export default function HeroSection() {
   return (
@@ -32,9 +33,9 @@ export default function HeroSection() {
               the legacy of excellence Holy rosary built in each of us.
             </p>
 
-            <button className="mt-8 h-[40px] rounded-full bg-[#5E89DA] px-6 text-sm font-medium text-white transition hover:bg-[#4F79C8] sm:mt-10 sm:h-[48px] sm:px-8 sm:text-base lg:mt-16 lg:px-10">
+            <Link href="/find_classmates" className="mt-8 py-1 h-[40px] rounded-full bg-[#5E89DA] px-6 text-sm font-medium text-white transition hover:bg-[#4F79C8] sm:mt-10 sm:h-[48px] sm:px-8 sm:text-base lg:mt-20 lg:px-10">
               Find your Classmates
-            </button>
+            </Link>
           </div>
 
           {/* RIGHT IMAGE */}
