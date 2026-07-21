@@ -158,6 +158,39 @@ export const fetchUser = createAsyncThunk(
   }
 );
 
+export const fetchUsersPublicly = createAsyncThunk(
+  'users/fetchUsersPublicly',
+  async (params: { force?: boolean } | undefined, { rejectWithValue, getState }) => {
+    // Check if cache is still fresh, unless forced
+    const state = getState() as any;
+    if (!params?.force && 
+        state.users.fetchedAt && 
+        Date.now() - state.users.fetchedAt < CACHE_TTL && 
+        state.users.users.length > 0) {
+      return state.users.users; // Return cached data
+    }
+    
+    try {
+      const response = await api.get('/auth/public/users');
+      return response.data;
+    } catch (error: any) {
+      return rejectWithValue(error.response?.data?.message || 'Failed to fetch users');
+    }
+  }
+);
+
+export const searchUsers = createAsyncThunk(
+  'users/searchUsers',
+  async (query: string, { rejectWithValue }) => {
+    try {
+      const response = await api.get(`/auth/public/users/search?q=${query}`);
+      return response.data;
+    } catch (error: any) {
+      return rejectWithValue(error.response?.data?.message || 'Failed to search users');
+    }
+  }
+);
+
 export const changeUserRole = createAsyncThunk(
   'users/changeUserRole',
   async ({ userId, role }: { userId: string; role: 'admin' | 'alumni' }, { rejectWithValue }) => {
@@ -192,6 +225,23 @@ const usersSlice = createSlice({
       .addCase(fetchUsers.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload as string;
+      })
+      .addCase(fetchUsersPublicly.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(fetchUsersPublicly.fulfilled, (state, action: PayloadAction<User[]>) => {
+        state.loading = false;
+        state.users = action.payload;
+        state.fetchedAt = Date.now(); // Update cache timestamp
+      })
+      .addCase(fetchUsersPublicly.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload as string;
+      })
+      .addCase(searchUsers.fulfilled, (state, action: PayloadAction<User[]>) => {
+        state.users = action.payload;
+        state.fetchedAt = Date.now(); // Update cache timestamp
       })
       .addCase(suspendUser.fulfilled, (state, action: PayloadAction<User>) => {
         const index = state.users.findIndex(u => u.id === action.payload.id);

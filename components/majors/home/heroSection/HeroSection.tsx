@@ -2,9 +2,11 @@ import Image from "next/image";
 import ItalicTitle from "@/components/reusables/ItalicTitle";
 import SectionHeading from "@/components/reusables/SectionHeading";
 import OgaGallery from "./OgaGallery";
-import Link from "next/link";
 
 export default function HeroSection() {
+  const handleClick = () => {
+    window.location.href = "/find_classmates";
+  }
   return (
     <section className="overflow-hidden bg-white px-4 pb-[2rem] pt-[5.5rem] md:pt-[8rem] lg:pt-[10rem] sm:px-6 lg:px-[5rem] xl:px-[12.5rem]">
       <div className="w-full">
@@ -33,9 +35,9 @@ export default function HeroSection() {
               the legacy of excellence Holy rosary built in each of us.
             </p>
 
-            <Link href="/find_classmates" className="mt-8 py-1 h-[40px] rounded-full bg-[#5E89DA] px-6 text-sm font-medium text-white transition hover:bg-[#4F79C8] sm:mt-10 sm:h-[48px] sm:px-8 sm:text-base lg:mt-20 lg:px-10">
+            <button onClick={handleClick} className="mt-8 h-[40px] rounded-full bg-[#5E89DA] px-6 text-sm font-medium text-white transition hover:bg-[#4F79C8] sm:mt-10 sm:h-[48px] sm:px-8 sm:text-base lg:mt-16 lg:px-10">
               Find your Classmates
-            </Link>
+            </button>
           </div>
 
           {/* RIGHT IMAGE */}

@@ -72,7 +72,7 @@ export default function AlumniSidebar({ isOpen, onClose }: AlumniSidebarProps) {
                 key={item.href}
                 href={item.href}
                 onClick={onClose}
-                className={`flex items-center gap-3 rounded-2xl px-4 py-3 text-sm font-medium transition-colors ${
+                className={`flex items-center gap-3 rounded-r-lg px-4 py-3 text-sm font-medium transition-colors ${
                   isActive
                     ? 'bg-primary text-white shadow-lg shadow-primary/20'
                     : 'text-slate-200 hover:bg-white/10 hover:text-white'
