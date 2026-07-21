@@ -47,19 +47,19 @@ export interface User {
   };
   howHeard?: string;
   referralName?: string;
-  notifications?: {
-    emailNewsletter: boolean;
-    whatsAppGroup: boolean;
-    smsAlerts: boolean;
+  socialMedia?: {
+    linkedIn: string;
+    facebook: string;
+    whatsApp: string;
   };
   acceptTerms?: boolean;
-  currentAddress: {
+  currentAddress?: {
     country: string;
     state: string;
     city: string;
     addressLine: string;
   };
-  permanentAddress: {
+  permanentAddress?: {
     country: string;
     state: string;
     city: string;
@@ -156,7 +156,41 @@ const updateCurrentUser = createAsyncThunk(
   'auth/updateCurrentUser',
   async (data: Partial<User>, { rejectWithValue }) => {
     try {
-      const response = await api.put('/auth/me', data);
+      // Clean the data before sending
+      const cleanData: any = { ...data };
+      
+      // Remove any fields that shouldn't be updated
+      const systemFields = ['id', 'role', 'suspended', 'createdAt', 'updatedAt'];
+      systemFields.forEach(field => {
+        delete cleanData[field];
+      });
+      
+      // Handle nested objects - remove empty nested objects
+      const nestedFields = ['currentAddress', 'permanentAddress', 'involvement', 'socialMedia'];
+      nestedFields.forEach(field => {
+        if (cleanData[field]) {
+          const nestedObj = cleanData[field];
+          // Check if nested object exists and is an object
+          if (nestedObj && typeof nestedObj === 'object' && !Array.isArray(nestedObj)) {
+            // Check if all values in the nested object are empty
+            const allEmpty = Object.values(nestedObj).every(val => 
+              val === '' || val === false || val === null || val === undefined
+            );
+            if (allEmpty) {
+              delete cleanData[field];
+            }
+          }
+        }
+      });
+      
+      // Remove any undefined or null values
+      Object.keys(cleanData).forEach(key => {
+        if (cleanData[key] === undefined || cleanData[key] === null) {
+          delete cleanData[key];
+        }
+      });
+      
+      const response = await api.put('/auth/me', cleanData);
       return response.data;
     } catch (error: any) {
       return rejectWithValue(error.response?.data?.message || 'Failed to update user');

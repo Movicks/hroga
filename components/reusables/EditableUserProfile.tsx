@@ -54,6 +54,7 @@ export default function EditableUserProfile({ onBack }: EditableUserProfileProps
     numberOfChildren: '',
     numberOfGrandchildren: '',
     yourStory: '',
+    image: '',
     currentAddress: {
       country: '',
       state: '',
@@ -76,11 +77,16 @@ export default function EditableUserProfile({ onBack }: EditableUserProfileProps
       shareStory: false,
       serveExec: false,
     },
-    notifications: {
-      emailNewsletter: false,
-      whatsAppGroup: false,
-      smsAlerts: false,
+    socialMedia: {
+      linkedIn: '',
+      facebook: '',
+      whatsApp: '',
     },
+    // notifications: {
+    //   emailNewsletter: false,
+    //   whatsAppGroup: false,
+    //   smsAlerts: false,
+    // },
   });
 
   // Initialize form with user data
@@ -88,6 +94,7 @@ export default function EditableUserProfile({ onBack }: EditableUserProfileProps
     if (authUser) {
       setFormData({
         ...authUser,
+        image: authUser.image ?? '',
         involvement: {
           attendReunion: authUser.involvement?.attendReunion ?? false,
           joinCommittee: authUser.involvement?.joinCommittee ?? false,
@@ -96,11 +103,16 @@ export default function EditableUserProfile({ onBack }: EditableUserProfileProps
           shareStory: authUser.involvement?.shareStory ?? false,
           serveExec: authUser.involvement?.serveExec ?? false,
         },
-        notifications: {
-          emailNewsletter: authUser.notifications?.emailNewsletter ?? false,
-          whatsAppGroup: authUser.notifications?.whatsAppGroup ?? false,
-          smsAlerts: authUser.notifications?.smsAlerts ?? false,
+        socialMedia: {
+          linkedIn: authUser.socialMedia?.linkedIn ?? '',
+          facebook: authUser.socialMedia?.facebook ?? '',
+          whatsApp: authUser.socialMedia?.whatsApp ?? '',
         },
+        // notifications: {
+        //   emailNewsletter: authUser.notifications?.emailNewsletter ?? false,
+        //   whatsAppGroup: authUser.notifications?.whatsAppGroup ?? false,
+        //   smsAlerts: authUser.notifications?.smsAlerts ?? false,
+        // },
         currentAddress: {
           country: authUser.currentAddress?.country ?? '',
           state: authUser.currentAddress?.state ?? '',
@@ -228,7 +240,7 @@ export default function EditableUserProfile({ onBack }: EditableUserProfileProps
                     className={`inline-flex items-center px-3 py-1 rounded-full text-xs font-medium ${
                       authUser.role === 'admin'
                         ? 'bg-purple-100 text-purple-800'
-                        : 'bg-blue-100 text-blue-800'
+                        : 'bg-primary-100 text-primary-800'
                     }`}
                   >
                     {authUser.role}
@@ -239,6 +251,7 @@ export default function EditableUserProfile({ onBack }: EditableUserProfileProps
                 </div>
               </div>
             </div>
+
             <div className="flex-shrink-0">
               <button
                 type="submit"
@@ -748,7 +761,7 @@ export default function EditableUserProfile({ onBack }: EditableUserProfileProps
             {/* Involvement & Notifications */}
             <div className="bg-[#F2F7FC] rounded-lg p-6 space-y-6">
               <h3 className="text-lg md:text-xl font-semibold text-[#6393f6]">
-                Involvement & Notifications
+                Involvement & Social Handles
               </h3>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div className="bg-white rounded-lg p-4 border border-[#E5E7EB]">
@@ -810,48 +823,53 @@ export default function EditableUserProfile({ onBack }: EditableUserProfileProps
                   </div>
                 </div>
                 <div className="bg-white rounded-lg p-4 border border-[#E5E7EB]">
-                  <p className="text-xs text-gray-500 mb-2">Notifications</p>
-                  <div className="space-y-2">
+                  <p className="text-xs text-gray-500 mb-3">Social Handles</p>
+                  <div className="space-y-3">
                     {[
                       {
-                        key: 'emailNewsletter',
-                        label: 'Email Newsletter',
+                        key: 'linkedIn',
+                        label: 'LinkedIn',
+                        placeholder: 'https://linkedin.com/in/username',
                       },
                       {
-                        key: 'whatsAppGroup',
-                        label: 'WhatsApp Group',
+                        key: 'facebook',
+                        label: 'Facebook',
+                        placeholder: 'https://facebook.com/username',
                       },
                       {
-                        key: 'smsAlerts',
-                        label: 'SMS Alerts',
+                        key: 'whatsApp',
+                        label: 'WhatsApp',
+                        placeholder: '+234 800 000 0000',
                       },
-                    ].map(({ key, label }) => (
-                      <label key={key} className="flex items-center gap-2">
+                    ].map(({ key, label, placeholder }) => (
+                      <div key={key}>
+                        <label className="block text-sm text-[#4B5563] mb-1">
+                          {label}
+                        </label>
                         <input
-                          type="checkbox"
-                          checked={
-                            (formData.notifications as any)?.[key] ?? false
-                          }
+                          type="text"
+                          value={(formData.socialMedia as any)?.[key] ?? ''}
                           onChange={(e) =>
                             setFormData({
                               ...formData,
-                              notifications: {
-                                emailNewsletter: false,
-                                whatsAppGroup: false,
-                                smsAlerts: false,
-                                ...(formData.notifications || {}),
-                                [key]: e.target.checked,
-                              } as any,
+                              socialMedia: {
+                                linkedIn: '',
+                                facebook: '',
+                                whatsApp: '',
+                                ...(formData.socialMedia || {}),
+                                [key]: e.target.value,
+                              },
                             })
                           }
-                          className="w-4 h-4 text-[#6393f6] rounded border-gray-300 focus:ring-[#6393f6]"
+                          placeholder={placeholder}
+                          className="w-full rounded-md border border-gray-300 px-3 py-2 text-sm text-gray-700 outline-none transition focus:border-[#6393f6] focus:ring-1 focus:ring-[#6393f6]"
                         />
-                        <span className="text-sm text-[#4B5563]">{label}</span>
-                      </label>
+                      </div>
                     ))}
                   </div>
                 </div>
               </div>
+              
               <div className="bg-white rounded-lg p-4 border border-[#E5E7EB]">
                 <label className="text-xs text-gray-500 mb-1 block">
                   How Did You Hear About Us?
