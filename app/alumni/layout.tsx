@@ -19,7 +19,18 @@ export default function AlumniLayout({ children }: { children: React.ReactNode }
           <header className="sticky top-0 z-20 border-b border-slate-200 bg-white/90 backdrop-blur">
             <div className="flex flex-col gap-4 px-4 py-4 sm:px-6 lg:px-8">
               <div className="flex items-center justify-between gap-4">
-                <div className="flex items-center gap-3">
+                <div className="w-full flex items-center justify-between gap-3">
+                  <div className='md:hidden max-w-[2rem]'>
+                    <img src='/images/MaskLogo.svg' alt='logo'/>
+                  </div>
+
+                  <div className="flex flex-col hidden md:block">
+                    <p className="text-xl font-semibold text-slate-900">Alumni dashboard</p>
+                    <h1 className="text-sm font-medium text-slate-500">
+                      Stay connected, track your impact, and manage your profile.
+                    </h1>
+                  </div>
+
                   <button
                     type="button"
                     aria-label="Open sidebar"
@@ -32,16 +43,9 @@ export default function AlumniLayout({ children }: { children: React.ReactNode }
                       <span className="block h-0.5 w-5 bg-current" />
                     </span>
                   </button>
-
-                  <div className="flex flex-col hidden lg:block">
-                    <p className="text-xl font-semibold text-slate-900">Alumni dashboard</p>
-                    <h1 className="text-sm font-medium text-slate-500">
-                      Stay connected, track your impact, and manage your profile.
-                    </h1>
-                  </div>
                 </div>
 
-                <div className="flex w-full max-w-[40rem] items-center justify-end gap-4 lg:gap-6">
+                {/* <div className="flex w-full max-w-[40rem] items-center justify-end gap-4 lg:gap-6">
                   <Searchbar />
                   <button className="relative flex h-12 min-w-13 items-center justify-center rounded-xl border border-slate-200 bg-black text-white shadow-sm">
                     <BellDotIcon size={28} />
@@ -49,7 +53,7 @@ export default function AlumniLayout({ children }: { children: React.ReactNode }
                       3
                     </span>
                   </button>
-                </div>
+                </div> */}
               </div>
             </div>
           </header>

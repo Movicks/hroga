@@ -4,10 +4,10 @@ import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { useAppDispatch, useAppSelector } from '../../../redux/hooks';
 import { signupAlumni, clearError } from '../../../redux/features/auth/authSlice';
-import SignupStepper from '../../SignupStepper';
+import SignupStepper from '../../reusables/SignupStepper';
 import PersonalInfoStep from './PersonalInfoStep';
 import SchoolDetailsStep from './SchoolDetailsStep';
-import LifeAfterSchoolStep from './LifeAfterSchoolStep';
+// import LifeAfterSchoolStep from './LifeAfterSchoolStep';
 import GetInvolvedStep from './GetInvolvedStep';
 import { FormData, initialFormData, stepNames } from './types';
 
@@ -37,7 +37,7 @@ export default function AlumniSignupForm() {
   }, [formData, currentStep]);
 
   const handleNext = () => {
-    setCurrentStep((prev) => Math.min(prev + 1, 4));
+    setCurrentStep((prev) => Math.min(prev + 1, 3));
   };
 
   const handlePrev = () => {
@@ -71,9 +71,9 @@ export default function AlumniSignupForm() {
         return <PersonalInfoStep formData={formData} setFormData={setFormData} />;
       case 2:
         return <SchoolDetailsStep formData={formData} setFormData={setFormData} />;
+      // case 3:
+      //   return <LifeAfterSchoolStep formData={formData} setFormData={setFormData} />;
       case 3:
-        return <LifeAfterSchoolStep formData={formData} setFormData={setFormData} />;
-      case 4:
         return <GetInvolvedStep formData={formData} setFormData={setFormData} />;
       default:
         return null;
@@ -86,7 +86,7 @@ export default function AlumniSignupForm() {
         <div className="w-full space-y-4">
           <SignupStepper 
             currentStep={currentStep} 
-            totalSteps={4} 
+            totalSteps={3} 
             stepNames={stepNames}
           />
           
@@ -106,7 +106,7 @@ export default function AlumniSignupForm() {
               </button>
             )}
             <div></div>
-            {currentStep < 4 ? (
+            {currentStep < 3 ? (
               <button
                 onClick={handleNext}
                 className="px-8 py-1 bg-[#6393d6] text-white rounded-full font-semibold hover:bg-[#6393d6]/80 transition"

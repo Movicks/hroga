@@ -28,12 +28,12 @@ export const quickActions: QuickAction[] = [
     href: '/alumni/profile-setting',
     icon: Settings,
   },
-  {
-    title: 'My Donations',
-    description: 'Review your giving history and track contribution progress.',
-    href: '/alumni/my_donate',
-    icon: CreditCard,
-  },
+  // {
+  //   title: 'My Donations',
+  //   description: 'Review your giving history and track contribution progress.',
+  //   href: '/alumni/my_donate',
+  //   icon: CreditCard,
+  // },
   {
     title: 'Make A Donation',
     description: 'Support student welfare, events, and community initiatives.',

@@ -14,8 +14,8 @@ interface AlumniSidebarProps {
 
 const navItems = [
   { name: 'Dashboard', href: '/alumni', icon: House },
-  { name: 'My Donations', href: '/alumni/my_donate', icon: CreditCard },
-  { name: 'Profile Settings', href: '/alumni/profile-setting', icon: Settings },
+  // { name: 'My Donations', href: '/alumni/my_donate', icon: CreditCard },
+  // { name: 'Profile Settings', href: '/alumni/profile-setting', icon: Settings },
   { name: 'Make A Donation', href: '/donate', icon: HandHeart },
 ];
 
@@ -26,13 +26,13 @@ export default function AlumniSidebar({ isOpen, onClose }: AlumniSidebarProps) {
     <>
       <div
         className={`fixed inset-0 z-30 bg-[var(--darkNavy)] transition-opacity duration-300 lg:hidden ${
-          isOpen ? 'pointer-events-auto opacity-100' : 'pointer-events-none opacity-0'
+          isOpen ? 'pointer-events-auto opacity-10' : 'pointer-events-none opacity-0'
         }`}
         onClick={onClose}
       />
 
       <aside
-        className={`fixed inset-y-0 left-0 z-40 flex w-72 flex-col border-r border-slate-200 bg-[var(--darkNavy)] px-5 py-6 text-white shadow-md transition-transform duration-300 lg:translate-x-0 ${
+        className={`fixed inset-y-0 left-0 z-40 flex w-72 flex-col border-r border-slate-200/30 bg-[var(--darkNavy)] px-5 py-6 text-white shadow-md transition-transform duration-300 lg:translate-x-0 ${
           isOpen ? 'translate-x-0' : '-translate-x-full'
         }`}
       >
@@ -52,7 +52,7 @@ export default function AlumniSidebar({ isOpen, onClose }: AlumniSidebarProps) {
           </button>
         </div>
 
-        <div className="rounded-2xl border border-white/10 bg-white/6 p-4">
+        <div className="rounded-lg border border-white/10 bg-white/6 p-4">
           <p className="text-sm font-medium text-slate-50">Your Community Hub</p>
           <p className="mt-2 text-sm leading-6 text-slate-300">
             Track your giving, keep your profile updated, and stay connected to the HROGA network.
