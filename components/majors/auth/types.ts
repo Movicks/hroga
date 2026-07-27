@@ -141,5 +141,4 @@ export const stepNames = [
   'Personal Info',
   'School details',
   'Life after school',
-  'Get involved',
 ];

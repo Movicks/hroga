@@ -12,7 +12,7 @@ export default function AlumniHero({
   return (
     <div className="overflow-hidden rounded-xl bg-darkNavy p-6 text-white shadow-xs sm:p-8">
       <div className="flex flex-col gap-8 lg:flex-row lg:items-start lg:justify-between">
-        <div className="max-w-2xl space-y-4">
+        <div className="max-w-3xl space-y-4">
           <div>
             <p className="text-sm uppercase tracking-[0.28em] text-white/75">Welcome back</p>
             <h1 className="mt-3 text-3xl font-semibold sm:text-4xl">

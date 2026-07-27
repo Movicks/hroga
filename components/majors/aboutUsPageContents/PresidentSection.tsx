@@ -82,7 +82,7 @@ export default function PresidentSection() {
                             className="text-base font-bold"
                             style={{ color: "#1a1a2e", letterSpacing: "0.01em" }}
                             >
-                            IGONIBYA. BRISIBE
+                            IGONIBI. BRISIBE
                             </p>
                             <p className="text-sm mt-0.5" style={{ color: "#777" }}>
                             President-General, HROGA

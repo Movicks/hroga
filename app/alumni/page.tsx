@@ -60,7 +60,7 @@ export default function AlumniDashboardPage() {
 
   return (
     <section className="space-y-6">
-      <div className="grid gap-6 xl:grid-cols-[1.3fr_0.7fr]">
+      <div className="grid gap-6 xl:grid-cols-[1.3fr_0.5fr]">
         <AlumniHero
           fullName={fullName}
           profileCompletion={profileCompletion}
@@ -76,9 +76,8 @@ export default function AlumniDashboardPage() {
 
       <AlumniOverviewGrid cards={overviewCards} showNextStep={!isProfileComplete} />
 
-      <div className="grid gap-6 xl:grid-cols-[1fr_0.9fr]">
-        <AlumniQuickActions />
-        <AlumniProfileInsight
+      <div className="grid gap-6">
+        <AlumniQuickActions
           isProfileComplete={isProfileComplete}
           missingProfileItems={missingProfileItems}
         />

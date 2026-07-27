@@ -74,7 +74,7 @@ export default function FindClassmatesPage() {
 
     if (loading && !isSearching) {
         return (
-            <div className="min-h-screen bg-gradient-to-br from-gray-50 to-blue-50/30 flex items-center justify-center">
+            <div className="min-h-[100dvh] bg-gradient-to-br from-gray-50 to-blue-50/30 flex items-center justify-center">
                 <div className="text-center flex flex-col items-center justify-center h-screen">
                     <Loader loadTitle="Loading classmates"/>
                 </div>
@@ -84,7 +84,7 @@ export default function FindClassmatesPage() {
 
     if (error) {
         return (
-            <div className="min-h-screen bg-gradient-to-br from-gray-50 to-blue-50/30 flex items-center justify-center p-4">
+            <div className="min-h-[100dvh] bg-gradient-to-br from-gray-50 to-blue-50/30 flex items-center justify-center p-4">
                 <div className="bg-red-50 border border-red-200 rounded-xl px-6 py-4 max-w-md w-full">
                     <div className="flex items-center space-x-3">
                         <div className="flex-shrink-0">
@@ -105,7 +105,7 @@ export default function FindClassmatesPage() {
     }
 
     return (
-        <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-blue-50/20">
+        <div className="min-h-[100dvh] bg-gradient-to-br from-gray-50 via-white to-blue-50/20">
             <HomeTopbar />
             <div className="container mx-auto px-4 pt-25 md:pt-40 pb-8 max-w-6xl">
                 {/* Header */}

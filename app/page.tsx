@@ -27,7 +27,7 @@ export default function HomePage() {
   return (
     <div className="relative flex flex-col">
       <HomeTopbar />
-      <main className="min-h-screen">
+      <main className="min-h-[100dvh]">
         <HeroSection />
         <AboutAssociation />
         <UpcomingEvents />

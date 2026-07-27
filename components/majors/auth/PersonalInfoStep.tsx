@@ -85,7 +85,7 @@ export default function PersonalInfoStep({ formData, setFormData }: PersonalInfo
               />
             </div>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          {/* <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
               <label className="block text-sm mb-2">
                 Maiden name <span className="text-gray-500">(Name at graduation)</span>
@@ -108,7 +108,7 @@ export default function PersonalInfoStep({ formData, setFormData }: PersonalInfo
                 placeholder="what your classmates called you"
               />
             </div>
-          </div>
+          </div> */}
         </section>
 
         <hr className="border-[#E5E7EB]" />
@@ -136,7 +136,7 @@ export default function PersonalInfoStep({ formData, setFormData }: PersonalInfo
               >
                 <option value="">Select</option>
                 <option value="female">Female</option>
-                <option value="male">Male</option>
+                {/* <option value="male">Male</option> */}
               </select>
             </div>
           </div>
@@ -170,7 +170,7 @@ export default function PersonalInfoStep({ formData, setFormData }: PersonalInfo
                 placeholder="+234 801 224 546"
               />
             </div>
-            <div>
+            {/* <div>
               <label className="block text-sm mb-2">
                 WhatsApp number <span className="text-gray-500">(If different)</span>
               </label>
@@ -181,7 +181,7 @@ export default function PersonalInfoStep({ formData, setFormData }: PersonalInfo
                 className="w-full bg-white px-3 py-2 border-2 border-[#E5E7EB] rounded-lg focus:outline-none focus:border-[#6393f6]"
                 placeholder="+234 801 224 546"
               />
-            </div>
+            </div> */}
             <div>
               <label className="block text-sm mb-2">Country of residence *</label>
               <select
@@ -198,7 +198,7 @@ export default function PersonalInfoStep({ formData, setFormData }: PersonalInfo
                 <option value="Canada">Canada</option>
               </select>
             </div>
-            <div>
+            {/* <div>
               <label className="block text-sm mb-2">State / city</label>
               <input
                 type="text"
@@ -207,8 +207,8 @@ export default function PersonalInfoStep({ formData, setFormData }: PersonalInfo
                 className="w-full bg-white px-3 py-2 border-2 border-[#E5E7EB] rounded-lg focus:outline-none focus:border-[#6393f6]"
                 placeholder="e.g Lagos, Abuja, London"
               />
-            </div>
-            <div>
+            </div> */}
+            {/* <div>
               <label className="block text-sm mb-2">
                 Home address <span className="text-gray-500">(optional)</span>
               </label>
@@ -219,58 +219,11 @@ export default function PersonalInfoStep({ formData, setFormData }: PersonalInfo
                 className="w-full bg-white px-3 py-2 border-2 border-[#E5E7EB] rounded-lg focus:outline-none focus:border-[#6393f6]"
                 placeholder="for postal correspondence"
               />
-            </div>
+            </div> */}
           </div>
         </section>
 
         <hr className="border-[#E5E7EB]" />
-
-        {/* Profile photo */}
-        <section className="space-y-4">
-          <h3 className="text-lg font-semibold text-[#4B5563]">Profile photo</h3>
-          {previewUrl ? (
-            <div className="relative inline-block">
-              <img 
-                src={previewUrl} 
-                alt="Profile preview" 
-                className="w-32 h-32 object-cover rounded-xl border-2 border-[#6393f6]"
-              />
-              <button
-                type="button"
-                onClick={() => setPreviewUrl(null)}
-                className="absolute -top-2 -right-2 bg-red-500 text-white rounded-full p-1 hover:bg-red-600 transition"
-              >
-                <X size={16} />
-              </button>
-            </div>
-          ) : (
-            <label className="border-2 border-dashed border-[#C7D2FE] rounded-xl p-8 bg-white text-center cursor-pointer hover:bg-[#F8FAFF] transition block">
-              <input
-                type="file"
-                accept="image/jpeg,image/png"
-                className="hidden"
-                onChange={(e) => {
-                  const file = e.target.files?.[0];
-                  if (file) {
-                    console.log('File selected:', file);
-                    const url = URL.createObjectURL(file);
-                    setPreviewUrl(url);
-                  }
-                }}
-              />
-              <div className="flex flex-col md:flex-row items-center md:justify-center md:items-start gap-2">
-                <div className='relative mt-1'>
-                  <Camera size={24} className='text-[#1e3a8a]/80' />
-                  <span className='absolute bg-white right-[-2px] top-[1px] p-1 rounded-full w-3 h-3 text-md font-medium flex items-center justify-center text-[#1e3a8a]'>+</span>
-                </div>
-                <div className='flex flex-col items-center'>
-                  <p className="text-lg font-medium text-[#1E3A8A]">Upload a recent photo of yourself</p>
-                  <p className="text-sm text-[#6B7280] mt-1 md:ml-[-25px]">JPG or PNG · Max 5MB · Minimum 300 × 300px</p>
-                </div>
-              </div>
-            </label>
-          )}
-        </section>
 
         {/* Password */}
         <section className="space-y-4">

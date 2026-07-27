@@ -23,7 +23,7 @@ export default function AlumniSnapshotCard({
           <p className="text-sm font-medium uppercase tracking-[0.2em] text-darkNavy/70">
             Member snapshot
           </p>
-          <h2 className="mt-2 text-2xl font-semibold text-darkNavy">
+          <h2 className="mt-2 text-md font-semibold text-darkNavy">
             {firstName || 'Alumni'} profile
           </h2>
         </div>

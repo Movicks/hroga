@@ -2,8 +2,22 @@ import Link from 'next/link';
 import { ArrowRight } from 'lucide-react';
 
 import { quickActions } from './dashboardData';
+import AlumniProfileInsight from './AlumniProfileInsight';
 
-export default function AlumniQuickActions() {
+type MissingProfileItem = {
+  title: string;
+  description: string;
+};
+
+type AlumniProfileInsightProps = {
+  isProfileComplete: boolean;
+  missingProfileItems: MissingProfileItem[];
+};
+
+export default function AlumniQuickActions({
+  isProfileComplete,
+  missingProfileItems,
+}: AlumniProfileInsightProps ) {
   return (
     <div className="rounded-xl border border-darkNavy/10 bg-white p-6 shadow-xs sm:p-7">
       <div className="flex items-center justify-between gap-4">
@@ -43,6 +57,10 @@ export default function AlumniQuickActions() {
             </Link>
           );
         })}
+        <AlumniProfileInsight
+          isProfileComplete={isProfileComplete}
+          missingProfileItems={missingProfileItems}
+        />
       </div>
     </div>
   );
