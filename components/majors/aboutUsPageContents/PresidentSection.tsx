@@ -6,11 +6,11 @@ export default function PresidentSection() {
   return (
       <section className="flex justify-center w-full px-4 lg:px-[6rem] xl:px-[12.5rem]">
           <div className="bg-gradient-to-r from-[#efe9f5] to-[#f7f7f7] w-full flex flex-wrap gap-6 lg:gap-16 p-4 lg:p-[72px]">
-              <div className="w-full max-w-[354px] h-full max-h-[490px] md:max-h-[790px] bg-yellow-200 border-4 border-[#aeecfe] rounded-xl">
-                  <Image src="/images/President_image.png" className="w-full h-full bg-cover" alt="President" width={100} height={100} />
+              <div className="w-full max-w-[354px] h-full max-h-[490px] md:max-h-[490px] bg-yellow-200 border-4 border-[#aeecfe] rounded-xl">
+                  <Image src="/images/President_Image2.jpeg" className="w-full h-full bg-cover rounded-lg" alt="President" width={100} height={100} />
               </div>
               {/* Right: Message content */}
-              <div className="flex-1 flex flex-col gap-5 lg:mt-20">
+              <div className="flex-1 flex flex-col gap-5 lg:mt-2">
                 {/* Heading */}
                 <h2
                     className="text-3xl md:text-4xl font-semibold tracking-tight"
