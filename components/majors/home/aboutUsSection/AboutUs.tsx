@@ -19,7 +19,7 @@ const tags = [
 
 export default function AboutAssociation() {
   return (
-    <section className="bg-[#020d39] py-14 lg:py-22 h-[50rem] md:h-[45rem] overflow-hidden">
+    <section className="bg-[#020d39] py-14 lg:py-22 h-[55rem] md:h-[48rem] overflow-hidden">
       <div className="relative flex items-center justify-end h-[100%] mx-auto max-w-[1280px] lg:px-6">
 
         <div className='w-[25%] min-h-full flex items-start justify-end'>
@@ -36,7 +36,7 @@ export default function AboutAssociation() {
         
         
         <div className="absolute w-full px-4 lg:px-[5rem] xl:px-[6.7rem]">
-          <div className="max-w-[760px]">
+          <div className="max-w-[870px]">
             {/* section heading */}
             <SectionHeading title="WHO WE ARE AND HOW TO GET INVOLVED" className="text-white/90 text-xs md:text-[18px] mb-0"/>
 
@@ -50,16 +50,14 @@ export default function AboutAssociation() {
 
             {/* Content */}
             <div className="mt-8 space-y-6">
-              <p className="max-w-[690px] md:text-[19px] leading-[2.05] font-normal text-white/90">
-                The Holy Rosary Old Girls Association connects alumnae across
-                every graduating class celebrating shared memories, driving
-                impactful projects, and keeping the bonds of school alive for
-                life.
+              <p className="max-w-[800px] md:text-[19px] leading-[2.05] font-normal text-white/90">
+                The Holy Rosary Old Girls Association (HROGA) is a proud community of alumnae united by a shared heritage,
+                lifelong friendships and the values instilled by our beloved Alma Mater since 1956.
               </p>
 
-              <p className="max-w-[690px] md:text-[19px] leading-[2.05] font-normal text-white/90">
-                From Lagos to London, our community spans continents but the
-                heart of who we are was shaped within the walls of Holy Rosary.
+              <p className="max-w-[870px] md:text-[19px] leading-[2.05] font-normal text-white/90">
+                Guided by our motto, “Truth and Service,” HROGA connects generations of Holy Rosary girls across the world,
+                fostering a strong sense of sisterhood, belonging and lasting connection.
               </p>
             </div>
 

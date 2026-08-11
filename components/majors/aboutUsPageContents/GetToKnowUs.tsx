@@ -11,10 +11,15 @@ export default function GetToKnowUs() {
       <div className="max-w-6xl mx-auto">
         {/* Heading */}
         <h2
-          className="text-4xl md:text-5xl mb-8 text-black font-serif"
+          className="text-4xl md:text-5xl mb-8 lg:mt-10 text-black font-serif"
         >
           Get to know us
         </h2>
+
+        <p className="my-6 md:my-9 w-full text-base leading-[1.75] text-[#616161] sm:text-lg lg:mt-10 lg:text-[18px] lg:leading-[1.8]">
+          As ambassadors of our <span className="font-semibold">Alma Mater,</span> we remain committed to preserving our rich heritage,
+          strengthening our community and building a lasting legacy for generations of Holy Rosary girls to come.
+        </p>
 
         {/* Two-column layout */}
         <div className="flex flex-col lg:flex-row gap-10 lg:gap-8 items-start">
@@ -76,7 +81,7 @@ export default function GetToKnowUs() {
                 style={{ borderRadius: "4px" }}
               >
                 <Image
-                  src="https://images.unsplash.com/photo-1739303987830-ca19742b19bc?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8VHdvJTIwYmxhY2slMjB3b21lbiUyMHN0YW5kaW5nJTIwYW5kJTIwY29sbGFib3JhdGluZyUyMG9uJTIwYSUyMGxhcHRvcHxlbnwwfHwwfHx8MA%3D%3D"
+                  src="/images/HROGA_Group.jpeg"
                   alt="Two women collaborating on a laptop"
                   width={600}
                   height={340}
@@ -92,7 +97,7 @@ export default function GetToKnowUs() {
                 style={{ borderRadius: "4px" }}
               >
                 <Image
-                  src="https://media.istockphoto.com/id/2226926882/photo/planning-meeting-or-business-women-with-laptop-for-feedback-collaboration-or-investment.webp?a=1&b=1&s=612x612&w=0&k=20&c=Fbvc9-jpfXNNZoOL3gHuwfzamDbfJjOEVaaB2FqaBo0="
+                  src="/images/HROGA_highTable.jpeg"
                   alt="Three women having a discussion in a living room"
                   width={600}
                   height={140}

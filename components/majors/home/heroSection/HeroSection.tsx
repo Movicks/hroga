@@ -10,9 +10,9 @@ export default function HeroSection() {
   return (
     <section className="overflow-hidden bg-white px-4 pb-[2rem] pt-[5.5rem] md:pt-[8rem] lg:pt-[10rem] sm:px-6 lg:px-[5rem] xl:px-[12.5rem]">
       <div className="w-full">
-        <div className="flex min-h-[auto] flex-col pb-8 gap-12 md:gap-12 lg:min-h-[560px] lg:flex-row lg:items-start lg:gap-20">
+        <div className="flex  min-h-[auto] flex-col pb-8 gap-12 md:gap-12 lg:min-h-[560px] lg:flex-row lg:items-start">
           {/* LEFT CONTENT */}
-          <div className="w-full lg:max-w-[560px] ">
+          <div className="w-full">
             {/* <p className="mb-4 text-sm font-normal uppercase tracking-[-0.02em] text-[#8B8B8B] sm:text-base lg:mb-5 lg:text-[18px]">
               
             </p> */}
@@ -30,12 +30,13 @@ export default function HeroSection() {
               HOLY ROSARY COLLEGE
             </p>
 
-            <p className="mt-6 max-w-[560px] text-base leading-[1.75] text-[#616161] sm:text-lg lg:mt-10 lg:text-[18px] lg:leading-[1.8]">
-              Reconnect with your class, celebrate every milestone, and continue
-              the legacy of excellence Holy rosary built in each of us.
+            <p className="mt-6 w-full max-w-[700px] text-base leading-[1.75] text-[#616161] sm:text-lg lg:mt-10 lg:text-[18px] lg:leading-[1.8]">
+              The <span className="font-semibold">Holy Rosary Old Girls Association (HROGA)</span> is a global community of alumnae united by shared heritage,
+              lifelong friendships and the enduring values of our Alma Mater.
+              Guided by our motto, <span className="font-semibold">“Truth and Service,”</span> we connect generations of Holy Rosary girls, preserve our legacy and strengthen the bonds of sisterhood across the world.
             </p>
 
-            <button onClick={handleClick} className="mt-8 h-[40px] rounded-full bg-[#5E89DA] px-6 text-sm font-medium text-white transition hover:bg-[#4F79C8] sm:mt-10 sm:h-[48px] sm:px-8 sm:text-base lg:mt-16 lg:px-10">
+            <button onClick={handleClick} className="mt-8 h-[40px] rounded-full bg-[#5E89DA] px-6 text-sm font-medium text-white transition hover:bg-[#4F79C8] sm:mt-10 sm:h-[48px] sm:px-8 sm:text-base lg:mt-10 lg:px-10">
               Find your Classmates
             </button>
           </div>
