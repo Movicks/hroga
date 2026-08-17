@@ -46,12 +46,18 @@ export interface InitializeDueResponse {
   message?: string;
 }
 
+export interface VerifyDuePaymentResponse {
+  message?: string;
+  due?: Due;
+}
+
 interface DuesState {
   dues: Due[];
   dueSummary: DueSummary | null;
   isCheckingDueStatus: boolean;
   lastDueStatusCheck: number | null;
   isInitializingPayment: boolean;
+  isVerifyingPayment: boolean;
   isFetchingDues: boolean;
   paymentError: string | null;
   fetchError: string | null;
@@ -63,6 +69,7 @@ const initialState: DuesState = {
   isCheckingDueStatus: false,
   lastDueStatusCheck: null,
   isInitializingPayment: false,
+  isVerifyingPayment: false,
   isFetchingDues: false,
   paymentError: null,
   fetchError: null,
@@ -173,6 +180,45 @@ export const initializeDuePayment = createAsyncThunk(
       return data;
     } catch (error) {
       return rejectWithValue(error instanceof Error ? error.message : 'Failed to initialize payment');
+    }
+  }
+);
+
+// Async thunk to verify a due payment after Paystack redirects back
+export const verifyDuePayment = createAsyncThunk(
+  'dues/verifyDuePayment',
+  async (reference: string, { rejectWithValue }) => {
+    try {
+      const baseUrl =
+        process.env.NEXT_PUBLIC_API_BASE_URL?.replace(/\/$/, '') || 'http://localhost:4000';
+
+      const response = await fetch(
+        `${baseUrl}/api/dues/verify/${encodeURIComponent(reference)}`
+      );
+
+      if (response.status === 404) {
+        throw new Error('Due verification endpoint not found. Please check if the server is running correctly.');
+      }
+
+      let data;
+      try {
+        data = await response.json();
+      } catch (jsonError) {
+        const text = await response.text();
+        throw new Error(
+          `Server returned non-JSON response (${response.status}): ${text.substring(0, 100)}`
+        );
+      }
+
+      if (!response.ok) {
+        throw new Error(data.message || `Unable to verify due payment (${response.status})`);
+      }
+
+      return data as VerifyDuePaymentResponse;
+    } catch (error) {
+      return rejectWithValue(
+        error instanceof Error ? error.message : 'Unable to verify due payment.'
+      );
     }
   }
 );
@@ -303,6 +349,31 @@ const duesSlice = createSlice({
       })
       .addCase(initializeDuePayment.rejected, (state, action) => {
         state.isInitializingPayment = false;
+        state.paymentError = action.payload as string;
+      });
+
+    // verifyDuePayment
+    builder
+      .addCase(verifyDuePayment.pending, (state) => {
+        state.isVerifyingPayment = true;
+        state.paymentError = null;
+      })
+      .addCase(
+        verifyDuePayment.fulfilled,
+        (state, action: PayloadAction<VerifyDuePaymentResponse>) => {
+          state.isVerifyingPayment = false;
+          if (action.payload.due?.status === 'success') {
+            state.dueSummary = state.dueSummary
+              ? {
+                  ...state.dueSummary,
+                  isCurrentMonthPaid: true,
+                }
+              : state.dueSummary;
+          }
+        }
+      )
+      .addCase(verifyDuePayment.rejected, (state, action) => {
+        state.isVerifyingPayment = false;
         state.paymentError = action.payload as string;
       });
 

@@ -4,7 +4,11 @@ import { useState, useEffect } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { Calendar, CreditCard, CheckCircle, AlertCircle, Loader2 } from 'lucide-react';
 import { useAppSelector, useAppDispatch } from '../../../redux/hooks';
-import { checkDuePaymentStatus, initializeDuePayment } from '../../../redux/features/dues/duesSlice';
+import {
+  checkDuePaymentStatus,
+  initializeDuePayment,
+  verifyDuePayment,
+} from '../../../redux/features/dues/duesSlice';
 
 export function MonthlyDuesForm() {
   const router = useRouter();
@@ -16,12 +20,12 @@ export function MonthlyDuesForm() {
     dueSummary, 
     isCheckingDueStatus, 
     isInitializingPayment, 
+    isVerifyingPayment,
     paymentError 
   } = useAppSelector((state) => state.dues);
   
   const [selectedMonth, setSelectedMonth] = useState<string>('');
   const [error, setError] = useState<string | null>(null);
-  const [isVerifyingPayment, setIsVerifyingPayment] = useState(false);
 
   const reference = searchParams.get('reference');
   const paymentStatus = searchParams.get('status');
@@ -54,23 +58,11 @@ export function MonthlyDuesForm() {
 
     let cancelled = false;
 
-    const verifyPayment = async () => {
-      setIsVerifyingPayment(true);
+    const verifyPaymentRedirect = async () => {
       setError(null);
 
       try {
-        const baseUrl =
-          process.env.NEXT_PUBLIC_API_BASE_URL?.replace(/\/$/, '') || 'http://localhost:4000';
-        const response = await fetch(`${baseUrl}/api/dues/verify/${encodeURIComponent(reference)}`);
-        const data = await response.json();
-
-        if (!response.ok) {
-          throw new Error(data.message || 'Unable to verify due payment.');
-        }
-
-        if (cancelled) {
-          return;
-        }
+        const data = await dispatch(verifyDuePayment(reference)).unwrap();
 
         if (data?.due?.status === 'success') {
           dispatch(checkDuePaymentStatus(true));
@@ -83,19 +75,17 @@ export function MonthlyDuesForm() {
       } catch (verificationError) {
         if (!cancelled) {
           setError(
-            verificationError instanceof Error
-              ? verificationError.message
-              : 'Unable to verify due payment.'
+            typeof verificationError === 'string'
+              ? verificationError
+              : verificationError instanceof Error
+                ? verificationError.message
+                : 'Unable to verify due payment.'
           );
-        }
-      } finally {
-        if (!cancelled) {
-          setIsVerifyingPayment(false);
         }
       }
     };
 
-    verifyPayment();
+    verifyPaymentRedirect();
 
     return () => {
       cancelled = true;
