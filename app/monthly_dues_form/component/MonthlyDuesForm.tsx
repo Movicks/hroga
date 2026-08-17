@@ -3,8 +3,8 @@
 import { useState, useEffect } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { Calendar, CreditCard, CheckCircle, AlertCircle, Loader2 } from 'lucide-react';
-import { useAppSelector, useAppDispatch } from '../../redux/hooks';
-import { checkDuePaymentStatus, initializeDuePayment } from '../../redux/features/dues/duesSlice';
+import { useAppSelector, useAppDispatch } from '../../../redux/hooks';
+import { checkDuePaymentStatus, initializeDuePayment } from '../../../redux/features/dues/duesSlice';
 
 export function MonthlyDuesForm() {
   const router = useRouter();
