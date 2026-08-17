@@ -1,19 +1,16 @@
 'use client';
 
 import { useState, useEffect, useRef } from 'react';
-import { useRouter } from 'next/navigation';
-import { CheckCircle, Clock, AlertCircle, DollarSign } from 'lucide-react';
+import { CheckCircle, AlertCircle } from 'lucide-react';
 import { useAppSelector, useAppDispatch } from '../../../redux/hooks';
 import { fetchUserDues, checkDuePaymentStatus } from '../../../redux/features/dues/duesSlice';
 import ProtectedRoute from '../../../authGuard/ProtectedRoute';
-import AlumniSidebar from '../../../components/sidebars/AlumniSidebar';
 import Loader from '../../../components/reusables/Loader';
 import DuePaymentCard from '../../../components/majors/alumni/DuePaymentCard';
 import DueHistoryTable from '../../../components/majors/alumni/DueHistoryTable';
 import DueSummaryCard from '../../../components/majors/alumni/DueSummaryCard';
 
 export default function AlumniDuesPage() {
-  const router = useRouter();
   const dispatch = useAppDispatch();
   
   const { user, loading } = useAppSelector((state) => state.auth);
@@ -41,43 +38,24 @@ export default function AlumniDuesPage() {
     dispatch(checkDuePaymentStatus(true));
   };
 
-  const formatCurrency = (amount: number) => {
-    return new Intl.NumberFormat('en-NG', {
+  const formatMonth = (month: string) => {
+    const [year, monthNumber] = month.split('-').map(Number);
+    return new Date(year, monthNumber - 1, 1).toLocaleDateString('en-US', {
+      month: 'long',
+      year: 'numeric',
+    });
+  };
+
+  const formatCurrency = (amount: number) =>
+    new Intl.NumberFormat('en-NG', {
       style: 'currency',
       currency: 'NGN',
       minimumFractionDigits: 0,
     }).format(amount);
-  };
 
-  const getStatusIcon = (status: string) => {
-    switch (status) {
-      case 'success':
-        return <CheckCircle className="h-5 w-5 text-green-500" />;
-      case 'pending':
-        return <Clock className="h-5 w-5 text-yellow-500" />;
-      case 'overdue':
-        return <AlertCircle className="h-5 w-5 text-red-500" />;
-      case 'failed':
-        return <AlertCircle className="h-5 w-5 text-red-500" />;
-      default:
-        return <Clock className="h-5 w-5 text-gray-500" />;
-    }
-  };
-
-  const getStatusColor = (status: string) => {
-    switch (status) {
-      case 'success':
-        return 'bg-green-100 text-green-800';
-      case 'pending':
-        return 'bg-yellow-100 text-yellow-800';
-      case 'overdue':
-        return 'bg-red-100 text-red-800';
-      case 'failed':
-        return 'bg-red-100 text-red-800';
-      default:
-        return 'bg-gray-100 text-gray-800';
-    }
-  };
+  const paidDues = dues
+    .filter((due) => due.status === 'success')
+    .sort((first, second) => second.month.localeCompare(first.month));
 
   const isPageLoading = loading || isFetchingDues || isCheckingDueStatus;
   const displayError = error || fetchError;
@@ -93,7 +71,6 @@ export default function AlumniDuesPage() {
   return (
     <ProtectedRoute allowedRoles={['alumni']}>
       <div className="min-h-auto bg-slate-50">
-        
         {/* Main Content */}
         <div className="">
           <main className="flex-1">
@@ -118,6 +95,55 @@ export default function AlumniDuesPage() {
                   currentMonth={dueSummary?.currentMonth || ''}
                   isCurrentMonthPaid={dueSummary?.isCurrentMonthPaid || false}
                 />
+
+                {/* <div className="rounded bg-white p-6 shadow-xs border border-gray-200">
+                  <div className="mb-6 flex items-center justify-between">
+                    <div>
+                      <h2 className="text-lg font-semibold text-gray-900">Paid Months</h2>
+                      <p className="text-sm text-gray-500">
+                        Each paid month is tracked independently for reminders, audit, and reporting.
+                      </p>
+                    </div>
+                    <div className="rounded bg-green-50 px-3 py-2 text-sm font-medium text-green-700">
+                      {paidDues.length} month{paidDues.length === 1 ? '' : 's'} paid
+                    </div>
+                  </div>
+
+                  {paidDues.length === 0 ? (
+                    <div className="rounded border border-dashed border-gray-200 bg-gray-50 p-6 text-sm text-gray-500">
+                      No paid months yet. Once a payment succeeds, each covered month appears here as its own card.
+                    </div>
+                  ) : (
+                    <div className="grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-3">
+                      {paidDues.map((due) => (
+                        <div key={due._id} className="rounded border border-green-200 bg-green-50 p-4">
+                          <div className="flex items-start justify-between gap-3">
+                            <div>
+                              <h3 className="text-sm font-semibold text-gray-900">
+                                {formatMonth(due.month)}
+                              </h3>
+                              <p className="mt-1 text-xs text-gray-600">
+                                {formatCurrency(due.amount)}
+                              </p>
+                            </div>
+                            <span className="inline-flex items-center gap-1 rounded-full bg-green-100 px-3 py-1 text-xs font-medium text-green-800">
+                              <CheckCircle className="h-3.5 w-3.5" />
+                              Paid
+                            </span>
+                          </div>
+                          <div className="mt-4 space-y-1 text-xs text-gray-600">
+                            <p>
+                              Group reference: <span className="font-mono">{due.paymentReference || due.reference}</span>
+                            </p>
+                            <p>
+                              Payment batch: {due.paymentMonthCount || due.coveredMonths?.length || 1} month(s)
+                            </p>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  )}
+                </div> */}
 
                 {/* Due History */}
                 <div className="bg-white rounded shadow-xs border border-gray-200 p-6">

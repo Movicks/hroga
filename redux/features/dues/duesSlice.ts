@@ -2,25 +2,33 @@ import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
 
 export interface DueUser {
   _id: string;
-  firstName: string;
-  lastName: string;
-  email: string;
-  role: 'admin' | 'alumni';
+  firstName?: string;
+  lastName?: string;
+  email?: string;
+  role?: 'admin' | 'alumni';
 }
 
 export interface Due {
   _id: string;
   reference: string;
+  paymentReference?: string;
   amount: number;
+  paymentTotalAmount?: number;
   currency: string;
   type: string;
   month: string;
+  paymentMonthCount?: number;
+  coveredMonths?: string[];
+  paymentStartMonth?: string;
+  paymentEndMonth?: string;
   status: string;
   paidAt?: string;
   dueDate?: string;
   notes?: string;
   userId: string;
   user?: DueUser;
+  payerName?: string;
+  payerEmail?: string;
   createdAt: string;
   updatedAt: string;
 }
@@ -30,6 +38,8 @@ export interface DueSummary {
   pendingCount: number;
   overdueCount: number;
   totalDues: number;
+  successfulMonthsCount?: number;
+  paidMonths?: string[];
   isCurrentMonthPaid: boolean;
   currentMonth: string;
 }
@@ -37,6 +47,7 @@ export interface DueSummary {
 export interface InitializeDuePayload {
   month: string;
   type: string;
+  monthsCount?: number;
   notes?: string;
 }
 
@@ -44,11 +55,18 @@ export interface InitializeDueResponse {
   authorizationUrl?: string;
   reference?: string;
   message?: string;
+  monthsCount?: number;
+  coveredMonths?: string[];
+  totalAmount?: number;
 }
 
 export interface VerifyDuePaymentResponse {
   message?: string;
   due?: Due;
+  dues?: Due[];
+  monthsPaidCount?: number;
+  paymentReference?: string;
+  totalAmount?: number;
 }
 
 interface DuesState {
@@ -362,11 +380,25 @@ const duesSlice = createSlice({
         verifyDuePayment.fulfilled,
         (state, action: PayloadAction<VerifyDuePaymentResponse>) => {
           state.isVerifyingPayment = false;
+          if (action.payload.dues?.length) {
+            const verifiedIds = new Set(action.payload.dues.map((due) => due._id));
+            state.dues = [
+              ...action.payload.dues,
+              ...state.dues.filter((due) => !verifiedIds.has(due._id)),
+            ];
+          }
           if (action.payload.due?.status === 'success') {
             state.dueSummary = state.dueSummary
               ? {
                   ...state.dueSummary,
                   isCurrentMonthPaid: true,
+                  successfulMonthsCount: state.dues.filter(
+                    (due) => due.status === 'success'
+                  ).length,
+                  paidMonths: state.dues
+                    .filter((due) => due.status === 'success')
+                    .map((due) => due.month)
+                    .sort(),
                 }
               : state.dueSummary;
           }
