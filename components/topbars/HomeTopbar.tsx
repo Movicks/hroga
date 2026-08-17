@@ -12,7 +12,7 @@ export default function HomeTopbar() {
   const router = useRouter();
   const pathname = usePathname();
   const dispatch = useAppDispatch();
-  const { isAuthenticated } = useAppSelector((state) => state.auth);
+  const { isAuthenticated, user } = useAppSelector((state) => state.auth);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   
@@ -54,6 +54,15 @@ export default function HomeTopbar() {
     setIsMenuOpen(false);
   };
 
+  const dashboardPath =
+    user?.role === 'admin' ? '/admin' : user?.role === 'alumni' ? '/alumni' : null;
+  const dashboardLabel =
+    user?.role === 'admin'
+      ? 'Dashboard'
+      : user?.role === 'alumni'
+        ? 'Dashboard'
+        : 'Donate';
+
   
 
   return (
@@ -64,7 +73,7 @@ export default function HomeTopbar() {
           <Image src="/images/MaskLogo.svg" className={`transform duration-300 ${scrolled ? 'w-[3rem] max-h-[3.2rem]' : 'w-[3.5rem] max-h-[3.7rem]'}`}  alt="HROGA" width={100} height={100} loading="eager" />
         </Link>
 
-        <section className={`hidden md:flex gap-15 xl:gap-4 xl:w-[55%] pl-8 justify-between h-full py-2 rounded-full overflow-hidden transform duration-300 ${scrolled ? 'bg-white' : 'md:bg-[#f3f9d2] pr-4'}`}>
+        <section className={`hidden md:flex gap-15 xl:gap-4 pl-8 justify-between h-full py-2 rounded-full overflow-hidden transform duration-300 ${scrolled ? 'bg-white xl:w-[60%]' : 'md:bg-[#f3f9d2] xl:w-[60%] pr-4'}`}>
           {/* Navigation Links */}
           <nav className="hidden md:flex items-center gap-6">
             {navLinks.map((item, index) => (
@@ -94,12 +103,21 @@ export default function HomeTopbar() {
               </button>
             )}
 
-            <button
-              onClick={() => handleNavigate('/donate')}
-              className="px-4 py-2 text-primary bg-primary/15 rounded-full hover:bg-primary/10 transition-colors"
-            >
-              Donate
-            </button>
+            {isAuthenticated && dashboardPath ? (
+              <button
+                onClick={() => handleNavigate(dashboardPath)}
+                className="px-4 py-2 text-primary bg-primary/15 rounded-full hover:bg-primary/10 transition-colors"
+              >
+                {dashboardLabel}
+              </button>
+            ) : (
+              <button
+                onClick={() => handleNavigate('/donate')}
+                className="px-4 py-2 text-primary bg-primary/15 rounded-full hover:bg-primary/10 transition-colors"
+              >
+                Donate
+              </button>
+            )}
           </div>
 
         </section>
@@ -178,12 +196,21 @@ export default function HomeTopbar() {
               </button>
             )}
 
-            <button
-              onClick={() => handleNavigate('/donate')}
-              className="w-full rounded-full bg-primary/15 px-4 py-3 text-primary transition-colors hover:bg-primary/10"
-            >
-              Donate
-            </button>
+            {isAuthenticated && dashboardPath ? (
+              <button
+                onClick={() => handleNavigate(dashboardPath)}
+                className="w-full rounded-full bg-primary/15 px-4 py-3 text-primary transition-colors hover:bg-primary/10"
+              >
+                {dashboardLabel}
+              </button>
+            ) : (
+              <button
+                onClick={() => handleNavigate('/donate')}
+                className="w-full rounded-full bg-primary/15 px-4 py-3 text-primary transition-colors hover:bg-primary/10"
+              >
+                Donate
+              </button>
+            )}
           </div>
         </aside>
       </div>

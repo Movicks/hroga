@@ -70,7 +70,7 @@ export default function ActivitiesPage() {
 
   return (
     <section className="space-y-6">
-      <div className="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm flex justify-between items-center">
+      <div className="rounded border border-slate-200 bg-white p-6 shadow-sm flex justify-between items-center">
         <div>
           <p className="text-sm uppercase tracking-[0.3em] text-slate-500">Activities</p>
           <h1 className="mt-3 text-3xl font-semibold text-slate-900">Manage activities</h1>
@@ -80,7 +80,7 @@ export default function ActivitiesPage() {
         </div>
         <button
           onClick={() => handleOpenModal()}
-          className="flex items-center gap-2 bg-black text-white px-6 py-3 rounded-xl hover:bg-primary/90 transition-all shadow-md"
+          className="flex items-center gap-2 bg-black text-white px-6 py-3 rounded hover:bg-primary/90 transition-all shadow-md"
         >
           <Plus size={20} />
           <span>Add Activity</span>
@@ -88,7 +88,7 @@ export default function ActivitiesPage() {
       </div>
 
       {error && (
-        <div className="bg-red-50 border border-red-200 text-red-600 px-4 py-3 rounded-xl flex justify-between items-center">
+        <div className="bg-red-50 border border-red-200 text-red-600 px-4 py-3 rounded flex justify-between items-center">
           <span>{error}</span>
           <button onClick={() => dispatch(clearActivityError())}>
             <X size={18} />
@@ -105,9 +105,9 @@ export default function ActivitiesPage() {
           <div className="col-span-full py-12 text-center text-slate-500">No activities found. Add one to get started!</div>
         ) : (
           activities.map((activity) => (
-            <div key={activity._id} className="rounded-xl border border-slate-200 bg-white p-6 shadow-sm hover:shadow-md transition-all group relative">
+            <div key={activity._id} className="rounded border border-slate-200 bg-white p-6 shadow-sm hover:shadow-md transition-all group relative">
               <div className="flex justify-between items-start">
-                <div className="bg-primary/10 text-black rounded-2xl p-3 text-center min-w-[60px]">
+                <div className="bg-primary/10 text-black rounded p-3 text-center min-w-[60px]">
                   <span className="block text-xl font-bold">{activity.day}</span>
                   <span className="text-xs uppercase font-medium">{activity.month}</span>
                 </div>
@@ -138,7 +138,7 @@ export default function ActivitiesPage() {
       {/* Modal */}
       {isModalOpen && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm">
-          <div className="bg-white rounded-xl w-full max-w-md p-8 shadow-2xl">
+          <div className="bg-white rounded w-full max-w-md p-8 shadow-2xl">
             <div className="flex justify-between items-center mb-6">
               <h2 className="text-2xl font-bold text-slate-900">
                 {editingId ? 'Edit Activity' : 'Add New Activity'}
@@ -157,7 +157,7 @@ export default function ActivitiesPage() {
                     placeholder="e.g. 14"
                     value={formData.day}
                     onChange={(e) => setFormData({ ...formData, day: e.target.value })}
-                    className="w-full px-4 py-2 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary"
+                    className="w-full px-4 py-2 border border-slate-200 rounded focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary"
                     required
                   />
                 </div>
@@ -168,7 +168,7 @@ export default function ActivitiesPage() {
                     placeholder="e.g. AUG"
                     value={formData.month}
                     onChange={(e) => setFormData({ ...formData, month: e.target.value })}
-                    className="w-full px-4 py-2 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary"
+                    className="w-full px-4 py-2 border border-slate-200 rounded focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary"
                     required
                   />
                 </div>
@@ -180,7 +180,7 @@ export default function ActivitiesPage() {
                   placeholder="Activity Title"
                   value={formData.title}
                   onChange={(e) => setFormData({ ...formData, title: e.target.value })}
-                  className="w-full px-4 py-2 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary"
+                  className="w-full px-4 py-2 border border-slate-200 rounded focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary"
                   required
                 />
               </div>
@@ -190,7 +190,7 @@ export default function ActivitiesPage() {
                   placeholder="Location, time, and other details..."
                   value={formData.details}
                   onChange={(e) => setFormData({ ...formData, details: e.target.value })}
-                  className="w-full px-4 py-2 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary h-32 resize-none"
+                  className="w-full px-4 py-2 border border-slate-200 rounded focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary h-32 resize-none"
                   required
                 />
               </div>
@@ -198,14 +198,14 @@ export default function ActivitiesPage() {
                 <button
                   type="button"
                   onClick={handleCloseModal}
-                  className="flex-1 px-6 py-3 border border-slate-200 text-slate-600 rounded-full hover:bg-slate-50 transition-colors font-medium"
+                  className="flex-1 px-6 py-3 border border-slate-200 text-slate-600 rounded hover:bg-slate-50 transition-colors font-medium"
                 >
                   Cancel
                 </button>
                 <button
                   type="submit"
                   disabled={loading}
-                  className="flex-1 px-6 py-3 bg-primary text-white rounded-full hover:bg-primary/90 transition-all font-medium disabled:opacity-50 shadow-md"
+                  className="flex-1 px-6 py-3 bg-primary text-white rounded hover:bg-primary/90 transition-all font-medium disabled:opacity-50 shadow-md"
                 >
                   {loading ? 'Saving...' : editingId ? 'Update' : 'Create'}
                 </button>

@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { CreditCard, HandHeart, House, Settings, X } from 'lucide-react';
+import { HandHeart, House, X, Calendar } from 'lucide-react';
 
 import Divider from '../reusables/Divider';
 import Profile from '../reusables/Profile';
@@ -14,6 +14,7 @@ interface AlumniSidebarProps {
 
 const navItems = [
   { name: 'Dashboard', href: '/alumni', icon: House },
+  { name: 'Monthly Dues', href: '/alumni/dues', icon: Calendar },
   // { name: 'My Donations', href: '/alumni/my_donate', icon: CreditCard },
   // { name: 'Profile Settings', href: '/alumni/profile-setting', icon: Settings },
   { name: 'Make A Donation', href: '/donate', icon: HandHeart },

@@ -16,7 +16,7 @@ export default function AlumniProfileInsight({
   missingProfileItems,
 }: AlumniProfileInsightProps) {
   return (
-    <div className="rounded-xl border border-darkNavy/10 bg-white p-6 shadow-xs sm:p-7">
+    <div className="rounded border border-darkNavy/10 bg-white p-6 shadow-xs sm:p-7">
       <p className="text-sm font-medium uppercase tracking-[0.2em] text-darkNavy/70">
         {isProfileComplete ? 'Profile status' : 'Profile insight'}
       </p>
@@ -27,7 +27,7 @@ export default function AlumniProfileInsight({
       </h2>
 
       {isProfileComplete ? (
-        <div className="mt-6 rounded-xl border border-darkNavy/10 bg-darkNavy p-5 shadow-xs">
+        <div className="mt-6 rounded border border-darkNavy/10 bg-darkNavy p-5 shadow-xs">
           <p className="text-sm font-semibold text-white">Everything important is on file</p>
           <p className="mt-2 text-sm leading-6 text-white/80">
             Your key alumni details are complete, so you can focus on staying connected,
@@ -38,7 +38,7 @@ export default function AlumniProfileInsight({
         <>
           <div className="mt-6 grid gap-4 md:grid-cols-2">
             {missingProfileItems.map((item) => (
-              <div key={item.title} className="rounded-xl border border-darkNavy/10 p-4 shadow-xs">
+              <div key={item.title} className="rounded border border-darkNavy/10 p-4 shadow-xs">
                 <p className="text-sm font-semibold text-darkNavy">{item.title}</p>
                 <p className="mt-2 text-sm leading-6 text-darkNavy/70">{item.description}</p>
               </div>

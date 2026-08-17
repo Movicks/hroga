@@ -72,7 +72,7 @@ export default function UsersPage() {
   return (
     <section className="space-y-6">
       {error && (
-        <div className="bg-red-50 border border-red-200 text-red-600 px-4 py-3 rounded-xl flex justify-between items-center">
+        <div className="bg-red-50 border border-red-200 text-red-600 px-4 py-3 rounded flex justify-between items-center">
           <span>{error}</span>
           <button onClick={() => dispatch(clearUsersError())}>
             <X size={18} />
@@ -81,7 +81,7 @@ export default function UsersPage() {
       )}
 
       {/* Table Container */}
-      <div className="rounded-t-xl border border-slate-200 bg-white shadow-sm overflow-x-auto">
+      <div className="rounded border border-slate-200 bg-white shadow-sm overflow-x-auto">
         <table className="w-full text-left border-collapse">
           <thead className="bg-[#020618] text-white border-b border-slate-200">
             <tr>
@@ -123,7 +123,7 @@ export default function UsersPage() {
                 <tr key={user.id} className="hover:bg-slate-50 transition-colors">
                   <td className="px-6 py-4 whitespace-nowrap">
                     <div className="flex items-center">
-                      <div className="h-10 w-10 rounded-full bg-primary/10 flex items-center justify-center text-primary font-bold mr-3">
+                      <div className="h-10 w-10 rounded bg-primary/10 flex items-center justify-center text-primary font-bold mr-3">
                         {user.firstName[0]}
                         {user.lastName[0]}
                       </div>
@@ -144,7 +144,7 @@ export default function UsersPage() {
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap">
                     <span
-                      className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${
+                      className={`inline-flex items-center px-2.5 py-0.5 rounded text-xs font-medium ${
                         user.role === 'admin'
                           ? 'bg-purple-100 text-purple-800'
                           : 'bg-blue-100 text-blue-800'
@@ -158,7 +158,7 @@ export default function UsersPage() {
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap">
                     <span
-                      className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${
+                      className={`inline-flex items-center px-2.5 py-0.5 rounded text-xs font-medium ${
                         user.suspended
                           ? 'bg-red-100 text-red-800'
                           : 'bg-green-100 text-green-800'
@@ -170,7 +170,7 @@ export default function UsersPage() {
                   <td className="px-6 py-4 whitespace-nowrap text-sm font-medium relative">
                     <DropdownMenu>
                       <DropdownMenuTrigger asChild>
-                        <button className="text-slate-500 hover:text-slate-700 transition-colors p-1 rounded-full hover:bg-slate-100">
+                        <button className="text-slate-500 hover:text-slate-700 transition-colors p-1 rounded hover:bg-slate-100">
                           <MoreHorizontal size={20} />
                         </button>
                       </DropdownMenuTrigger>

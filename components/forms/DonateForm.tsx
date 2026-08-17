@@ -127,7 +127,7 @@ export default function DonateForm({
 
   return (
     <div className="relative">
-      <div className="rounded-[1rem] border border-slate-200 bg-white p-6 sm:p-8">
+      <div className="rounded-[0.5rem] border border-slate-200 bg-white p-6 sm:p-8">
         <div className="mb-6 flex items-start justify-between gap-4">
           <div>
             <p className="text-sm font-medium uppercase tracking-[0.18em] text-primary">
@@ -190,7 +190,7 @@ export default function DonateForm({
                 }
                 autoComplete="name"
                 required
-                className="w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-slate-900 outline-none transition focus:border-primary focus:ring-4 focus:ring-primary/10"
+                className="w-full rounded-md border border-slate-200 bg-white px-4 py-3 text-slate-900 outline-none transition focus:border-primary focus:ring-4 focus:ring-primary/10"
                 placeholder="Enter your full name"
               />
             </label>
@@ -205,7 +205,7 @@ export default function DonateForm({
                 }
                 autoComplete="email"
                 required
-                className="w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-slate-900 outline-none transition focus:border-primary focus:ring-4 focus:ring-primary/10"
+                className="w-full rounded-md border border-slate-200 bg-white px-4 py-3 text-slate-900 outline-none transition focus:border-primary focus:ring-4 focus:ring-primary/10"
                 placeholder="you@example.com"
               />
             </label>
@@ -228,7 +228,7 @@ export default function DonateForm({
                   onAmountChange(amount);
                 }}
                 required
-                className="w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-slate-900 outline-none transition focus:border-primary focus:ring-4 focus:ring-primary/10"
+                className="w-full rounded-md border border-slate-200 bg-white px-4 py-3 text-slate-900 outline-none transition focus:border-primary focus:ring-4 focus:ring-primary/10"
               />
             </label>
 
@@ -240,7 +240,7 @@ export default function DonateForm({
                 onChange={(event) =>
                   setForm((current) => ({ ...current, purpose: event.target.value }))
                 }
-                className="w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-slate-900 outline-none transition focus:border-primary focus:ring-4 focus:ring-primary/10"
+                className="w-full rounded-md border border-slate-200 bg-white px-4 py-3 text-slate-900 outline-none transition focus:border-primary focus:ring-4 focus:ring-primary/10"
                 placeholder="Scholarships, projects, events, welfare..."
               />
             </label>
@@ -254,12 +254,12 @@ export default function DonateForm({
                 setForm((current) => ({ ...current, message: event.target.value }))
               }
               rows={4}
-              className="w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-slate-900 outline-none transition focus:border-primary focus:ring-4 focus:ring-primary/10"
+              className="w-full rounded-md border border-slate-200 bg-white px-4 py-3 text-slate-900 outline-none transition focus:border-primary focus:ring-4 focus:ring-primary/10"
               placeholder="Share a dedication, campaign note, or why you are giving."
             />
           </label>
 
-          <label className="flex items-center gap-3 rounded-2xl bg-slate-50 px-4 py-3 text-sm text-slate-700">
+          <label className="flex items-center gap-3 rounded-md bg-slate-50 px-4 py-3 text-sm text-slate-700">
             <input
               type="checkbox"
               checked={form.anonymous}

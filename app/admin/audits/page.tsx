@@ -73,7 +73,7 @@ export default function AuditsPage() {
           <p className="text-red-600 text-lg font-medium">Error: {error}</p>
           <button
             onClick={() => dispatch(fetchAudits())}
-            className="mt-4 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition"
+            className="mt-4 px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition"
           >
             Retry
           </button>
@@ -93,13 +93,13 @@ export default function AuditsPage() {
 
       <div className="space-y-4">
         {audits.length === 0 ? (
-          <div className="text-center py-12 border-2 border-dashed border-slate-200 rounded-3xl bg-slate-50">
+          <div className="text-center py-12 border-2 border-dashed border-slate-200 rounded bg-slate-50">
             <Clock className="h-12 w-12 mx-auto text-slate-400" />
             <h3 className="mt-4 text-lg font-medium text-slate-800">No Audit Logs Found</h3>
             <p className="mt-2 text-slate-600">Start performing actions to see audit logs here</p>
           </div>
         ) : (
-          <div className="overflow-x-auto rounded-3xl border border-slate-200 bg-white shadow-sm">
+          <div className="overflow-x-auto rounded border border-slate-200 bg-white shadow-sm">
             <table className="w-full">
               <thead className="bg-slate-50">
                 <tr>
@@ -124,7 +124,7 @@ export default function AuditsPage() {
                       <div className="flex items-center gap-2">
                         {getActionIcon(audit.action)}
                         <span
-                          className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${getActionBadgeColor(audit.action)}`}
+                          className={`inline-flex items-center px-2.5 py-0.5 rounded text-xs font-medium ${getActionBadgeColor(audit.action)}`}
                         >
                           {audit.action.charAt(0).toUpperCase() + audit.action.slice(1)}
                         </span>

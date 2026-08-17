@@ -14,9 +14,9 @@ export default function AlumniSnapshotCard({
   currentAddress,
 }: AlumniSnapshotCardProps) {
   return (
-    <div className="rounded-xl border border-darkNavy/10 bg-white p-6 shadow-xs">
+    <div className="rounded border border-darkNavy/10 bg-white p-6 shadow-xs">
       <div className="flex items-start gap-4">
-        <div className="flex h-14 w-14 items-center justify-center rounded-xl bg-darkNavy text-white">
+        <div className="flex h-14 w-14 items-center justify-center rounded bg-darkNavy text-white">
           <UserRound size={26} />
         </div>
         <div className="min-w-0">
@@ -30,17 +30,17 @@ export default function AlumniSnapshotCard({
       </div>
 
       <div className="mt-6 space-y-4">
-        <div className="rounded-xl bg-darkNavy/4 p-4 shadow-xs">
+        <div className="rounded bg-darkNavy/4 p-4 shadow-xs">
           <p className="text-xs uppercase tracking-[0.2em] text-darkNavy/55">Email</p>
           <p className="mt-2 break-all text-sm font-medium text-darkNavy">{email}</p>
         </div>
-        <div className="rounded-xl bg-darkNavy/4 p-4 shadow-xs">
+        <div className="rounded bg-darkNavy/4 p-4 shadow-xs">
           <p className="text-xs uppercase tracking-[0.2em] text-darkNavy/55">Phone</p>
           <p className="mt-2 text-sm font-medium text-darkNavy">
             {phoneNumber || 'Add your phone number'}
           </p>
         </div>
-        <div className="rounded-xl bg-darkNavy/4 p-4 shadow-xs">
+        <div className="rounded bg-darkNavy/4 p-4 shadow-xs">
           <p className="text-xs uppercase tracking-[0.2em] text-darkNavy/55">Current location</p>
           <p className="mt-2 text-sm font-medium text-darkNavy">
             {currentAddress || 'Complete your current address'}

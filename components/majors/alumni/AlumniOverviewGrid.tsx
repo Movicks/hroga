@@ -9,7 +9,7 @@ function OverviewItem({ card }: { card: OverviewCard }) {
   const Icon = card.icon;
 
   return (
-    <article className="rounded-xl border border-darkNavy/10 bg-white p-5 shadow-xs">
+    <article className="rounded border border-darkNavy/10 bg-white p-5 shadow-xs">
       <div className="flex items-center justify-between">
         <p className="text-sm font-medium text-darkNavy/70">{card.title}</p>
         <Icon className="text-darkNavy" size={20} />

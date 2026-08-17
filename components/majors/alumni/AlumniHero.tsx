@@ -10,7 +10,7 @@ export default function AlumniHero({
   yearOfGraduation,
 }: AlumniHeroProps) {
   return (
-    <div className="overflow-hidden rounded-xl bg-darkNavy p-6 text-white shadow-xs sm:p-8">
+    <div className="overflow-hidden rounded bg-darkNavy p-6 text-white shadow-xs sm:p-8">
       <div className="flex flex-col gap-8 lg:flex-row lg:items-start lg:justify-between">
         <div className="max-w-3xl space-y-4">
           <div>
@@ -26,7 +26,7 @@ export default function AlumniHero({
         </div>
 
         <div className="grid gap-4 sm:grid-cols-2 lg:w-[20rem] lg:grid-cols-1">
-          <div className="rounded-xl border border-white/15 bg-white/10 p-5 shadow-xs backdrop-blur">
+          <div className="rounded border border-white/15 bg-white/10 p-5 shadow-xs backdrop-blur">
             <p className="text-xs uppercase tracking-[0.25em] text-white/70">
               Profile completion
             </p>
@@ -39,7 +39,7 @@ export default function AlumniHero({
             </div>
           </div>
 
-          <div className="rounded-xl border border-white/15 bg-white/10 p-5 shadow-xs backdrop-blur">
+          <div className="rounded border border-white/15 bg-white/10 p-5 shadow-xs backdrop-blur">
             <p className="text-xs uppercase tracking-[0.25em] text-white/70">Class year</p>
             <p className="mt-3 text-3xl font-semibold">{yearOfGraduation || 'N/A'}</p>
             <p className="mt-2 text-sm text-white/80">Part of the HROGA sisterhood network.</p>

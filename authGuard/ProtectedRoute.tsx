@@ -7,6 +7,7 @@ import {
   fetchCurrentUser,
   initializeAuth,
 } from '../redux/features/auth/authSlice';
+import { checkDuePaymentStatus } from '../redux/features/dues/duesSlice';
 import Loader from '@/components/reusables/Loader';
 
 interface ProtectedRouteProps {
@@ -66,9 +67,36 @@ export default function ProtectedRoute({
     verifyUser();
   }, [dispatch, isAuthenticated, user, isHydrated]);
 
+  // Check if user has paid current month dues (applies to both admins and alumni)
+  const { dueSummary, isCheckingDueStatus } = useAppSelector((state) => state.dues);
+  const [hasCheckedDues, setHasCheckedDues] = useState(false);
+
+  useEffect(() => {
+    const checkDuePayment = async () => {
+      if (!isHydrated || !authChecked || loading || !isAuthenticated || !user) return;
+      
+      // Only check dues once per session
+      if (hasCheckedDues) return;
+      
+      // Check dues payment status for both admins and alumni
+      dispatch(checkDuePaymentStatus(false));
+      setHasCheckedDues(true);
+    };
+
+    checkDuePayment();
+  }, [isHydrated, authChecked, loading, isAuthenticated, user, dispatch, hasCheckedDues]);
+
+  // Redirect to dues page if current month is not paid
+  useEffect(() => {
+    if (!isCheckingDueStatus && dueSummary && !dueSummary.isCurrentMonthPaid) {
+      // Redirect to monthly dues form
+      router.replace('/monthly_dues_form');
+    }
+  }, [dueSummary, isCheckingDueStatus, router]);
+
   // Handle redirects
   useEffect(() => {
-    if (!isHydrated || !authChecked || loading) return;
+    if (!isHydrated || !authChecked || loading || isCheckingDueStatus) return;
 
     // Not logged in
     if (!isAuthenticated) {
@@ -104,10 +132,12 @@ export default function ProtectedRoute({
     loading,
     authChecked,
     isHydrated,
+    isCheckingDueStatus,
+    dueSummary,
   ]);
 
   // Loading state
-  if (!isHydrated || loading || !authChecked) {
+  if (!isHydrated || loading || !authChecked || isCheckingDueStatus) {
     return (
       <div className="flex min-h-screen flex-col items-center justify-center">
         <Loader loadTitle='Verifying access'/>

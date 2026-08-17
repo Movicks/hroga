@@ -8,7 +8,6 @@ import {
   User,
 } from '../../redux/features/auth/authSlice';
 import { ArrowLeft, X, Camera } from 'lucide-react';
-import Image from 'next/image';
 
 interface EditableUserProfileProps {
   onBack?: () => void;
@@ -129,14 +128,70 @@ export default function EditableUserProfile({ onBack }: EditableUserProfileProps
     }
   }, [authUser]);
 
-  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const compressImage = (file: File): Promise<string> =>
+    new Promise((resolve, reject) => {
+      const reader = new FileReader();
+
+      reader.onload = () => {
+        const image = new window.Image();
+
+        image.onload = () => {
+          const maxDimension = 600;
+          const scale = Math.min(
+            1,
+            maxDimension / image.width,
+            maxDimension / image.height
+          );
+          const width = Math.max(1, Math.round(image.width * scale));
+          const height = Math.max(1, Math.round(image.height * scale));
+
+          const canvas = document.createElement('canvas');
+          canvas.width = width;
+          canvas.height = height;
+
+          const context = canvas.getContext('2d');
+          if (!context) {
+            reject(new Error('Unable to process selected image.'));
+            return;
+          }
+
+          context.drawImage(image, 0, 0, width, height);
+          resolve(canvas.toDataURL('image/jpeg', 0.72));
+        };
+
+        image.onerror = () => {
+          reject(new Error('Selected file is not a valid image.'));
+        };
+
+        image.src = reader.result as string;
+      };
+
+      reader.onerror = () => {
+        reject(new Error('Unable to read selected image.'));
+      };
+
+      reader.readAsDataURL(file);
+    });
+
+  const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setPreviewUrl(reader.result as string);
-      };
-      reader.readAsDataURL(file);
+      try {
+        const imageDataUrl = await compressImage(file);
+        setPreviewUrl(imageDataUrl);
+        setFormData((prev) => ({
+          ...prev,
+          image: imageDataUrl,
+        }));
+      } catch (compressionError) {
+        dispatch(clearError());
+        setPreviewUrl(null);
+        setFormData((prev) => ({
+          ...prev,
+          image: authUser?.image ?? '',
+        }));
+        console.error(compressionError);
+      }
     }
   };
 
@@ -199,18 +254,16 @@ export default function EditableUserProfile({ onBack }: EditableUserProfileProps
             <div className="flex items-center gap-6">
               <div className="h-24 w-24 rounded-full bg-[#6393f6]/10 border-3 border-[#6393f6] p-1 flex items-center justify-center text-[#6393f6] text-3xl font-bold overflow-hidden relative group">
                 {previewUrl ? (
-                  <Image
+                  <img
                     src={previewUrl}
                     alt="Profile"
-                    fill
-                    className="object-cover"
+                    className="absolute inset-0 h-full w-full object-cover"
                   />
                 ) : authUser.image ? (
-                  <Image
+                  <img
                     src={authUser.image}
                     alt="Profile"
-                    fill
-                    className="object-cover"
+                    className="absolute inset-0 h-full w-full object-cover"
                   />
                 ) : (
                   <span>
