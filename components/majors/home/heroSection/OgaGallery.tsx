@@ -10,7 +10,7 @@ export default function OgaGallery() {
                 <div className="flex flex-col gap-4 lg:gap-6">
                     {/* Image 1 */}
                     <div className="h-40 w-40 md:h-54 md:w-44 rounded-md border-2 border-white bg-white overflow-hidden">
-                      <Image src='/images/HROGA_Prestigious.jpeg' alt='OGA 1' width={100} height={100} className="w-full h-full bg-cover"/>
+                      <Image src='/images/Hroga_Prestigious.jpeg' alt='OGA 1' width={100} height={100} className="w-full h-full bg-cover"/>
                     </div>
                     {/* Card */}
                     <div className="h-32 w-40 md:h-44 md:w-44 rounded-md bg-blue-400 shadow-lg">
