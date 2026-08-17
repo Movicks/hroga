@@ -116,7 +116,7 @@ export default function GalleryPage() {
 
   return (
     <section className="space-y-6">
-      <div className="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm gap-4 flex flex-col justify-between items-center lg:flex-row">
+      <div className="rounded border border-slate-200 bg-white p-6 shadow-sm gap-4 flex flex-col justify-between items-center lg:flex-row">
         <div>
           <p className="text-sm uppercase tracking-[0.3em] text-slate-500">Gallery</p>
           <h1 className="mt-3 text-3xl font-semibold text-slate-900">Gallery management</h1>
@@ -126,7 +126,7 @@ export default function GalleryPage() {
         </div>
         <button
           onClick={() => handleOpenModal()}
-          className="flex items-center gap-2 bg-black text-white px-6 py-3 rounded-xl hover:bg-primary/90 transition-all shadow-sm"
+          className="flex items-center gap-2 bg-black text-white px-6 py-3 rounded hover:bg-primary/90 transition-all shadow-sm"
         >
           <Plus size={20} />
           <span>Add Image</span>
@@ -134,7 +134,7 @@ export default function GalleryPage() {
       </div>
 
       {error && (
-        <div className="bg-red-50 border border-red-200 text-red-600 px-4 py-3 rounded-xl flex justify-between items-center">
+        <div className="bg-red-50 border border-red-200 text-red-600 px-4 py-3 rounded flex justify-between items-center">
           <span>{error}</span>
           <button onClick={() => dispatch(clearGalleryError())}>
             <X size={18} />
@@ -151,7 +151,7 @@ export default function GalleryPage() {
           <div className="col-span-full py-12 text-center text-slate-500">No gallery items found. Add one to get started!</div>
         ) : (
           gallery.map((item) => (
-            <div key={item._id} className="rounded-xl border border-slate-200 bg-white overflow-hidden shadow-sm hover:shadow-md transition-all group">
+            <div key={item._id} className="rounded border border-slate-200 bg-white overflow-hidden shadow-sm hover:shadow-md transition-all group">
               <div className="relative">
                 <img
                   src={getImageUrl(item.image)}
@@ -162,14 +162,14 @@ export default function GalleryPage() {
                 <div className="absolute top-3 right-3 flex gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
                   <button
                     onClick={() => handleOpenModal(item)}
-                    className="p-2 bg-white rounded-full shadow-md hover:bg-slate-50 transition-colors"
+                    className="p-2 bg-white rounded shadow-md hover:bg-slate-50 transition-colors"
                     title="Edit"
                   >
                     <Pencil size={16} className="text-slate-700" />
                   </button>
                   <button
                     onClick={() => handleDelete(item._id)}
-                    className="p-2 bg-white rounded-full shadow-md hover:bg-slate-50 transition-colors"
+                    className="p-2 bg-white rounded shadow-md hover:bg-slate-50 transition-colors"
                     title="Delete"
                   >
                     <Trash2 size={16} className="text-slate-700" />
@@ -177,7 +177,7 @@ export default function GalleryPage() {
                 </div>
               </div>
               <div className="p-4">
-                <span className="inline-block px-3 py-1 bg-primary/10 text-primary text-sm font-medium rounded-full">
+                <span className="inline-block px-3 py-1 bg-primary/10 text-primary text-sm font-medium rounded">
                   {item.category}
                 </span>
               </div>
@@ -189,7 +189,7 @@ export default function GalleryPage() {
       {/* Modal */}
       {isModalOpen && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm">
-          <div className="bg-white rounded-3xl w-full max-w-lg p-8 shadow-2xl">
+          <div className="bg-white rounded w-full max-w-lg p-8 shadow-2xl">
             <div className="flex justify-between items-center mb-6">
               <h2 className="text-2xl font-bold text-slate-900">
                 {editingId ? 'Edit Image' : 'Add New Image'}
@@ -201,7 +201,7 @@ export default function GalleryPage() {
 
             <form onSubmit={handleSubmit} className="space-y-4">
               {previewImage && (
-                <div className="rounded-2xl overflow-hidden border border-slate-200">
+                <div className="rounded overflow-hidden border border-slate-200">
                   <img
                     src={previewImage.startsWith('http') || previewImage.startsWith('data:') ? previewImage : getImageUrl(previewImage)}
                     alt="Preview"
@@ -216,7 +216,7 @@ export default function GalleryPage() {
                   type="file"
                   accept="image/*"
                   onChange={handleFileChange}
-                  className="w-full px-4 py-2 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary"
+                  className="w-full px-4 py-2 border border-slate-200 rounded focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary"
                 />
               </div>
 
@@ -229,7 +229,7 @@ export default function GalleryPage() {
                   placeholder="https://example.com/image.jpg"
                   value={imageLink}
                   onChange={handleLinkChange}
-                  className="w-full px-4 py-2 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary"
+                  className="w-full px-4 py-2 border border-slate-200 rounded focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary"
                 />
               </div>
 
@@ -238,7 +238,7 @@ export default function GalleryPage() {
                 <select
                   value={category}
                   onChange={(e) => setCategory(e.target.value)}
-                  className="w-full px-4 py-2 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary"
+                  className="w-full px-4 py-2 border border-slate-200 rounded focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary"
                   required
                 >
                   {categories.map((cat) => (
@@ -253,14 +253,14 @@ export default function GalleryPage() {
                 <button
                   type="button"
                   onClick={handleCloseModal}
-                  className="flex-1 px-6 py-3 border border-slate-200 text-slate-600 rounded-full hover:bg-slate-50 transition-colors font-medium"
+                  className="flex-1 px-6 py-3 border border-slate-200 text-slate-600 rounded hover:bg-slate-50 transition-colors font-medium"
                 >
                   Cancel
                 </button>
                 <button
                   type="submit"
                   disabled={loading}
-                  className="flex-1 px-6 py-3 bg-primary text-white rounded-full hover:bg-primary/90 transition-all font-medium disabled:opacity-50 shadow-md"
+                  className="flex-1 px-6 py-3 bg-primary text-white rounded hover:bg-primary/90 transition-all font-medium disabled:opacity-50 shadow-md"
                 >
                   {loading ? 'Saving...' : editingId ? 'Update' : 'Create'}
                 </button>

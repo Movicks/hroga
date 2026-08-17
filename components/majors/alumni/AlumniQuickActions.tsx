@@ -19,7 +19,7 @@ export default function AlumniQuickActions({
   missingProfileItems,
 }: AlumniProfileInsightProps ) {
   return (
-    <div className="rounded-xl border border-darkNavy/10 bg-white p-6 shadow-xs sm:p-7">
+    <div className="rounded border border-darkNavy/10 bg-white p-6 shadow-xs sm:p-7">
       <div className="flex items-center justify-between gap-4">
         <div>
           <p className="text-sm font-medium uppercase tracking-[0.2em] text-darkNavy/70">
@@ -39,7 +39,7 @@ export default function AlumniQuickActions({
             <Link
               key={action.href}
               href={action.href}
-              className="group rounded-xl border border-darkNavy/10 bg-white p-5 shadow-xs transition hover:border-darkNavy hover:bg-darkNavy hover:text-white"
+              className="group rounded border border-darkNavy/10 bg-white p-5 shadow-xs transition hover:border-darkNavy hover:bg-darkNavy hover:text-white"
             >
               <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-darkNavy text-white">
                 <Icon size={22} />

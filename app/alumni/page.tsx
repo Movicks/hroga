@@ -2,7 +2,7 @@
 
 import AlumniHero from '../../components/majors/alumni/AlumniHero';
 import AlumniOverviewGrid from '../../components/majors/alumni/AlumniOverviewGrid';
-import AlumniProfileInsight from '../../components/majors/alumni/AlumniProfileInsight';
+// import AlumniProfileInsight from '../../components/majors/alumni/AlumniProfileInsight';
 import AlumniQuickActions from '../../components/majors/alumni/AlumniQuickActions';
 import AlumniSnapshotCard from '../../components/majors/alumni/AlumniSnapshotCard';
 import { getOverviewCards } from '../../components/majors/alumni/dashboardData';

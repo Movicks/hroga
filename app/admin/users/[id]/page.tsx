@@ -11,7 +11,6 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from '../../../../components/ui/dropdown-menu';
-import Image from 'next/image';
 import Loader from '@/components/reusables/Loader';
 
 export default function UserProfilePage() {
@@ -44,7 +43,7 @@ export default function UserProfilePage() {
       </button>
 
       {error && (
-        <div className="bg-red-50 border border-red-200 text-red-600 px-4 py-3 rounded-lg flex justify-between items-center">
+        <div className="bg-red-50 border border-red-200 text-red-600 px-4 py-3 rounded flex justify-between items-center">
           <span>{error}</span>
           <button onClick={() => {}}>
             <X size={18} />
@@ -57,15 +56,18 @@ export default function UserProfilePage() {
       ) : !user ? (
         <div className="py-12 text-center text-slate-500">User not found</div>
       ) : (
-        <div className="bg-[#E3EFFC] rounded-lg p-6 md:p-8">
+        <div className="bg-[#E3EFFC] rounded p-6 md:p-8">
           {/* Header */}
           <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-4 mb-6">
             <div className="flex items-center gap-6">
-              <div className="h-24 w-24 rounded-full bg-[#6393f6]/10 border-3 border-[#6393f6] p-1 flex items-center justify-center text-[#6393f6] text-3xl font-bold">
-                <Image src={user.image || 'https://plus.unsplash.com/premium_photo-1683972509783-da5a74795bb3?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1yZWxhdGVkfDE0fHx8ZW58MHx8fHx8'}
+              <div className="h-24 w-24 rounded bg-[#6393f6]/10 border-3 border-[#6393f6] p-1 flex items-center justify-center text-[#6393f6] text-3xl font-bold">
+                <img
+                  src={
+                    user.image ||
+                    'https://plus.unsplash.com/premium_photo-1683972509783-da5a74795bb3?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1yZWxhdGVkfDE0fHx8ZW58MHx8fHx8'
+                  }
                   alt={user.firstName[0] + user.lastName[0]}
-                  width={48} height={48}
-                  className="rounded-full w-full h-full bg-cover"
+                  className="rounded w-full h-full bg-cover object-cover"
                 />
               </div>
               <div>
@@ -77,7 +79,7 @@ export default function UserProfilePage() {
                 </h2>
                 <div className="flex flex-wrap items-center gap-3 mt-2">
                   <span
-                    className={`inline-flex items-center px-3 py-1 rounded-full text-xs font-medium ${
+                    className={`inline-flex items-center px-3 py-1 rounded text-xs font-medium ${
                       user.role === 'admin'
                         ? 'bg-purple-100 text-purple-800'
                         : 'bg-blue-100 text-blue-800'
@@ -86,7 +88,7 @@ export default function UserProfilePage() {
                     {user.role}
                   </span>
                   <span
-                    className={`inline-flex items-center px-3 py-1 rounded-full text-xs font-medium ${
+                    className={`inline-flex items-center px-3 py-1 rounded text-xs font-medium ${
                       user.suspended
                         ? 'bg-red-100 text-red-800'
                         : 'bg-green-100 text-green-800'
@@ -100,16 +102,16 @@ export default function UserProfilePage() {
             <div className="flex-shrink-0">
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
-                  <button className="flex items-center gap-2 px-6 py-2 bg-[#6393f6] text-white rounded-full hover:bg-[#6393f6]/90 transition-colors shadow-sm">
+                  <button className="flex items-center gap-2 px-6 py-2 bg-[#6393f6] text-white rounded hover:bg-[#6393f6]/90 transition-colors shadow-sm">
                     <Edit size={18} />
                     Edit Role
                   </button>
                 </DropdownMenuTrigger>
-                <DropdownMenuContent align="end" className="w-44 bg-white rounded-lg shadow-xl border border-[#E5E7EB]">
+                <DropdownMenuContent align="end" className="w-44 bg-white rounded shadow-xl border border-[#E5E7EB]">
                   <DropdownMenuItem 
                     onClick={() => handleChangeUserRole(user.id, 'admin')}
                     disabled={user.role === 'admin'}
-                    className="cursor-pointer hover:bg-[#F2F7FC] rounded-lg mx-1 my-1"
+                    className="cursor-pointer hover:bg-[#F2F7FC] rounded mx-1 my-1"
                   >
                     <span className={user.role === 'admin' ? 'opacity-50' : ''}>
                       Admin
@@ -118,7 +120,7 @@ export default function UserProfilePage() {
                   <DropdownMenuItem 
                     onClick={() => handleChangeUserRole(user.id, 'alumni')}
                     disabled={user.role === 'alumni'}
-                    className="cursor-pointer hover:bg-[#F2F7FC] rounded-lg mx-1 my-1"
+                    className="cursor-pointer hover:bg-[#F2F7FC] rounded mx-1 my-1"
                   >
                     <span className={user.role === 'alumni' ? 'opacity-50' : ''}>
                       Alumni
@@ -131,58 +133,58 @@ export default function UserProfilePage() {
 
           <div className="space-y-6">
             {/* Personal Information */}
-            <div className="bg-[#F2F7FC] rounded-lg p-6 space-y-6">
+            <div className="bg-[#F2F7FC] rounded p-6 space-y-6">
               <div className="flex justify-between items-center">
                 <h3 className="text-lg md:text-xl font-semibold text-[#6393f6]">Personal Information</h3>
               </div>
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                 {user.dateOfBirth && (
-                  <div className="bg-white rounded-lg p-4 border border-[#E5E7EB]">
+                  <div className="bg-white rounded p-4 border border-[#E5E7EB]">
                     <p className="text-xs text-gray-500 mb-1">Date of Birth</p>
                     <p className="text-sm text-[#4B5563] font-medium">{user.dateOfBirth}</p>
                   </div>
                 )}
                 {user.gender && (
-                  <div className="bg-white rounded-lg p-4 border border-[#E5E7EB]">
+                  <div className="bg-white rounded p-4 border border-[#E5E7EB]">
                     <p className="text-xs text-gray-500 mb-1">Gender</p>
                     <p className="text-sm text-[#4B5563] font-medium">{user.gender}</p>
                   </div>
                 )}
-                <div className="bg-white rounded-lg p-4 border border-[#E5E7EB]">
+                <div className="bg-white rounded p-4 border border-[#E5E7EB]">
                   <p className="text-xs text-gray-500 mb-1">Email Address</p>
                   <p className="text-sm text-[#4B5563] font-medium">{user.email}</p>
                 </div>
-                <div className="bg-white rounded-lg p-4 border border-[#E5E7EB]">
+                <div className="bg-white rounded p-4 border border-[#E5E7EB]">
                   <p className="text-xs text-gray-500 mb-1">Phone Number</p>
                   <p className="text-sm text-[#4B5563] font-medium">{user.phoneNumber}</p>
                 </div>
                 {user.whatsappNumber && (
-                  <div className="bg-white rounded-lg p-4 border border-[#E5E7EB]">
+                  <div className="bg-white rounded p-4 border border-[#E5E7EB]">
                     <p className="text-xs text-gray-500 mb-1">WhatsApp Number</p>
                     <p className="text-sm text-[#4B5563] font-medium">{user.whatsappNumber}</p>
                   </div>
                 )}
-                <div className="bg-white rounded-lg p-4 border border-[#E5E7EB]">
+                <div className="bg-white rounded p-4 border border-[#E5E7EB]">
                   <p className="text-xs text-gray-500 mb-1">Country</p>
                   <p className="text-sm text-[#4B5563] font-medium">{user.country}</p>
                 </div>
                 {user.stateCity && (
-                  <div className="bg-white rounded-lg p-4 border border-[#E5E7EB]">
+                  <div className="bg-white rounded p-4 border border-[#E5E7EB]">
                     <p className="text-xs text-gray-500 mb-1">State/City</p>
                     <p className="text-sm text-[#4B5563] font-medium">{user.stateCity}</p>
                   </div>
                 )}
                 {user.homeAddress && (
-                  <div className="bg-white rounded-lg p-4 border border-[#E5E7EB] lg:col-span-2">
+                  <div className="bg-white rounded p-4 border border-[#E5E7EB] lg:col-span-2">
                     <p className="text-xs text-gray-500 mb-1">Home Address</p>
                     <p className="text-sm text-[#4B5563] font-medium">{user.homeAddress}</p>
                   </div>
                 )}
-                <div className="bg-white rounded-lg p-4 border border-[#E5E7EB]">
+                <div className="bg-white rounded p-4 border border-[#E5E7EB]">
                   <p className="text-xs text-gray-500 mb-1">Year of Graduation</p>
                   <p className="text-sm text-[#4B5563] font-medium">{user.yearOfGraduation}</p>
                 </div>
-                <div className="bg-white rounded-lg p-4 border border-[#E5E7EB]">
+                <div className="bg-white rounded p-4 border border-[#E5E7EB]">
                   <p className="text-xs text-gray-500 mb-1">Account Created</p>
                   <p className="text-sm text-[#4B5563] font-medium">
                     {user.createdAt 
@@ -194,9 +196,9 @@ export default function UserProfilePage() {
             </div>
 
             {/* School Details */}
-            <div className="bg-[#F2F7FC] rounded-lg p-6 space-y-6">
+            <div className="bg-[#F2F7FC] rounded p-6 space-y-6">
               <h3 className="text-lg md:text-xl font-semibold text-[#6393f6]">School Details</h3>
-              <div className="bg-white rounded-lg p-4 border border-[#E5E7EB]">
+              <div className="bg-white rounded p-4 border border-[#E5E7EB]">
                 <h4 className="text-md font-semibold text-[#4B5563] mb-4">Your Class</h4>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   {user.entryYear && (
@@ -238,13 +240,13 @@ export default function UserProfilePage() {
                 </div>
               </div>
               {user.favoriteMemory && (
-                <div className="bg-white rounded-lg p-4 border border-[#E5E7EB]">
+                <div className="bg-white rounded p-4 border border-[#E5E7EB]">
                   <p className="text-xs text-gray-500 mb-1">Favorite School Memory</p>
                   <p className="text-sm text-[#4B5563]">{user.favoriteMemory}</p>
                 </div>
               )}
               {user.classmates && (
-                <div className="bg-white rounded-lg p-4 border border-[#E5E7EB]">
+                <div className="bg-white rounded p-4 border border-[#E5E7EB]">
                   <p className="text-xs text-gray-500 mb-1">Classmates You Remember</p>
                   <p className="text-sm text-[#4B5563]">{user.classmates}</p>
                 </div>
@@ -253,9 +255,9 @@ export default function UserProfilePage() {
 
             {/* Life After School */}
             {(user.currentOccupation || user.jobTitle || user.organisation || user.industry || user.highestQualification || user.institutionAttended || user.maritalStatus) && (
-              <div className="bg-[#F2F7FC] rounded-lg p-6 space-y-6">
+              <div className="bg-[#F2F7FC] rounded p-6 space-y-6">
                 <h3 className="text-lg md:text-xl font-semibold text-[#6393f6]">Life After School</h3>
-                <div className="bg-white rounded-lg p-4 border border-[#E5E7EB]">
+                <div className="bg-white rounded p-4 border border-[#E5E7EB]">
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     {user.currentOccupation && (
                       <div>
@@ -330,11 +332,11 @@ export default function UserProfilePage() {
 
             {/* Involvement & Notifications */}
             {(user.involvement || user.socialMedia || user.howHeard || user.referralName) && (
-              <div className="bg-[#F2F7FC] rounded-lg p-6 space-y-6">
+              <div className="bg-[#F2F7FC] rounded p-6 space-y-6">
                 <h3 className="text-lg md:text-xl font-semibold text-[#6393f6]">Involvement & Notifications</h3>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   {user.involvement && (
-                    <div className="bg-white rounded-lg p-4 border border-[#E5E7EB]">
+                    <div className="bg-white rounded p-4 border border-[#E5E7EB]">
                       <p className="text-xs text-gray-500 mb-2">Get Involved</p>
                       <div className="space-y-1">
                         {Object.entries(user.involvement).map(([key, value]) => (
@@ -348,7 +350,7 @@ export default function UserProfilePage() {
                     </div>
                   )}
                   {user.socialMedia && (
-                    <div className="bg-white rounded-lg p-4 border border-[#E5E7EB]">
+                    <div className="bg-white rounded p-4 border border-[#E5E7EB]">
                       <p className="text-xs text-gray-500 mb-2">Social Media</p>
                       <div className="space-y-1">
                         {Object.entries(user.socialMedia).map(([key, value]) => (
@@ -363,13 +365,13 @@ export default function UserProfilePage() {
                   )}
                 </div>
                 {user.howHeard && (
-                  <div className="bg-white rounded-lg p-4 border border-[#E5E7EB]">
+                  <div className="bg-white rounded p-4 border border-[#E5E7EB]">
                     <p className="text-xs text-gray-500 mb-1">How Did You Hear About Us?</p>
                     <p className="text-sm text-[#4B5563]">{user.howHeard}</p>
                   </div>
                 )}
                 {user.referralName && (
-                  <div className="bg-white rounded-lg p-4 border border-[#E5E7EB]">
+                  <div className="bg-white rounded p-4 border border-[#E5E7EB]">
                     <p className="text-xs text-gray-500 mb-1">Referral Name</p>
                     <p className="text-sm text-[#4B5563]">{user.referralName}</p>
                   </div>
@@ -378,10 +380,10 @@ export default function UserProfilePage() {
             )}
 
             {/* Addresses */}
-            <div className="bg-[#F2F7FC] rounded-lg p-6 space-y-6">
+            <div className="bg-[#F2F7FC] rounded p-6 space-y-6">
               <h3 className="text-lg md:text-xl font-semibold text-[#6393f6]">Addresses</h3>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div className="bg-white rounded-lg p-4 border border-[#E5E7EB]">
+                <div className="bg-white rounded p-4 border border-[#E5E7EB]">
                   <p className="text-xs text-gray-500 mb-3">Current Address</p>
                   <p className="text-sm text-[#4B5563]">
                     {user.currentAddress.addressLine}
@@ -392,7 +394,7 @@ export default function UserProfilePage() {
                     {user.currentAddress.country}
                   </p>
                 </div>
-                <div className="bg-white rounded-lg p-4 border border-[#E5E7EB]">
+                <div className="bg-white rounded p-4 border border-[#E5E7EB]">
                   <p className="text-xs text-gray-500 mb-3">Permanent Address</p>
                   <p className="text-sm text-[#4B5563]">
                     {user.permanentAddress.addressLine}

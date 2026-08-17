@@ -2,7 +2,7 @@
 
 import { useEffect } from 'react';
 import { useAppDispatch, useAppSelector } from '../../redux/hooks';
-import { fetchCurrentUser } from '../../redux/features/auth/authSlice';
+import { fetchCurrentUser, initializeAuth } from '../../redux/features/auth/authSlice';
 import { fetchActivities } from '../../redux/features/activities/activitiesSlice';
 import { fetchGallery } from '../../redux/features/gallery/gallerySlice';
 import { fetchEvents } from '../../redux/features/events/eventsSlice';
@@ -12,6 +12,18 @@ import { fetchConversations } from '@/redux/features/contact-messages/contactMes
 export default function AutoFetch() {
   const dispatch = useAppDispatch();
   const { isAuthenticated, accessToken } = useAppSelector((state) => state.auth);
+
+  useEffect(() => {
+    const token = localStorage.getItem('accessToken');
+    const storedUser = localStorage.getItem('user');
+
+    dispatch(
+      initializeAuth({
+        token,
+        user: storedUser ? JSON.parse(storedUser) : null,
+      })
+    );
+  }, [dispatch]);
 
   useEffect(() => {
     // Always fetch public data

@@ -48,7 +48,17 @@ export default function Profile({ onClose }: ProfileProps) {
         className="flex flex-col justify-between w-full items-center justify-between gap-3 text-left"
       >
         <div className="flex items-center justify-between gap-3 w-full">
-          {/* <div className="avatar">{initials}</div> */}
+          <div className="flex h-12 w-12 flex-shrink-0 items-center justify-center overflow-hidden rounded-full bg-slate-800 text-sm font-semibold text-white">
+            {user?.image ? (
+              <img
+                src={user.image}
+                alt={fullName}
+                className="h-full w-full object-cover"
+              />
+            ) : (
+              <span>{initials}</span>
+            )}
+          </div>
           <div className="flex-1 min-w-0 w-full">
             <p className='text-sm'>{fullName}</p>
             <p className='text-sm text-gray-400'>{user?.role}</p>

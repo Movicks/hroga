@@ -84,7 +84,7 @@ export default function AdminUpcomingEvents() {
 
   return (
     <section className="space-y-6">
-      <div className="rounded-3xl border border-slate-200 bg-white p-6 gap-4 shadow-sm flex flex-col md:flex-row justify-between items-center">
+      <div className="rounded border border-slate-200 bg-white p-6 gap-4 shadow-sm flex flex-col md:flex-row justify-between items-center">
         <div>
           <p className="text-sm uppercase tracking-[0.3em] text-slate-500">Upcoming Events</p>
           <h1 className="mt-3 text-3xl font-semibold text-slate-900">Events Management</h1>
@@ -94,7 +94,7 @@ export default function AdminUpcomingEvents() {
         </div>
         <button
           onClick={() => handleOpenModal()}
-          className="flex items-center gap-2 bg-[#020618] text-white px-6 py-3 rounded-xl hover:bg-[#020618]/70 transition-all shadow-xs"
+          className="flex items-center gap-2 bg-[#020618] text-white px-6 py-3 rounded hover:bg-[#020618]/70 transition-all shadow-xs"
         >
           <Plus size={20} />
           <span>Add Event</span>
@@ -102,7 +102,7 @@ export default function AdminUpcomingEvents() {
       </div>
 
       {error && (
-        <div className="bg-red-50 border border-red-200 text-red-600 px-4 py-3 rounded-xl flex justify-between items-center">
+        <div className="bg-red-50 border border-red-200 text-red-600 px-4 py-3 rounded flex justify-between items-center">
           <span>{error}</span>
           <button onClick={() => dispatch(clearEventError())}>
             <X size={18} />
@@ -119,10 +119,10 @@ export default function AdminUpcomingEvents() {
           <div className="col-span-full py-12 text-center text-slate-500">No events found. Add one to get started!</div>
         ) : (
           events.map((event) => (
-            <div key={event._id} className="rounded-3xl border border-slate-200 bg-white overflow-hidden shadow-sm hover:shadow-md transition-all">
+            <div key={event._id} className="rounded border border-slate-200 bg-white overflow-hidden shadow-sm hover:shadow-md transition-all">
               <div className="p-6">
                 <div className="flex justify-between items-start mb-3">
-                  <span className="inline-block px-3 py-1 bg-primary/10 text-primary text-sm font-semibold rounded-md">
+                  <span className="inline-block px-3 py-1 bg-primary/10 text-primary text-sm font-semibold rounded">
                     {event.type}
                   </span>
                   <div className="flex gap-2">
@@ -154,7 +154,7 @@ export default function AdminUpcomingEvents() {
       {/* Modal */}
       {isModalOpen && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm">
-          <div className="bg-white rounded-3xl w-full max-w-lg p-8 shadow-2xl">
+          <div className="bg-white rounded w-full max-w-lg p-8 shadow-2xl">
             <div className="flex justify-between items-center mb-6">
               <h2 className="text-2xl font-bold text-slate-900">
                 {editingId ? 'Edit Event' : 'Add New Event'}
@@ -170,7 +170,7 @@ export default function AdminUpcomingEvents() {
                 <select
                   value={formData.type}
                   onChange={(e) => setFormData({ ...formData, type: e.target.value as EventType })}
-                  className="w-full px-4 py-2 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary"
+                  className="w-full px-4 py-2 border border-slate-200 rounded focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary"
                   required
                 >
                   {eventTypes.map((type) => (
@@ -187,7 +187,7 @@ export default function AdminUpcomingEvents() {
                   type="text"
                   value={formData.title}
                   onChange={(e) => setFormData({ ...formData, title: e.target.value })}
-                  className="w-full px-4 py-2 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary"
+                  className="w-full px-4 py-2 border border-slate-200 rounded focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary"
                   placeholder="e.g., Mrs. Adaeze Okonkwo"
                   required
                 />
@@ -199,7 +199,7 @@ export default function AdminUpcomingEvents() {
                   type="text"
                   value={formData.dateLocation}
                   onChange={(e) => setFormData({ ...formData, dateLocation: e.target.value })}
-                  className="w-full px-4 py-2 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary"
+                  className="w-full px-4 py-2 border border-slate-200 rounded focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary"
                   placeholder="e.g., June 15, 2026"
                   required
                 />
@@ -210,7 +210,7 @@ export default function AdminUpcomingEvents() {
                 <textarea
                   value={formData.description}
                   onChange={(e) => setFormData({ ...formData, description: e.target.value })}
-                  className="w-full px-4 py-2 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary"
+                  className="w-full px-4 py-2 border border-slate-200 rounded focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary"
                   placeholder="e.g., Class of 1994 · Celebrating her 50th..."
                   rows={3}
                   required
@@ -221,14 +221,14 @@ export default function AdminUpcomingEvents() {
                 <button
                   type="button"
                   onClick={handleCloseModal}
-                  className="flex-1 px-6 py-3 border border-slate-200 text-slate-600 rounded-full hover:bg-slate-50 transition-colors font-medium"
+                  className="flex-1 px-6 py-3 border border-slate-200 text-slate-600 rounded hover:bg-slate-50 transition-colors font-medium"
                 >
                   Cancel
                 </button>
                 <button
                   type="submit"
                   disabled={loading}
-                  className="flex-1 px-6 py-3 bg-primary text-white rounded-full hover:bg-primary/90 transition-all font-medium disabled:opacity-50 shadow-md"
+                  className="flex-1 px-6 py-3 bg-primary text-white rounded hover:bg-primary/90 transition-all font-medium disabled:opacity-50 shadow-md"
                 >
                   {loading ? 'Saving...' : editingId ? 'Update' : 'Create'}
                 </button>

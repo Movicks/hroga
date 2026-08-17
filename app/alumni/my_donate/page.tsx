@@ -21,13 +21,13 @@ export default function MyDonations() {
       </p>
 
       {/* Decorative line */}
-      <div className="w-20 h-1 bg-gradient-to-r from-indigo-500 to-purple-500 rounded-full mb-8" />
+      <div className="w-20 h-1 bg-gradient-to-r from-indigo-500 to-purple-500 rounded mb-8" />
 
       {/* Status indicator */}
-      <div className="flex items-center gap-3 bg-white/80 backdrop-blur-sm px-6 py-3 rounded-full shadow-md">
+      <div className="flex items-center gap-3 bg-white/80 backdrop-blur-sm px-6 py-3 rounded shadow-md">
         <span className="relative flex h-3 w-3">
-          <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-indigo-400 opacity-75"></span>
-          <span className="relative inline-flex rounded-full h-3 w-3 bg-indigo-500"></span>
+          <span className="animate-ping absolute inline-flex h-full w-full rounded bg-indigo-400 opacity-75"></span>
+          <span className="relative inline-flex rounded h-3 w-3 bg-indigo-500"></span>
         </span>
         <span className="text-sm font-medium text-gray-600">
           In Development

@@ -50,7 +50,7 @@ export default function AdminDashboardPage() {
   if (isLoading) {
     return (
       <section className="space-y-6 animate-pulse">
-        <div className="rounded-xl bg-slate-200 px-6 py-8">
+        <div className="rounded bg-slate-200 px-6 py-8">
           <div className="h-4 w-24 rounded bg-slate-300" />
           <div className="mt-4 h-9 w-80 rounded bg-slate-300" />
           <div className="mt-4 h-4 max-w-2xl rounded bg-slate-300" />
@@ -60,7 +60,7 @@ export default function AdminDashboardPage() {
           {[1, 2, 3].map((item) => (
             <div
               key={item}
-              className="rounded-xl border border-slate-200 bg-white p-5 shadow-sm"
+              className="rounded border border-slate-200 bg-white p-5 shadow-sm"
             >
               <div className="h-4 w-32 rounded bg-slate-200" />
               <div className="mt-4 h-9 w-16 rounded bg-slate-200" />
@@ -69,9 +69,9 @@ export default function AdminDashboardPage() {
         </div>
 
         <div className="grid gap-4 xl:grid-cols-[1.6fr_1fr]">
-          <div className="h-64 rounded-xl border border-slate-200 bg-white p-6 shadow-sm" />
+          <div className="h-64 rounded border border-slate-200 bg-white p-6 shadow-sm" />
 
-          <div className="h-64 rounded-xl border border-slate-200 bg-white p-6 shadow-sm" />
+          <div className="h-64 rounded border border-slate-200 bg-white p-6 shadow-sm" />
         </div>
       </section>
     );
@@ -79,7 +79,7 @@ export default function AdminDashboardPage() {
 
   return (
     <section className="space-y-6">
-      <div className="rounded-xl bg-slate-900 px-6 py-8 text-white shadow-xl">
+      <div className="rounded bg-slate-900 px-6 py-8 text-white shadow-xl">
         <p className="text-sm uppercase tracking-[0.3em] text-slate-400">
           Overview
         </p>
@@ -95,7 +95,7 @@ export default function AdminDashboardPage() {
       </div>
 
       {error && (
-        <div className="rounded-xl border border-red-200 bg-red-50 px-5 py-4 text-sm text-red-700">
+        <div className="rounded border border-red-200 bg-red-50 px-5 py-4 text-sm text-red-700">
           {error}
         </div>
       )}
@@ -104,7 +104,7 @@ export default function AdminDashboardPage() {
         {stats.map((stat) => (
           <div
             key={stat.label}
-            className="rounded-xl border border-slate-200 bg-white p-5 shadow-sm"
+            className="rounded border border-slate-200 bg-white p-5 shadow-sm"
           >
             <p className="text-sm text-slate-500">
               {stat.label}
@@ -118,7 +118,7 @@ export default function AdminDashboardPage() {
       </div>
 
       <div className="grid gap-4 xl:grid-cols-[1.6fr_1fr]">
-        <div className="rounded-xl border border-slate-200 bg-white p-6 shadow-sm">
+        <div className="rounded border border-slate-200 bg-white p-6 shadow-sm">
           <h3 className="text-lg font-semibold text-slate-900">
             Recent activity
           </h3>
@@ -131,7 +131,7 @@ export default function AdminDashboardPage() {
             ].map((item) => (
               <div
                 key={item}
-                className="rounded-lg bg-slate-50 px-4 py-3 text-sm text-slate-600"
+                className="rounded bg-slate-50 px-4 py-3 text-sm text-slate-600"
               >
                 {item}
               </div>
@@ -139,7 +139,7 @@ export default function AdminDashboardPage() {
           </div>
         </div>
 
-        <div className="rounded-xl border border-slate-200 bg-white p-6 shadow-sm">
+        <div className="rounded border border-slate-200 bg-white p-6 shadow-sm">
           <h3 className="text-lg font-semibold text-slate-900">
             Quick notes
           </h3>

@@ -19,6 +19,8 @@ const navItems = [
   { name: 'All Users', href: '/admin/users' },
   { name: 'Contact Messages', href: '/admin/contact_messages' },
   { name: 'All Donations', href: '/admin/donations' },
+  { name: 'Monthly Dues', href: '/admin/dues' }, 
+  { name: 'Make A Donation', href: '/donate'},
   { name: 'Audits', href: '/admin/audits' },
 ];
 
@@ -74,7 +76,7 @@ export default function AdminNavbar({ isOpen, onClose }: AdminNavbarProps) {
                 key={item.href}
                 href={item.href}
                 onClick={onClose}
-                className={`rounded-r-lg px-4 py-3 text-sm font-medium transition-colors ${
+                className={`rounded-r px-4 py-3 text-sm font-medium transition-colors ${
                   isActive
                     ? 'bg-primary text-white shadow-r-lg'
                     : 'text-slate-300 hover:bg-slate-900 hover:text-white'

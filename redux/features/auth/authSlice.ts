@@ -78,25 +78,10 @@ interface AuthState {
   error: string | null;
 }
 
-const getInitialToken = () => {
-  if (typeof window !== 'undefined') {
-    return localStorage.getItem('accessToken');
-  }
-  return null;
-};
-
-const getInitialUser = () => {
-  if (typeof window !== 'undefined') {
-    const user = localStorage.getItem('user');
-    return user ? JSON.parse(user) : null;
-  }
-  return null;
-};
-
 const initialState: AuthState = {
-  user: getInitialUser(),
-  accessToken: getInitialToken(),
-  isAuthenticated: !!getInitialToken(),
+  user: null,
+  accessToken: null,
+  isAuthenticated: false,
   loading: false,
   error: null,
 };

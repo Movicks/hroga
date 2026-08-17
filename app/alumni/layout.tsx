@@ -35,7 +35,7 @@ export default function AlumniLayout({ children }: { children: React.ReactNode }
                     type="button"
                     aria-label="Open sidebar"
                     onClick={() => setIsSidebarOpen(true)}
-                    className="flex h-11 w-11 items-center justify-center rounded-lg border border-slate-200 bg-white text-slate-700 shadow-sm lg:hidden"
+                    className="flex h-11 w-11 items-center justify-center rounded border border-slate-200 bg-white text-slate-700 shadow-sm lg:hidden"
                   >
                     <span className="flex flex-col gap-1.5">
                       <span className="block h-0.5 w-5 bg-current" />
@@ -47,9 +47,9 @@ export default function AlumniLayout({ children }: { children: React.ReactNode }
 
                 {/* <div className="flex w-full max-w-[40rem] items-center justify-end gap-4 lg:gap-6">
                   <Searchbar />
-                  <button className="relative flex h-12 min-w-13 items-center justify-center rounded-xl border border-slate-200 bg-black text-white shadow-sm">
+                  <button className="relative flex h-12 min-w-13 items-center justify-center rounded border border-slate-200 bg-black text-white shadow-sm">
                     <BellDotIcon size={28} />
-                    <span className="absolute right-0 top-0 flex h-4 min-w-7 items-center justify-center rounded-full bg-red-500 px-1 text-xs font-medium">
+                    <span className="absolute right-0 top-0 flex h-4 min-w-7 items-center justify-center rounded bg-red-500 px-1 text-xs font-medium">
                       3
                     </span>
                   </button>
