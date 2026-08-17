@@ -5,10 +5,14 @@ import { CheckCircle, Clock, AlertCircle, Calendar } from 'lucide-react';
 interface Due {
   _id: string;
   reference: string;
+  paymentReference?: string;
   amount: number;
+  paymentTotalAmount?: number;
   currency: string;
   type: string;
   month: string;
+  paymentMonthCount?: number;
+  coveredMonths?: string[];
   status: string;
   paidAt?: string;
   dueDate?: string;
@@ -138,14 +142,22 @@ export default function DueHistoryTable({ dues }: DueHistoryTableProps) {
                       <div className="text-xs text-gray-500">
                         Due: {formatDate(due.dueDate)}
                       </div>
+                      <div className="text-xs text-gray-500">
+                        Payment batch: {due.paymentMonthCount || due.coveredMonths?.length || 1} month(s)
+                      </div>
                     </div>
                   </div>
                 </td>
                 <td className="px-4 py-4 whitespace-nowrap">
                   <div className="flex items-center">
-                    <span className="text-sm font-medium text-gray-900">
-                      {formatCurrency(due.amount)}
-                    </span>
+                    <div>
+                      <span className="text-sm font-medium text-gray-900">
+                        {formatCurrency(due.amount)}
+                      </span>
+                      <div className="text-xs text-gray-500">
+                        Group total: {formatCurrency(due.paymentTotalAmount || due.amount)}
+                      </div>
+                    </div>
                   </div>
                 </td>
                 <td className="px-4 py-4 whitespace-nowrap">
@@ -159,7 +171,7 @@ export default function DueHistoryTable({ dues }: DueHistoryTableProps) {
                 </td>
                 <td className="px-4 py-4 whitespace-nowrap">
                   <div className="text-xs font-mono text-gray-500 bg-gray-50 px-2 py-1 rounded">
-                    {due.reference}
+                    {due.paymentReference || due.reference}
                   </div>
                 </td>
               </tr>

@@ -16,7 +16,6 @@ import { useAppSelector, useAppDispatch } from '../../../redux/hooks';
 import { fetchAllDues, checkDuePaymentStatus } from '../../../redux/features/dues/duesSlice';
 import ProtectedRoute from '../../../authGuard/ProtectedRoute';
 import Loader from '../../../components/reusables/Loader';
-import AdminNavbar from '../../../components/sidebars/AdminNavbar';
 
 export default function AdminDuesPage() {
   const dispatch = useAppDispatch();
@@ -114,6 +113,9 @@ export default function AdminDuesPage() {
   const filteredDues = dues.filter(due => {
     const matchesSearch = 
       due.reference.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      due.paymentReference?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      due.payerName?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      due.payerEmail?.toLowerCase().includes(searchTerm.toLowerCase()) ||
       due.user?.firstName?.toLowerCase().includes(searchTerm.toLowerCase()) ||
       due.user?.lastName?.toLowerCase().includes(searchTerm.toLowerCase()) ||
       due.user?.email?.toLowerCase().includes(searchTerm.toLowerCase());
@@ -141,7 +143,6 @@ export default function AdminDuesPage() {
   return (
     <ProtectedRoute allowedRoles={['admin']}>
       <div className="min-h-auto bg-slate-50">
-        <AdminNavbar isOpen={isSidebarOpen} onClose={() => setIsSidebarOpen(false)} />
         
         {/* Main Content */}
         <div className="">
@@ -314,7 +315,7 @@ export default function AdminDuesPage() {
                         Reference
                       </th>
                       <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                        Alumni
+                        Paid By
                       </th>
                       <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                         Month
@@ -343,6 +344,10 @@ export default function AdminDuesPage() {
                     ) : (
                       filteredDues.map((due) => {
                         const statusConfig = getStatusConfig(due.status);
+                        const payerName =
+                          due.payerName ||
+                          `${due.user?.firstName || ''} ${due.user?.lastName || ''}`.trim() ||
+                          'Unknown payer';
                         return (
                           <tr key={due._id} className="hover:bg-gray-50">
                             <td className="px-6 py-4 whitespace-nowrap">
@@ -357,10 +362,10 @@ export default function AdminDuesPage() {
                                 </div>
                                 <div className="ml-4">
                                   <div className="text-sm font-medium text-gray-900">
-                                    {due.user?.firstName} {due.user?.lastName}
+                                    {payerName}
                                   </div>
                                   <div className="text-sm text-gray-500">
-                                    {due.user?.email}
+                                    {due.payerEmail || due.user?.email || 'No email available'}
                                   </div>
                                 </div>
                               </div>
@@ -425,13 +430,13 @@ export default function AdminDuesPage() {
                     </button>
                   </div>
 
-                  <div className="grid grid-cols-1 gap-4 px-6 py-6 md:grid-cols-2">
-                    <div className="rounded bg-gray-50 p-4">
+                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 px-6 py-6 max-h-[calc(100vh-10rem)] overflow-auto">
+                    <div className="rounded bg-gray-50 p-4 lg:col-span-2">
                       <p className="text-xs font-medium uppercase tracking-wider text-gray-500">Alumni</p>
                       <p className="mt-2 text-sm font-medium text-gray-900">
-                        {selectedDue.user?.firstName} {selectedDue.user?.lastName}
+                        {selectedDue.payerName || `${selectedDue.user?.firstName || ''} ${selectedDue.user?.lastName || ''}`.trim() || 'Unknown payer'}
                       </p>
-                      <p className="text-sm text-gray-600">{selectedDue.user?.email || '-'}</p>
+                      <p className="text-sm text-gray-600">{selectedDue.payerEmail || selectedDue.user?.email || '-'}</p>
                     </div>
 
                     <div className="rounded bg-gray-50 p-4">
@@ -450,6 +455,13 @@ export default function AdminDuesPage() {
                     </div>
 
                     <div className="rounded bg-gray-50 p-4">
+                      <p className="text-xs font-medium uppercase tracking-wider text-gray-500">Total Charged</p>
+                      <p className="mt-2 text-sm font-medium text-gray-900">
+                        {formatCurrency(selectedDue.paymentTotalAmount || selectedDue.amount)}
+                      </p>
+                    </div>
+
+                    <div className="rounded bg-gray-50 p-4">
                       <p className="text-xs font-medium uppercase tracking-wider text-gray-500">Type</p>
                       <p className="mt-2 text-sm font-medium capitalize text-gray-900">
                         {selectedDue.type}
@@ -464,10 +476,31 @@ export default function AdminDuesPage() {
                     </div>
 
                     <div className="rounded bg-gray-50 p-4">
+                      <p className="text-xs font-medium uppercase tracking-wider text-gray-500">Months Paid</p>
+                      <p className="mt-2 text-sm font-medium text-gray-900">
+                        {selectedDue.paymentMonthCount || selectedDue.coveredMonths?.length || 1}
+                      </p>
+                    </div>
+
+                    <div className="rounded bg-gray-50 p-4">
                       <p className="text-xs font-medium uppercase tracking-wider text-gray-500">Currency</p>
                       <p className="mt-2 text-sm font-medium text-gray-900">
                         {selectedDue.currency}
                       </p>
+                    </div>
+
+                    <div className="rounded bg-gray-50 p-4 md:col-span-2">
+                      <p className="text-xs font-medium uppercase tracking-wider text-gray-500">Covered Months</p>
+                      <div className="mt-2 flex flex-wrap gap-2">
+                        {(selectedDue.coveredMonths?.length ? selectedDue.coveredMonths : [selectedDue.month]).map((month) => (
+                          <span
+                            key={month}
+                            className="inline-flex items-center rounded bg-blue-50 px-3 py-1 text-xs font-medium text-blue-700"
+                          >
+                            {formatMonth(month)}
+                          </span>
+                        ))}
+                      </div>
                     </div>
 
                     <div className="rounded bg-gray-50 p-4">
@@ -481,6 +514,13 @@ export default function AdminDuesPage() {
                       <p className="text-xs font-medium uppercase tracking-wider text-gray-500">Paid Date</p>
                       <p className="mt-2 text-sm font-medium text-gray-900">
                         {formatDate(selectedDue.paidAt)}
+                      </p>
+                    </div>
+
+                    <div className="rounded bg-gray-50 p-4 md:col-span-2">
+                      <p className="text-xs font-medium uppercase tracking-wider text-gray-500">Payment Reference</p>
+                      <p className="mt-2 break-all text-sm font-medium text-gray-900">
+                        {selectedDue.paymentReference || selectedDue.reference}
                       </p>
                     </div>
 
@@ -498,9 +538,9 @@ export default function AdminDuesPage() {
                       </p>
                     </div>
 
-                    <div className="rounded bg-gray-50 p-4 md:col-span-2">
+                    <div className="rounded bg-gray-50 p-4 md:col-span-1">
                       <p className="text-xs font-medium uppercase tracking-wider text-gray-500">Notes</p>
-                      <p className="mt-2 text-sm text-gray-700">
+                      <p className="mt-2 text-xs text-gray-700">
                         {selectedDue.notes || 'No notes provided.'}
                       </p>
                     </div>

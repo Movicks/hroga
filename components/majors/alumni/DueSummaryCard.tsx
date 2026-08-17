@@ -7,6 +7,8 @@ interface DueSummary {
   pendingCount: number;
   overdueCount: number;
   totalDues: number;
+  successfulMonthsCount?: number;
+  paidMonths?: string[];
   isCurrentMonthPaid: boolean;
   currentMonth: string;
 }
@@ -40,12 +42,12 @@ export default function DueSummaryCard({ summary }: DueSummaryCardProps) {
       description: 'Lifetime contributions',
     },
     {
-      title: 'Paid Dues',
-      value: summary.totalDues - summary.pendingCount - summary.overdueCount,
+      title: 'Months Paid',
+      value: summary.successfulMonthsCount ?? (summary.totalDues - summary.pendingCount - summary.overdueCount),
       icon: <CheckCircle className="h-5 w-5 text-blue-600" />,
       color: 'text-blue-600',
       bgColor: 'bg-blue-50',
-      description: 'Successful payments',
+      description: 'Successful month records',
     },
     {
       title: 'Pending',
@@ -104,6 +106,22 @@ export default function DueSummaryCard({ summary }: DueSummaryCardProps) {
           Consecutive months of on-time payments. Keep it up!
         </div>
       </div>
+
+      {summary.paidMonths?.length ? (
+        <div className="mt-6 border-t border-gray-200 pt-6">
+          <h4 className="mb-4 text-sm font-medium text-gray-900">Recently Covered Months</h4>
+          <div className="flex flex-wrap gap-2">
+            {summary.paidMonths.slice(-6).reverse().map((month) => (
+              <span
+                key={month}
+                className="inline-flex items-center rounded bg-green-50 px-3 py-1 text-xs font-medium text-green-700"
+              >
+                {formatMonth(month)}
+              </span>
+            ))}
+          </div>
+        </div>
+      ) : null}
 
       {/* Current Month Status */}
       <div className="mt-6 pt-6 border-t border-gray-200">
