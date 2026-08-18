@@ -5,6 +5,7 @@ export interface DueUser {
   firstName?: string;
   lastName?: string;
   email?: string;
+  avatar?: string;
   role?: 'admin' | 'alumni';
 }
 

@@ -167,6 +167,7 @@
 
   ::-webkit-scrollbar {
     width: 4px;
+    max-height: 4px;
   }
 
   ::-webkit-scrollbar-track {
