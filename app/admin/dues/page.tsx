@@ -16,6 +16,7 @@ import { useAppSelector, useAppDispatch } from '../../../redux/hooks';
 import { fetchAllDues, checkDuePaymentStatus } from '../../../redux/features/dues/duesSlice';
 import ProtectedRoute from '../../../authGuard/ProtectedRoute';
 import Loader from '../../../components/reusables/Loader';
+import Image from 'next/image';
 
 export default function AdminDuesPage() {
   const dispatch = useAppDispatch();
@@ -193,8 +194,8 @@ export default function AdminDuesPage() {
                       {formatCurrency(dues.filter(d => d.status === 'success').reduce((sum, d) => sum + d.amount, 0))}
                     </p>
                   </div>
-                  <div className="rounded bg-green-100 p-3">
-                    <DollarSign className="h-6 w-6 text-green-600" />
+                  <div className="rounded bg-green-100 px-4 py-2 text-2xl">
+                    ₦
                   </div>
                 </div>
               </div>
@@ -352,13 +353,24 @@ export default function AdminDuesPage() {
                           <tr key={due._id} className="hover:bg-gray-50">
                             <td className="px-6 py-4 whitespace-nowrap">
                               <div className="text-sm font-medium text-gray-900">
-                                {due.reference}
+                                {due.reference.length > 20 ? due.reference.slice(0, 20) + '...' : due.reference}
                               </div>
                             </td>
                             <td className="px-6 py-4 whitespace-nowrap">
                               <div className="flex items-center">
-                                <div className="flex-shrink-0 h-8 w-8 rounded bg-gray-200 flex items-center justify-center">
-                                  <User className="h-4 w-4 text-gray-500" />
+                                <div className="flex-shrink-0 h-10 w-10 rounded-full bg-gray-200 flex items-center justify-center">
+                                  {due.user?.avatar ? (
+                                    <Image
+                                      src={due.user?.avatar}
+                                      alt={payerName}
+                                      width={32}
+                                      height={32}
+                                      className="rounded-full w-full h-full bg-cover"
+                                      loading="lazy"
+                                    />
+                                  ) : (
+                                    <User className="h-4 w-4 text-gray-500" />
+                                  )}
                                 </div>
                                 <div className="ml-4">
                                   <div className="text-sm font-medium text-gray-900">
@@ -381,7 +393,7 @@ export default function AdminDuesPage() {
                               </div>
                             </td>
                             <td className="px-6 py-4 whitespace-nowrap">
-                              <div className={`inline-flex items-center gap-1 px-3 py-1 rounded text-xs font-medium ${statusConfig.bgColor} ${statusConfig.color}`}>
+                              <div className={`inline-flex items-center gap-1 px-3 py-1 rounded-full text-xs font-medium ${statusConfig.bgColor} ${statusConfig.color}`}>
                                 {statusConfig.icon}
                                 {statusConfig.text}
                               </div>
@@ -394,7 +406,7 @@ export default function AdminDuesPage() {
                             <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
                               <button
                                 onClick={() => setSelectedDue(due)}
-                                className="text-blue-600 hover:text-blue-900"
+                                className="text-primary hover:text-blue-900"
                               >
                                 View Details
                               </button>
