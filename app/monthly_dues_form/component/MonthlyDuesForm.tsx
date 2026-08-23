@@ -18,7 +18,7 @@ import {
 } from '../../../redux/features/dues/duesSlice';
 
 const PAYMENT_OPTIONS = [1, 3, 6, 12] as const;
-const MONTHLY_DUE_AMOUNT = 12000;
+const MONTHLY_DUE_AMOUNT = 1000;
 
 export function MonthlyDuesForm() {
   const router = useRouter();
@@ -189,7 +189,7 @@ export function MonthlyDuesForm() {
   }
 
   return (
-    <div className="min-h-screen bg-slate-50 py-12 px-4 sm:px-6 lg:px-8">
+    <div className="min-h-screen bg-slate-50 py-12 px-4 sm:px-6 lg:px-8 pt-35">
 
       <div className="mx-auto max-w-7xl">
         <div className="rounded-2xl bg-white md:p-8 shadow-xs">

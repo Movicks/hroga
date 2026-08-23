@@ -11,8 +11,8 @@ interface DuePaymentCardProps {
   isCurrentMonthPaid: boolean;
 }
 
-// const PAYMENT_OPTIONS = [1, 3, 6, 12] as const;
-const MONTHLY_DUE_AMOUNT = 12000;
+const PAYMENT_OPTIONS = [1, 3, 6, 12] as const;
+const MONTHLY_DUE_AMOUNT = 1000;
 
 export default function DuePaymentCard({ 
   onPaymentSuccess, 
@@ -162,7 +162,7 @@ export default function DuePaymentCard({
           </div>
         </div>
 
-        {/* <div>
+        <div>
           <label className="mb-3 block text-sm font-medium text-gray-700">
             Choose payment duration
           </label>
@@ -182,14 +182,14 @@ export default function DuePaymentCard({
               </button>
             ))}
           </div>
-        </div> */}
+        </div>
 
-        {/* <div>
+        <div>
           <div className="mb-3 flex items-center gap-2">
             <Layers3 className="h-4 w-4 text-blue-600" />
             <p className="text-sm font-medium text-gray-700">Months covered by this payment</p>
           </div>
-          <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
+          <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
             {coveredMonths.map((month, index) => (
               <div key={month} className="rounded border border-blue-200 bg-blue-50 p-4">
                 <p className="text-sm font-medium text-gray-900">{formatMonth(month)}</p>
@@ -199,7 +199,7 @@ export default function DuePaymentCard({
               </div>
             ))}
           </div>
-        </div> */}
+        </div>
 
         {error && (
           <div className="rounded bg-red-50 p-4">
@@ -222,7 +222,7 @@ export default function DuePaymentCard({
               </div>
             </div>
           )}
-          {/* <button
+          <button
             onClick={handlePayNow}
             disabled={isProcessing}
             className="w-full flex items-center justify-center gap-3 rounded bg-blue-600 px-6 py-4 text-white font-medium hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed"
@@ -238,7 +238,7 @@ export default function DuePaymentCard({
                 Pay {monthsCount} {monthsCount === 1 ? 'Month' : 'Months'} - {formatCurrency(totalAmount)}
               </>
             )}
-          </button> */}
+          </button>
         </div>
 
         <div className="rounded bg-blue-50 p-4">

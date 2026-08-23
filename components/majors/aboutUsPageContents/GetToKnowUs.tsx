@@ -97,7 +97,7 @@ export default function GetToKnowUs() {
                 style={{ borderRadius: "4px" }}
               >
                 <Image
-                  src="/images/HROGA_highTable.jpeg"
+                  src="/images/Hroga_highTable.jpeg"
                   alt="Three women having a discussion in a living room"
                   width={600}
                   height={140}
