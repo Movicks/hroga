@@ -174,7 +174,7 @@ export default function AlumniDuesPage() {
                   <div className="space-y-4">
                     <div className="flex items-center justify-between">
                       <span className="text-sm text-gray-600">Monthly Amount</span>
-                      <span className="text-sm font-medium text-gray-900">₦12,000</span>
+                      <span className="text-sm font-medium text-gray-900">₦1,000</span>
                     </div>
                     <div className="flex items-center justify-between">
                       <span className="text-sm text-gray-600">Payment Method</span>
