@@ -2,6 +2,7 @@
 
 import { FormEvent, useEffect, useState } from 'react';
 import { ArrowRight, Banknote, CheckCircle2 } from 'lucide-react';
+import { payDonation, type MonnifyResponse } from '@/lib/monnify';
 
 export type VerifiedDonation = {
   reference: string;
@@ -29,10 +30,6 @@ type DonateFormProps = {
   apiBaseUrl?: string;
   initialAmount: number;
   onAmountChange: (amount: number) => void;
-  error: string | null;
-  successMessage: string | null;
-  verifiedDonation: VerifiedDonation | null;
-  isVerifying: boolean;
 };
 
 const initialForm: DonationState = {
@@ -56,17 +53,17 @@ export default function DonateForm({
   apiBaseUrl,
   initialAmount,
   onAmountChange,
-  error,
-  successMessage,
-  verifiedDonation,
-  isVerifying,
 }: DonateFormProps) {
   const [form, setForm] = useState<DonationState>({
     ...initialForm,
     amount: initialAmount,
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [submitError, setSubmitError] = useState<string | null>(null);
+  const [isVerifying, setIsVerifying] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const [successMessage, setSuccessMessage] = useState<string | null>(null);
+  const [verifiedDonation, setVerifiedDonation] =
+    useState<VerifiedDonation | null>(null);
 
   useEffect(() => {
     setForm((current) => {
@@ -85,17 +82,21 @@ export default function DonateForm({
     event.preventDefault();
 
     if (!apiBaseUrl) {
-      setSubmitError(
+      setError(
         'The donation service is not configured. Add NEXT_PUBLIC_API_BASE_URL to your env.',
       );
       return;
     }
 
     setIsSubmitting(true);
-    setSubmitError(null);
+    setError(null);
+    setSuccessMessage(null);
+    setVerifiedDonation(null);
 
     try {
-      const response = await fetch(`${apiBaseUrl}/donations/initialize`, {
+      // Step 1: Initialize donation on server (creates DB record, returns reference)
+      const baseUrl = apiBaseUrl.replace(/\/$/, '');
+      const response = await fetch(`${baseUrl}/api/donations/initialize`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -112,18 +113,47 @@ export default function DonateForm({
         throw new Error(data.message || 'Unable to start the donation.');
       }
 
-      window.location.href = data.authorizationUrl;
+      // Step 2: Open Monnify popup
+      await payDonation({
+        reference: data.reference,
+        amount: data.amount,
+        email: data.email,
+        fullName: data.fullName,
+        purpose: data.purpose,
+      });
+
+      // Step 3: Verify the payment on the server
+      setIsSubmitting(false);
+      setIsVerifying(true);
+
+      const verifyResponse = await fetch(
+        `${baseUrl}/api/donations/verify/${data.reference}`,
+      );
+      const verifyData = await verifyResponse.json();
+
+      if (!verifyResponse.ok) {
+        throw new Error(
+          verifyData.message || 'Unable to verify your donation.',
+        );
+      }
+
+      setVerifiedDonation(verifyData.donation);
+      setSuccessMessage(
+        verifyData.donation?.status === 'success'
+          ? 'Thank you. Your donation has been confirmed successfully.'
+          : 'Your payment is still being processed. Please check again shortly.',
+      );
     } catch (submitError) {
-      setSubmitError(
+      setError(
         submitError instanceof Error
           ? submitError.message
-          : 'Unable to start the donation.',
+          : 'Unable to complete the donation.',
       );
+    } finally {
       setIsSubmitting(false);
+      setIsVerifying(false);
     }
   };
-
-  const displayedError = submitError || error;
 
   return (
     <div className="relative">
@@ -142,11 +172,11 @@ export default function DonateForm({
           </div>
         </div>
 
-        {(displayedError || successMessage || isVerifying) && (
+        {(error || successMessage || isVerifying) && (
           <div className="mb-6 space-y-3">
             {isVerifying && (
               <div className="rounded-2xl border border-primary/20 bg-primary/8 px-4 py-3 text-sm text-primary">
-                Verifying your Paystack payment reference...
+                Verifying your payment...
               </div>
             )}
 
@@ -170,9 +200,9 @@ export default function DonateForm({
               </div>
             )}
 
-            {displayedError && (
+            {error && (
               <div className="rounded-2xl border border-rose-200 bg-rose-50 px-4 py-3 text-sm text-rose-700">
-                {displayedError}
+                {error}
               </div>
             )}
           </div>
@@ -276,14 +306,18 @@ export default function DonateForm({
             disabled={isSubmitting || isVerifying}
             className="inline-flex w-full items-center justify-center gap-2 rounded-full bg-primary px-6 py-4 text-base font-semibold text-white shadow-lg shadow-primary/30 transition hover:bg-primary/90 disabled:cursor-not-allowed disabled:opacity-70"
           >
-            {isSubmitting ? 'Redirecting to Paystack...' : 'Continue to secure payment'}
-            {!isSubmitting && <ArrowRight className="h-5 w-5" />}
+            {isSubmitting
+              ? 'Opening payment...'
+              : isVerifying
+                ? 'Verifying payment...'
+                : 'Continue to secure payment'}
+            {!isSubmitting && !isVerifying && <ArrowRight className="h-5 w-5" />}
           </button>
         </form>
 
         <div className="mt-6 rounded-2xl bg-slate-50 px-4 py-4 text-sm leading-6 text-slate-600">
-          Payments are processed securely via Paystack. You&apos;ll return here automatically
-          after payment verification.
+          Payments are processed securely via Monnify. The payment popup will open
+          on this page and your donation will be verified automatically.
         </div>
       </div>
     </div>

@@ -1,19 +1,12 @@
 'use client';
 
-import { useEffect, useMemo, useState } from 'react';
+import { useMemo, useState } from 'react';
 import { HeartHandshake } from 'lucide-react';
 
 import Footer from '../../components/footer/Footer';
-import DonateForm, {
-  VerifiedDonation,
-} from '../../components/forms/DonateForm';
+import DonateForm from '../../components/forms/DonateForm';
 import HomeTopbar from '../../components/topbars/HomeTopbar';
 import ItalicTitle from '@/components/reusables/ItalicTitle';
-
-interface DonatePageClientProps {
-  reference?: string;
-  status?: string;
-}
 
 const suggestedAmounts = [
   5000,
@@ -34,18 +27,8 @@ function formatCurrency(amount: number) {
   }).format(amount);
 }
 
-export default function DonatePageClient({
-  reference,
-  status,
-}: DonatePageClientProps) {
+export default function DonatePageClient() {
   const [selectedAmount, setSelectedAmount] = useState(25000);
-  const [isVerifying, setIsVerifying] = useState(false);
-  const [error, setError] = useState<string | null>(null);
-  const [successMessage, setSuccessMessage] = useState<string | null>(null);
-  const [verifiedDonation, setVerifiedDonation] =
-    useState<VerifiedDonation | null>(null);
-  const [handledReference, setHandledReference] =
-    useState<string | null>(null);
 
   const apiBaseUrl = process.env.NEXT_PUBLIC_API_BASE_URL;
 
@@ -53,70 +36,6 @@ export default function DonatePageClient({
     () => formatCurrency(selectedAmount || 0),
     [selectedAmount]
   );
-
-  useEffect(() => {
-    if (!reference || handledReference === reference || !apiBaseUrl) {
-      return;
-    }
-
-    let cancelled = false;
-
-    const verifyDonation = async () => {
-      setIsVerifying(true);
-      setError(null);
-
-      try {
-        const response = await fetch(
-          `${apiBaseUrl}/donations/verify/${reference}`
-        );
-
-        const data = await response.json();
-
-        if (!response.ok) {
-          throw new Error(
-            data.message || 'Unable to verify your donation.'
-          );
-        }
-
-        if (!cancelled) {
-          setHandledReference(reference);
-          setVerifiedDonation(data.donation);
-
-          setSuccessMessage(
-            data.donation.status === 'success'
-              ? 'Thank you. Your donation has been confirmed successfully.'
-              : 'Your payment is still being processed. Please check again shortly.'
-          );
-        }
-      } catch (verificationError) {
-        if (!cancelled) {
-          setError(
-            verificationError instanceof Error
-              ? verificationError.message
-              : 'Unable to verify your donation right now.'
-          );
-        }
-      } finally {
-        if (!cancelled) {
-          setIsVerifying(false);
-        }
-      }
-    };
-
-    verifyDonation();
-
-    return () => {
-      cancelled = true;
-    };
-  }, [apiBaseUrl, handledReference, reference]);
-
-  useEffect(() => {
-    if (status === 'cancelled') {
-      setError(
-        'The donation flow was cancelled before payment was completed.'
-      );
-    }
-  }, [status]);
 
   return (
     <div className="min-h-[100dvh] bg-white text-slate-900">
@@ -146,7 +65,7 @@ export default function DonatePageClient({
                 <p className="max-w-2xl text-lg leading-8 text-slate-600">
                   Power projects that support students, strengthen alumni
                   engagement, and sustain the Holy Rosary legacy. Your gift is
-                  securely processed through Paystack.
+                  securely processed through Monnify.
                 </p>
               </div>
 
@@ -186,10 +105,6 @@ export default function DonatePageClient({
               apiBaseUrl={apiBaseUrl}
               initialAmount={selectedAmount}
               onAmountChange={setSelectedAmount}
-              error={error}
-              successMessage={successMessage}
-              verifiedDonation={verifiedDonation}
-              isVerifying={isVerifying}
             />
           </div>
         </section>

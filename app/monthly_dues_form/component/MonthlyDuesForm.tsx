@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { useRouter, useSearchParams } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 import {
   Calendar,
   CreditCard,
@@ -16,13 +16,13 @@ import {
   initializeDuePayment,
   verifyDuePayment,
 } from '../../../redux/features/dues/duesSlice';
+import { payDues } from '@/lib/monnify';
 
 const PAYMENT_OPTIONS = [1, 3, 6, 12] as const;
 const MONTHLY_DUE_AMOUNT = 1000;
 
 export function MonthlyDuesForm() {
   const router = useRouter();
-  const searchParams = useSearchParams();
   const dispatch = useAppDispatch();
   
   const { user, isAuthenticated } = useAppSelector((state) => state.auth);
@@ -37,9 +37,7 @@ export function MonthlyDuesForm() {
   const [selectedMonth, setSelectedMonth] = useState<string>('');
   const [monthsCount, setMonthsCount] = useState<number>(1);
   const [error, setError] = useState<string | null>(null);
-
-  const reference = searchParams.get('reference');
-  const paymentStatus = searchParams.get('status');
+  const [isPayingPopup, setIsPayingPopup] = useState(false);
 
   const getCurrentMonth = () => {
     const now = new Date();
@@ -93,53 +91,6 @@ export function MonthlyDuesForm() {
   }, [isAuthenticated, user, dispatch]);
 
   useEffect(() => {
-    if (paymentStatus === 'cancelled') {
-      setError('Payment was cancelled before completion.');
-    }
-  }, [paymentStatus]);
-
-  useEffect(() => {
-    if (!reference) {
-      return;
-    }
-
-    let cancelled = false;
-
-    const verifyPaymentRedirect = async () => {
-      setError(null);
-
-      try {
-        const data = await dispatch(verifyDuePayment(reference)).unwrap();
-
-        if (data?.due?.status === 'success') {
-          dispatch(checkDuePaymentStatus(true));
-          const redirectPath = user?.role === 'admin' ? '/admin' : '/alumni';
-          router.replace(redirectPath);
-          return;
-        }
-
-        setError(data.message || 'Payment is still being processed. Please check again shortly.');
-      } catch (verificationError) {
-        if (!cancelled) {
-          setError(
-            typeof verificationError === 'string'
-              ? verificationError
-              : verificationError instanceof Error
-                ? verificationError.message
-                : 'Unable to verify due payment.'
-          );
-        }
-      }
-    };
-
-    verifyPaymentRedirect();
-
-    return () => {
-      cancelled = true;
-    };
-  }, [reference, dispatch, router, user]);
-
-  useEffect(() => {
     const currentMonth = getCurrentMonth();
     setSelectedMonth(currentMonth);
   }, []);
@@ -152,6 +103,7 @@ export function MonthlyDuesForm() {
     const lastMonth = coveredMonths[coveredMonths.length - 1];
     
     try {
+      // Step 1: Initialize due on server (creates DB records, returns reference)
       const result = await dispatch(initializeDuePayment({
         month: selectedMonth,
         type: 'monthly',
@@ -162,11 +114,47 @@ export function MonthlyDuesForm() {
             : `Monthly dues from ${formatMonth(selectedMonth)} to ${formatMonth(lastMonth)}`
       })).unwrap();
 
-      if (result.authorizationUrl) {
-        window.location.href = result.authorizationUrl;
+      // Step 2: Open Monnify popup
+      setIsPayingPopup(true);
+      
+      const payerName = result.payerName || 
+        [user.firstName, user.lastName].filter(Boolean).join(' ') || 
+        user.email || 'Alumni';
+      const payerEmail = result.payerEmail || user.email || '';
+
+      await payDues({
+        reference: result.reference,
+        amount: result.totalAmount,
+        email: payerEmail,
+        fullName: payerName,
+        description:
+          monthsCount === 1
+            ? `Monthly due for ${formatMonth(selectedMonth)}`
+            : `Monthly dues from ${formatMonth(selectedMonth)} to ${formatMonth(lastMonth)}`,
+      });
+
+      setIsPayingPopup(false);
+
+      // Step 3: Verify the payment on the server
+      const data = await dispatch(verifyDuePayment(result.reference)).unwrap();
+
+      if (data?.due?.status === 'success') {
+        dispatch(checkDuePaymentStatus(true));
+        const redirectPath = user?.role === 'admin' ? '/admin' : '/alumni';
+        router.replace(redirectPath);
+        return;
       }
+
+      setError(data.message || 'Payment is still being processed. Please check again shortly.');
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'Payment initialization failed');
+      setIsPayingPopup(false);
+      setError(
+        typeof err === 'string'
+          ? err
+          : err instanceof Error
+            ? err.message
+            : 'Payment failed. Please try again.',
+      );
     }
   };
 
@@ -327,13 +315,18 @@ export function MonthlyDuesForm() {
                 </div>
                 <button
                   onClick={handlePayNow}
-                  disabled={isInitializingPayment || !selectedMonth}
+                  disabled={isInitializingPayment || isPayingPopup || !selectedMonth}
                   className="flex w-full items-center justify-center gap-3 mt-6 rounded bg-primary px-4 py-3 font-semibold text-white transition duration-200 hover:bg-primary/80 disabled:bg-primary/60"
                 >
                   {isInitializingPayment ? (
                     <>
                       <Loader2 className="h-5 w-5 animate-spin" />
                       Processing...
+                    </>
+                  ) : isPayingPopup ? (
+                    <>
+                      <Loader2 className="h-5 w-5 animate-spin" />
+                      Completing payment...
                     </>
                   ) : (
                     <>
