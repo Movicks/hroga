@@ -53,12 +53,13 @@ export interface InitializeDuePayload {
 }
 
 export interface InitializeDueResponse {
-  authorizationUrl?: string;
   reference?: string;
   message?: string;
   monthsCount?: number;
   coveredMonths?: string[];
   totalAmount?: number;
+  payerEmail?: string;
+  payerName?: string;
 }
 
 export interface VerifyDuePaymentResponse {

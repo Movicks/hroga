@@ -95,7 +95,8 @@ export default function DonateForm({
 
     try {
       // Step 1: Initialize donation on server (creates DB record, returns reference)
-      const response = await fetch(`${apiBaseUrl}/donations/initialize`, {
+      const baseUrl = apiBaseUrl.replace(/\/$/, '');
+      const response = await fetch(`${baseUrl}/api/donations/initialize`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -126,7 +127,7 @@ export default function DonateForm({
       setIsVerifying(true);
 
       const verifyResponse = await fetch(
-        `${apiBaseUrl}/donations/verify/${data.reference}`,
+        `${baseUrl}/api/donations/verify/${data.reference}`,
       );
       const verifyData = await verifyResponse.json();
 

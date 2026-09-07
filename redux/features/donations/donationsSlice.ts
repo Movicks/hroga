@@ -16,7 +16,7 @@ export interface Donation {
   accessCode?: string;
   paidAt?: string;
   channel?: string;
-  paystackData?: Record<string, unknown>;
+  gatewayData?: Record<string, unknown>;
   createdAt: string;
   updatedAt: string;
 }
